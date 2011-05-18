@@ -12,6 +12,10 @@ div#cws-wp-help-listing {
 	min-height: 600px;
 	}
 
+div#cws-wp-help-listing ul li a {
+	text-decoration: none;
+}
+
 div#cws-wp-help-listing h3 {
 	margin: 0;
 	padding: 0;
@@ -39,14 +43,16 @@ div#cws-wp-help-listing h3 span a {
 	}
 
 div#cws-wp-help-listing ul {
-	margin: 10px 0;
-	margin-left: 25px;
+	margin: 5px 5px 5px 20px;
 	list-style: circle;
 	}
 
+div#cws-wp-help-listing > ul {
+	margin: 10px 5px 10px 20px;
+}
+
 div#cws-wp-help-listing ul ul {
 	list-style: square;
-	margin-left: 25px;
 	}
 
 div#cws-wp-help-document {

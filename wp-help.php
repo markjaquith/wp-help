@@ -62,7 +62,7 @@ class CWS_WP_Help_Plugin {
 
 	public function enqueue() {
 		$suffix = defined ('SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '.dev' : '';
-		wp_enqueue_style( 'cws-wp-help', plugins_url( "wp-help$suffix.css", __FILE__ ), array(), '20110516' );
+		wp_enqueue_style( 'cws-wp-help', plugins_url( "wp-help$suffix.css", __FILE__ ), array(), '20110518' );
 	}
 
 	private function enable_link_filter() {
@@ -87,9 +87,15 @@ class CWS_WP_Help_Plugin {
 	}
 
 	public function render_listing_page() {
-?>
+		if ( isset( $_GET['document'] ) ) : ?>
+			<style>
+			div#cws-wp-help-listing .page-item-<?php echo absint( $_GET['document'] ); ?> a {
+				font-weight: bold;
+			}
+			</style>
+		<?php endif; ?>
 <div class="wrap">
-<?php screen_icon(); ?><h2><?php _e( 'Publishing Help' ); ?></h2>
+	<?php screen_icon(); ?><h2><?php _e( 'Publishing Help' ); ?></h2>
 <?php $pages = $this->get_help_topics_html(); ?>
 <?php if ( trim( $pages ) ) : ?>
 <div id="cws-wp-help-listing">
