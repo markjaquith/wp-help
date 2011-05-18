@@ -19,7 +19,7 @@ class CWS_WP_Help_Plugin {
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 		register_post_type( 'wp-help',
 			array(
-				'label' => 'Help',
+				'label' => __( 'Publishing Help' ),
 //				'description' => '',
 				'public' => false,
 				'show_ui' => true,
@@ -37,19 +37,19 @@ class CWS_WP_Help_Plugin {
 					'read_post' => 'read'
 				),
 				'labels' => array (
-					'name' => 'Help Documents',
-					'singular_name' => 'Help Document',
-					'add_new' => 'Add New',
-					'add_new_item' => 'Add New Help Document',
-					'edit' => 'Edit',
-					'edit_item' => 'Edit Help Document',
-					'new_item' => 'New Help Document',
-					'view' => 'View',
-					'view_item' => 'View Help Document',
-					'search_items' => 'Search Help Documents',
-					'not_found' => 'No Help Documents Found',
-					'not_found_in_trash' => 'No Help Documents found in Trash',
-					'parent' => 'Parent Help Document'
+					'name' => __( 'Help Documents' ),
+					'singular_name' => __( 'Help Document' ),
+					'add_new' => __( 'Add New' ),
+					'add_new_item' => __( 'Add New Help Document' ),
+					'edit' => __( 'Edit' ),
+					'edit_item' => __( 'Edit Help Document' ),
+					'new_item' => __( 'New Help Document' ),
+					'view' => __( 'View' ),
+					'view_item' => __( 'View Help Document' ),
+					'search_items' => __( 'Search Help Documents' ),
+					'not_found' => __( 'No Help Documents Found' ),
+					'not_found_in_trash' => __( 'No Help Documents found in Trash' ),
+					'parent' => __( 'Parent Help Document' )
 				)
 			)
 		);
@@ -89,7 +89,7 @@ class CWS_WP_Help_Plugin {
 	public function render_listing_page() {
 		if ( isset( $_GET['document'] ) ) : ?>
 			<style>
-			div#cws-wp-help-listing .page-item-<?php echo absint( $_GET['document'] ); ?> a {
+			div#cws-wp-help-listing .page-item-<?php echo absint( $_GET['document'] ); ?> > a {
 				font-weight: bold;
 			}
 			</style>
