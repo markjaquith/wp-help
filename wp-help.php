@@ -20,6 +20,8 @@ class CWS_WP_Help_Plugin {
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 		add_action( 'do_meta_boxes', array( $this, 'do_meta_boxes' ), 20, 2 );
 		add_action( 'save_post', array( $this, 'save_post' ) );
+		add_filter( 'post_type_link', array( $this, 'page_link' ), 10, 2 );
+		add_filter( 'post_updated_messages', array( $this, 'post_updated_messages' ) );
 		register_post_type( 'wp-help',
 			array(
 				'label' => __( 'Publishing Help' ),
@@ -88,30 +90,39 @@ class CWS_WP_Help_Plugin {
 		return $post_id;
 	}
 
+	public function post_updated_messages( $messages ) {
+		global $post_ID, $post;
+		$messages['wp-help'] = array(
+			 0 => '', // Unused. Messages start at index 1.
+			 1 => sprintf( __('Document updated. <a href="%s">View document</a>'), esc_url( get_permalink($post_ID) ) ),
+			 2 => __('Custom field updated.'),
+			 3 => __('Custom field deleted.'),
+			 4 => __('Document updated.'),
+			 5 => isset($_GET['revision']) ? sprintf( __('Document restored to revision from %s'), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
+			 6 => sprintf( __('Document published. <a href="%s">View document</a>'), esc_url( get_permalink($post_ID) ) ),
+			 7 => __('Document saved.'),
+			 8 => sprintf( __('Document submitted. <a target="_blank" href="%s">Preview document</a>'), esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ) ),
+			 9 => sprintf( __('Document scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview document</a>'), date_i18n( __( 'M j, Y @ G:i' ), strtotime( $post->post_date ) ), esc_url( get_permalink($post_ID) ) ),
+			10 => sprintf( __('Document draft updated. <a target="_blank" href="%s">Preview document</a>'), esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ) ),
+		);
+		return $messages;
+	}
+
 	public function enqueue() {
 		$suffix = defined ('SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '.dev' : '';
-		wp_enqueue_style( 'cws-wp-help', plugins_url( "wp-help$suffix.css", __FILE__ ), array(), '20110518' );
-	}
-
-	private function enable_link_filter() {
-		$this->disable_link_filter();
-		add_filter( 'post_type_link', array( $this, 'page_link' ), 10, 2 );
-	}
-
-	private function disable_link_filter() {
-		remove_filter( 'post_type_link', array( $this, 'page_link' ), 10, 2 );
+		wp_enqueue_style( 'cws-wp-help', plugins_url( "wp-help$suffix.css", __FILE__ ), array(), '20110518b' );
 	}
 
 	public function page_link( $link, $post ) {
 		$post = get_post( $post );
-		return admin_url( 'index.php?page=wp-help-documents&document=' . absint( $post->ID ) );
+		if ( 'wp-help' == $post->post_type )
+			return admin_url( 'index.php?page=wp-help-documents&document=' . absint( $post->ID ) );
+		else
+			return $link;
 	}
 
 	private function get_help_topics_html() {
-		$this->enable_link_filter();
-		$pages = wp_list_pages( array( 'post_type' => 'wp-help', 'hierarchical' => true, 'echo' => false, 'title_li' => '' ) );
-		$this->disable_link_filter();
-		return $pages;
+		return wp_list_pages( array( 'post_type' => 'wp-help', 'hierarchical' => true, 'echo' => false, 'title_li' => '' ) );
 	}
 
 	public function render_listing_page() {
