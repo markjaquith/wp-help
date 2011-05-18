@@ -9,6 +9,7 @@ Author URI: http://coveredwebservices.com/
 
 class CWS_WP_Help_Plugin {
 	public static $instance;
+	const default_doc = 'cws_wp_help_default_doc';
 
 	public function __construct() {
 		self::$instance = $this;
@@ -17,6 +18,8 @@ class CWS_WP_Help_Plugin {
 
 	public function init() {
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
+		add_action( 'do_meta_boxes', array( $this, 'do_meta_boxes' ), 20, 2 );
+		add_action( 'save_post', array( $this, 'save_post' ) );
 		register_post_type( 'wp-help',
 			array(
 				'label' => __( 'Publishing Help' ),
@@ -46,7 +49,7 @@ class CWS_WP_Help_Plugin {
 					'new_item' => __( 'New Help Document' ),
 					'view' => __( 'View' ),
 					'view_item' => __( 'View Help Document' ),
-					'search_items' => __( 'Search Help Documents' ),
+					'search_items' => __( 'Search Documents' ),
 					'not_found' => __( 'No Help Documents Found' ),
 					'not_found_in_trash' => __( 'No Help Documents found in Trash' ),
 					'parent' => __( 'Parent Help Document' )
@@ -58,6 +61,31 @@ class CWS_WP_Help_Plugin {
 	public function admin_menu() {
 		$hook = add_dashboard_page( __( 'Publishing Help' ), __( 'Publishing Help' ), 'publish_posts', 'wp-help-documents', array( $this, 'render_listing_page' ) );
 		add_action( "load-{$hook}", array( $this, 'enqueue' ) );
+	}
+
+	public function do_meta_boxes( $page, $context ) {
+		if ( 'wp-help' == $page && 'side' == $context )
+			add_meta_box( 'cws-wp-help-meta', __( 'WP Help Options' ), array( $this, 'meta_box' ), $page, 'side' );
+	}
+
+	public function meta_box() {
+		global $post;
+		wp_nonce_field( 'cws-wp-help-save', '_cws_wp_help_nonce', false, true ); ?>
+		<p><input type="checkbox" name="cws_wp_help_make_default_doc" id="cws_wp_help_make_default_doc" <?php checked( $post->ID == get_option( self::default_doc ) ); ?> /> <label for="cws_wp_help_make_default_doc"><?php _e( 'Make this the default help document' ); ?></label></p>
+		<?php
+	}
+
+	public function save_post( $post_id ) {
+		if ( wp_verify_nonce( $_POST['_cws_wp_help_nonce'], 'cws-wp-help-save' ) ) {
+			if ( isset( $_POST['cws_wp_help_make_default_doc'] ) ) {
+				// Make it the default_doc
+				update_option( self::default_doc, absint( $post_id ) );
+			} elseif ( $post_id == get_option( self::default_doc ) ) {
+				// Unset
+				update_option( self::default_doc, 0 );
+			}
+		}
+		return $post_id;
 	}
 
 	public function enqueue() {
@@ -87,6 +115,8 @@ class CWS_WP_Help_Plugin {
 	}
 
 	public function render_listing_page() {
+		if ( !isset( $_GET['document'] ) && get_option( self::default_doc ) )
+			$_GET['document'] = get_option( self::default_doc );
 		if ( isset( $_GET['document'] ) ) : ?>
 			<style>
 			div#cws-wp-help-listing .page-item-<?php echo absint( $_GET['document'] ); ?> > a {
