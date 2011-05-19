@@ -1,0 +1,164 @@
+# Copyright (C) 2010 WP Help
+# This file is distributed under the same license as the WP Help package.
+msgid ""
+msgstr ""
+"Project-Id-Version: WP Help 0.2-beta\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/wp-help\n"
+"POT-Creation-Date: 2011-05-19 17:08:50+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2010-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+
+#: wp-help.php:34 wp-help.php:98 wp-help.php:173
+msgid "Publishing Help"
+msgstr ""
+
+#: wp-help.php:51
+msgid "Help Documents"
+msgstr ""
+
+#: wp-help.php:52
+msgid "Help Document"
+msgstr ""
+
+#: wp-help.php:53
+msgid "Add New"
+msgstr ""
+
+#: wp-help.php:54
+msgid "Add New Help Document"
+msgstr ""
+
+#: wp-help.php:55
+msgid "Edit"
+msgstr ""
+
+#: wp-help.php:56
+msgid "Edit Help Document"
+msgstr ""
+
+#: wp-help.php:57
+msgid "New Help Document"
+msgstr ""
+
+#: wp-help.php:58
+msgid "View"
+msgstr ""
+
+#: wp-help.php:59
+msgid "View Help Document"
+msgstr ""
+
+#: wp-help.php:60
+msgid "Search Documents"
+msgstr ""
+
+#: wp-help.php:61
+msgid "No Help Documents Found"
+msgstr ""
+
+#: wp-help.php:62
+msgid "No Help Documents found in Trash"
+msgstr ""
+
+#: wp-help.php:63
+msgid "Parent Help Document"
+msgstr ""
+
+#: wp-help.php:104
+msgid "WP Help Options"
+msgstr ""
+
+#: wp-help.php:110
+msgid "Make this the default help document"
+msgstr ""
+
+#: wp-help.php:132
+msgid "Document updated. <a href=\"%s\">View document</a>"
+msgstr ""
+
+#: wp-help.php:133
+msgid "Custom field updated."
+msgstr ""
+
+#: wp-help.php:134
+msgid "Custom field deleted."
+msgstr ""
+
+#: wp-help.php:135
+msgid "Document updated."
+msgstr ""
+
+#: wp-help.php:136
+msgid "Document restored to revision from %s"
+msgstr ""
+
+#: wp-help.php:137
+msgid "Document published. <a href=\"%s\">View document</a>"
+msgstr ""
+
+#: wp-help.php:138
+msgid "Document saved."
+msgstr ""
+
+#: wp-help.php:139
+msgid ""
+"Document submitted. <a target=\"_blank\" href=\"%s\">Preview document</a>"
+msgstr ""
+
+#: wp-help.php:140
+msgid ""
+"Document scheduled for: <strong>%1$s</strong>. <a target=\"_blank\" href=\"%2"
+"$s\">Preview document</a>"
+msgstr ""
+
+#: wp-help.php:140
+msgid "M j, Y @ G:i"
+msgstr ""
+
+#: wp-help.php:141
+msgid ""
+"Document draft updated. <a target=\"_blank\" href=\"%s\">Preview document</a>"
+msgstr ""
+
+#: wp-help.php:177
+msgid "Help Topics"
+msgstr ""
+
+#: wp-help.php:177
+msgid "Manage"
+msgstr ""
+
+#: wp-help.php:189
+msgid "The requested help document could not be found"
+msgstr ""
+
+#: wp-help.php:195
+msgid ""
+"No published help documents found. <a href=\"%s\">Manage Help Documents</a>."
+msgstr ""
+
+#: wp-help.php:197
+msgid "No help documents found. Contact the site administrator."
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "WP Help"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid ""
+"Administrators can create detailed, hierarchical documentation for the "
+"site's authors and editors, viewable in the WordPress admin."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Mark Jaquith"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://coveredwebservices.com/"
+msgstr ""
