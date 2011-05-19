@@ -22,6 +22,7 @@ class CWS_WP_Help_Plugin {
 		add_action( 'save_post', array( $this, 'save_post' ) );
 		add_filter( 'post_type_link', array( $this, 'page_link' ), 10, 2 );
 		add_filter( 'post_updated_messages', array( $this, 'post_updated_messages' ) );
+		add_action( 'admin_init', array( $this, 'ajax_listener' ) );
 		register_post_type( 'wp-help',
 			array(
 				'label' => __( 'Publishing Help' ),
@@ -58,6 +59,34 @@ class CWS_WP_Help_Plugin {
 				)
 			)
 		);
+	}
+
+	public function ajax_listener() {
+		if ( !defined( 'DOING_AJAX' ) || !DOING_AJAX || !isset( $_POST['action'] ) || 'wp-link-ajax' != $_POST['action'] )
+			return;
+		// It's the right kind of request
+		// Now to see if it originated from our post type
+		$qs = parse_url( $_SERVER['HTTP_REFERER'], PHP_URL_QUERY );
+		wp_parse_str( $qs, $vars );
+		if ( isset( $vars['post_type'] ) ) {
+			$post_type = $vars['post_type'];
+		} elseif ( isset( $vars['post'] ) ) {
+			$post = get_post( $vars['post'] );
+			$post_type = $post->post_type;
+		} else {
+			// Can't determine post type. Bail.
+			return;
+		}
+		if ( 'wp-help' == $post_type ) {
+			// Nice! This originated from our post type
+			// Now we make our post type public, and all others non-public
+			// There really should be a better way to do this. :-\
+			global $wp_post_types;
+			foreach ( $wp_post_types as $name => $type ) {
+				$wp_post_types[$name]->publicly_queryable = false;
+			}
+			$wp_post_types['wp-help']->publicly_queryable = true;
+		}
 	}
 
 	public function admin_menu() {
