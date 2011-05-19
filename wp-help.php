@@ -85,14 +85,16 @@ class CWS_WP_Help_Plugin {
 		}
 		if ( 'wp-help' == $post_type ) {
 			// Nice! This originated from our post type
-			// Now we make our post type public, and all others non-public
+			// Now we make our post type public, and initiate a query filter
 			// There really should be a better way to do this. :-\
+			add_filter( 'pre_get_posts', array( $this, 'only_query_help_docs' ) );
 			global $wp_post_types;
-			foreach ( $wp_post_types as $name => $type ) {
-				$wp_post_types[$name]->publicly_queryable = false;
-			}
-			$wp_post_types['wp-help']->publicly_queryable = true;
+			$wp_post_types['wp-help']->publicly_queryable = $wp_post_types['wp-help']->public = true;
 		}
+	}
+
+	public function only_query_help_docs( $q ) {
+		$q->set( 'post_type', 'wp-help' );
 	}
 
 	public function admin_menu() {
