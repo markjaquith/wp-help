@@ -1,0 +1,61 @@
+div#cws-wp-help-listing {
+	width: 250px;
+	float: left;
+	margin: 10px 10px 10px 0;
+	padding: 10px;
+	border: 1px solid #ddd;
+	-moz-border-radius: 3px;
+	-khtml-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	background: #f4f4f4;
+	min-height: 400px;
+	}
+
+div#cws-wp-help-listing ul li a {
+	text-decoration: none;
+}
+
+div#cws-wp-help-listing h3 {
+	margin: 0;
+	padding: 0;
+	}
+
+div#cws-wp-help-listing h3 span a {
+	text-decoration: none;
+	float: right;
+	font-size: 12px;
+	font-weight: normal;
+	padding: 3px 4px;
+	right: -5px;
+	top: -5px;
+	position: relative;
+	border: 1px solid #ccc;
+	-moz-border-radius: 3px;
+	-khtml-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	background: #eee;
+	}
+
+	div#cws-wp-help-listing h3 span a:hover {
+		background: #fafafa;
+		border: 1px solid #c5c5c5;
+	}
+
+div#cws-wp-help-listing ul {
+	margin: 5px 5px 5px 15px;
+	list-style: circle;
+	}
+
+div#cws-wp-help-listing > ul {
+	margin: 10px 5px 10px 20px;
+}
+
+div#cws-wp-help-listing ul ul {
+	list-style: square;
+	}
+
+div#cws-wp-help-document {
+	max-width: 600px;
+	padding-left: 300px;
+	}
