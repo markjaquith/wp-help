@@ -42,6 +42,10 @@ Use WordPress' internal linking feature. When launched from a help document, it 
 
 Edit the help document you want to be the default. Find the "WP Help" meta box. Check the checkbox, and save. This will now be the default document
 
+== Screenshots ==
+
+1. The Publishing Help screen, which lists and displays available help documents.
+
 == Changelog ==
 
 = 0.1 =
