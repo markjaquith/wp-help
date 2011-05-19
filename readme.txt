@@ -6,11 +6,11 @@ Requires at least: 3.1
 Tested up to: 3.2
 Stable tag: 0.1
 
-Administrators can created detailed, hierarchical documentation for the site's authors and editors, viewable in the WordPress admin.
+Administrators can create detailed, hierarchical documentation for the site's authors and editors, viewable in the WordPress admin.
 
 == Description ==
 
-Administrators can created detailed, hierarchical documentation for the site's authors and editors, viewable in the WordPress admin. Powered by Custom Post Types, you get all the power of WordPress to create, edit, and arrange your documentation. Perfect for customized client sites. Never send another "here's how to use your site" e-mail again!
+Administrators can create detailed, hierarchical documentation for the site's authors and editors, viewable in the WordPress admin. Powered by Custom Post Types, you get all the power of WordPress to create, edit, and arrange your documentation. Perfect for customized client sites. Never send another "here's how to use your site" e-mail again!
 
 == Installation ==
 

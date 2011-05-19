@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: WP Help
-Description: Administrators can created detailed, hierarchical documentation for the site's authors and editors, viewable in the WordPress admin.
+Description: Administrators can create detailed, hierarchical documentation for the site's authors and editors, viewable in the WordPress admin.
 Version: 0.1
 Author: Mark Jaquith
 Author URI: http://coveredwebservices.com/
