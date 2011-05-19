@@ -47,6 +47,8 @@ Edit the help document you want to be the default. Find the "WP Help" meta box. 
 1. The Publishing Help screen, which lists and displays available help documents.
 
 == Changelog ==
+= 0.2 =
+* Translations, for non-English users
 
 = 0.1 =
 * Initial version

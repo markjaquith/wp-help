@@ -2,7 +2,7 @@
 /*
 Plugin Name: WP Help
 Description: Administrators can create detailed, hierarchical documentation for the site's authors and editors, viewable in the WordPress admin.
-Version: 0.1
+Version: 0.2-beta
 Author: Mark Jaquith
 Author URI: http://coveredwebservices.com/
 */
@@ -17,16 +17,21 @@ class CWS_WP_Help_Plugin {
 	}
 
 	public function init() {
+		// Translations
+		load_plugin_textdomain( 'wp-help', false, basename( dirname( __FILE__ ) ) . '/i18n' );
+		
+		// Actions and filters
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 		add_action( 'do_meta_boxes', array( $this, 'do_meta_boxes' ), 20, 2 );
 		add_action( 'save_post', array( $this, 'save_post' ) );
 		add_filter( 'post_type_link', array( $this, 'page_link' ), 10, 2 );
 		add_filter( 'post_updated_messages', array( $this, 'post_updated_messages' ) );
 		add_action( 'admin_init', array( $this, 'ajax_listener' ) );
+
+		// Register the wp-help post type
 		register_post_type( 'wp-help',
 			array(
-				'label' => __( 'Publishing Help' ),
-//				'description' => '',
+				'label' => __( 'Publishing Help', 'wp-help' ),
 				'public' => false,
 				'show_ui' => true,
 				'show_in_menu' => false,
@@ -43,19 +48,19 @@ class CWS_WP_Help_Plugin {
 					'read_post' => 'read'
 				),
 				'labels' => array (
-					'name' => __( 'Help Documents' ),
-					'singular_name' => __( 'Help Document' ),
-					'add_new' => __( 'Add New' ),
-					'add_new_item' => __( 'Add New Help Document' ),
-					'edit' => __( 'Edit' ),
-					'edit_item' => __( 'Edit Help Document' ),
-					'new_item' => __( 'New Help Document' ),
-					'view' => __( 'View' ),
-					'view_item' => __( 'View Help Document' ),
-					'search_items' => __( 'Search Documents' ),
-					'not_found' => __( 'No Help Documents Found' ),
-					'not_found_in_trash' => __( 'No Help Documents found in Trash' ),
-					'parent' => __( 'Parent Help Document' )
+					'name' => __( 'Help Documents', 'wp-help' ),
+					'singular_name' => __( 'Help Document', 'wp-help' ),
+					'add_new' => __( 'Add New', 'wp-help' ),
+					'add_new_item' => __( 'Add New Help Document', 'wp-help' ),
+					'edit' => __( 'Edit', 'wp-help' ),
+					'edit_item' => __( 'Edit Help Document', 'wp-help' ),
+					'new_item' => __( 'New Help Document', 'wp-help' ),
+					'view' => __( 'View', 'wp-help' ),
+					'view_item' => __( 'View Help Document', 'wp-help' ),
+					'search_items' => __( 'Search Documents', 'wp-help' ),
+					'not_found' => __( 'No Help Documents Found', 'wp-help' ),
+					'not_found_in_trash' => __( 'No Help Documents found in Trash', 'wp-help' ),
+					'parent' => __( 'Parent Help Document', 'wp-help' )
 				)
 			)
 		);
@@ -90,19 +95,19 @@ class CWS_WP_Help_Plugin {
 	}
 
 	public function admin_menu() {
-		$hook = add_dashboard_page( __( 'Publishing Help' ), __( 'Publishing Help' ), 'publish_posts', 'wp-help-documents', array( $this, 'render_listing_page' ) );
+		$hook = add_dashboard_page( __( 'Publishing Help', 'wp-help' ), __( 'Publishing Help', 'wp-help' ), 'publish_posts', 'wp-help-documents', array( $this, 'render_listing_page' ) );
 		add_action( "load-{$hook}", array( $this, 'enqueue' ) );
 	}
 
 	public function do_meta_boxes( $page, $context ) {
 		if ( 'wp-help' == $page && 'side' == $context )
-			add_meta_box( 'cws-wp-help-meta', __( 'WP Help Options' ), array( $this, 'meta_box' ), $page, 'side' );
+			add_meta_box( 'cws-wp-help-meta', __( 'WP Help Options', 'wp-help' ), array( $this, 'meta_box' ), $page, 'side' );
 	}
 
 	public function meta_box() {
 		global $post;
 		wp_nonce_field( 'cws-wp-help-save', '_cws_wp_help_nonce', false, true ); ?>
-		<p><input type="checkbox" name="cws_wp_help_make_default_doc" id="cws_wp_help_make_default_doc" <?php checked( $post->ID == get_option( self::default_doc ) ); ?> /> <label for="cws_wp_help_make_default_doc"><?php _e( 'Make this the default help document' ); ?></label></p>
+		<p><input type="checkbox" name="cws_wp_help_make_default_doc" id="cws_wp_help_make_default_doc" <?php checked( $post->ID == get_option( self::default_doc ) ); ?> /> <label for="cws_wp_help_make_default_doc"><?php _e( 'Make this the default help document', 'wp-help' ); ?></label></p>
 		<?php
 	}
 
@@ -121,18 +126,19 @@ class CWS_WP_Help_Plugin {
 
 	public function post_updated_messages( $messages ) {
 		global $post_ID, $post;
+		$permalink = get_permalink( $post_ID );
 		$messages['wp-help'] = array(
 			 0 => '', // Unused. Messages start at index 1.
-			 1 => sprintf( __('Document updated. <a href="%s">View document</a>'), esc_url( get_permalink($post_ID) ) ),
-			 2 => __('Custom field updated.'),
-			 3 => __('Custom field deleted.'),
-			 4 => __('Document updated.'),
-			 5 => isset($_GET['revision']) ? sprintf( __('Document restored to revision from %s'), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
-			 6 => sprintf( __('Document published. <a href="%s">View document</a>'), esc_url( get_permalink($post_ID) ) ),
-			 7 => __('Document saved.'),
-			 8 => sprintf( __('Document submitted. <a target="_blank" href="%s">Preview document</a>'), esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ) ),
-			 9 => sprintf( __('Document scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview document</a>'), date_i18n( __( 'M j, Y @ G:i' ), strtotime( $post->post_date ) ), esc_url( get_permalink($post_ID) ) ),
-			10 => sprintf( __('Document draft updated. <a target="_blank" href="%s">Preview document</a>'), esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ) ),
+			 1 => sprintf( __( 'Document updated. <a href="%s">View document</a>', 'wp-help' ), esc_url( $permalink ) ),
+			 2 => __( 'Custom field updated.', 'wp-help' ),
+			 3 => __( 'Custom field deleted.', 'wp-help' ),
+			 4 => __( 'Document updated.', 'wp-help' ),
+			 5 => isset( $_GET['revision'] ) ? sprintf( __( 'Document restored to revision from %s', 'wp-help' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
+			 6 => sprintf( __( 'Document published. <a href="%s">View document</a>', 'wp-help' ), esc_url( $permalink ) ),
+			 7 => __( 'Document saved.', 'wp-help' ),
+			 8 => sprintf( __( 'Document submitted. <a target="_blank" href="%s">Preview document</a>', 'wp-help' ), esc_url( add_query_arg( 'preview', 'true', $permalink ) ) ),
+			 9 => sprintf( __( 'Document scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview document</a>', 'wp-help' ), date_i18n( __( 'M j, Y @ G:i', 'wp-help' ), strtotime( $post->post_date ) ), esc_url( $permalink ) ),
+			10 => sprintf( __('Document draft updated. <a target="_blank" href="%s">Preview document</a>', 'wp-help' ), esc_url( add_query_arg( 'preview', 'true', $permalink ) ) ),
 		);
 		return $messages;
 	}
@@ -155,21 +161,20 @@ class CWS_WP_Help_Plugin {
 	}
 
 	public function render_listing_page() {
-		if ( !isset( $_GET['document'] ) && get_option( self::default_doc ) )
-			$_GET['document'] = get_option( self::default_doc );
-		if ( isset( $_GET['document'] ) ) : ?>
+		$document = absint( isset( $_GET['document'] ) ? $_GET['document'] : get_option( self::default_doc ) );
+		if ( $document ) : ?>
 			<style>
-			div#cws-wp-help-listing .page-item-<?php echo absint( $_GET['document'] ); ?> > a {
+			div#cws-wp-help-listing .page-item-<?php echo $document; ?> > a {
 				font-weight: bold;
 			}
 			</style>
 		<?php endif; ?>
 <div class="wrap">
-	<?php screen_icon(); ?><h2><?php _e( 'Publishing Help' ); ?></h2>
+	<?php screen_icon(); ?><h2><?php _e( 'Publishing Help', 'wp-help' ); ?></h2>
 <?php $pages = $this->get_help_topics_html(); ?>
 <?php if ( trim( $pages ) ) : ?>
 <div id="cws-wp-help-listing">
-<h3><?php _e( 'Help Topics' ); ?><?php if ( current_user_can( 'publish_pages' ) ) : ?><span><a href="<?php echo admin_url( 'edit.php?post_type=wp-help' ); ?>">Manage</a></span><?php endif; ?></h3>
+<h3><?php _e( 'Help Topics', 'wp-help' ); ?><?php if ( current_user_can( 'publish_pages' ) ) : ?><span><a href="<?php echo admin_url( 'edit.php?post_type=wp-help' ); ?>"><?php _e( 'Manage', 'wp-help' ); ?></a></span><?php endif; ?></h3>
 <ul>
 <?php echo $pages; ?>
 </ul>
@@ -181,15 +186,15 @@ class CWS_WP_Help_Plugin {
 		<h2><?php the_title(); ?></h2>
 		<?php the_content(); ?>
 	<?php else : ?>
-	<p><?php _e( 'The requested help document could not be found' ); ?>
+	<p><?php _e( 'The requested help document could not be found', 'wp-help' ); ?>
 	<?php endif; ?>
 <?php endif; ?>
 </div>
 <?php else : ?>
 	<?php if ( current_user_can( 'manage_options' ) ) : ?>
-		<p><?php printf( __( 'No published help documents found. <a href="%s">Manage Help Documents</a>.' ), admin_url( 'edit.php?post_type=wp-help' ) ); ?></p>
+		<p><?php printf( __( 'No published help documents found. <a href="%s">Manage Help Documents</a>.', 'wp-help' ), admin_url( 'edit.php?post_type=wp-help' ) ); ?></p>
 	<?php else : ?>
-		<p><?php _e( 'No help documents found. Contact the site administrator.' ); ?></p>
+		<p><?php _e( 'No help documents found. Contact the site administrator.', 'wp-help' ); ?></p>
 	<?php endif; ?>
 <?php endif; ?>
 </div>
