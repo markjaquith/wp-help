@@ -8,11 +8,13 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2010-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2011-05-19 13:16-0500\n"
+"Last-Translator: Mark Jaquith <mark.gpl@txfx.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 
-#: wp-help.php:34 wp-help.php:98 wp-help.php:173
+#: wp-help.php:34
+#: wp-help.php:98
+#: wp-help.php:173
 msgid "Publishing Help"
 msgstr ""
 
@@ -105,14 +107,11 @@ msgid "Document saved."
 msgstr ""
 
 #: wp-help.php:139
-msgid ""
-"Document submitted. <a target=\"_blank\" href=\"%s\">Preview document</a>"
+msgid "Document submitted. <a target=\"_blank\" href=\"%s\">Preview document</a>"
 msgstr ""
 
 #: wp-help.php:140
-msgid ""
-"Document scheduled for: <strong>%1$s</strong>. <a target=\"_blank\" href=\"%2"
-"$s\">Preview document</a>"
+msgid "Document scheduled for: <strong>%1$s</strong>. <a target=\"_blank\" href=\"%2$s\">Preview document</a>"
 msgstr ""
 
 #: wp-help.php:140
@@ -120,8 +119,7 @@ msgid "M j, Y @ G:i"
 msgstr ""
 
 #: wp-help.php:141
-msgid ""
-"Document draft updated. <a target=\"_blank\" href=\"%s\">Preview document</a>"
+msgid "Document draft updated. <a target=\"_blank\" href=\"%s\">Preview document</a>"
 msgstr ""
 
 #: wp-help.php:177
@@ -137,8 +135,7 @@ msgid "The requested help document could not be found"
 msgstr ""
 
 #: wp-help.php:195
-msgid ""
-"No published help documents found. <a href=\"%s\">Manage Help Documents</a>."
+msgid "No published help documents found. <a href=\"%s\">Manage Help Documents</a>."
 msgstr ""
 
 #: wp-help.php:197
@@ -150,9 +147,7 @@ msgid "WP Help"
 msgstr ""
 
 #. Description of the plugin/theme
-msgid ""
-"Administrators can create detailed, hierarchical documentation for the "
-"site's authors and editors, viewable in the WordPress admin."
+msgid "Administrators can create detailed, hierarchical documentation for the site's authors and editors, viewable in the WordPress admin."
 msgstr ""
 
 #. Author of the plugin/theme
@@ -162,3 +157,4 @@ msgstr ""
 #. Author URI of the plugin/theme
 msgid "http://coveredwebservices.com/"
 msgstr ""
+

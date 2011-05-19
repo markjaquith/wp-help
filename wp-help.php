@@ -5,6 +5,7 @@ Description: Administrators can create detailed, hierarchical documentation for 
 Version: 0.2-beta
 Author: Mark Jaquith
 Author URI: http://coveredwebservices.com/
+Text Domain: wp-help
 */
 
 class CWS_WP_Help_Plugin {
@@ -31,7 +32,7 @@ class CWS_WP_Help_Plugin {
 		// Register the wp-help post type
 		register_post_type( 'wp-help',
 			array(
-				'label' => __( 'Publishing Help', 'wp-help' ),
+				'label' => _x( 'Publishing Help', 'post type label', 'wp-help' ),
 				'public' => false,
 				'show_ui' => true,
 				'show_in_menu' => false,
@@ -50,12 +51,12 @@ class CWS_WP_Help_Plugin {
 				'labels' => array (
 					'name' => __( 'Help Documents', 'wp-help' ),
 					'singular_name' => __( 'Help Document', 'wp-help' ),
-					'add_new' => __( 'Add New', 'wp-help' ),
+					'add_new' => _x( 'Add New', 'i.e. Add new Help Document', 'wp-help' ),
 					'add_new_item' => __( 'Add New Help Document', 'wp-help' ),
-					'edit' => __( 'Edit', 'wp-help' ),
+					'edit' => _x( 'Edit', 'i.e. Edit Help Document', 'wp-help' ),
 					'edit_item' => __( 'Edit Help Document', 'wp-help' ),
 					'new_item' => __( 'New Help Document', 'wp-help' ),
-					'view' => __( 'View', 'wp-help' ),
+					'view' => _x( 'View', 'i.e. View Help Document', 'wp-help' ),
 					'view_item' => __( 'View Help Document', 'wp-help' ),
 					'search_items' => __( 'Search Documents', 'wp-help' ),
 					'not_found' => __( 'No Help Documents Found', 'wp-help' ),
@@ -95,13 +96,13 @@ class CWS_WP_Help_Plugin {
 	}
 
 	public function admin_menu() {
-		$hook = add_dashboard_page( __( 'Publishing Help', 'wp-help' ), __( 'Publishing Help', 'wp-help' ), 'publish_posts', 'wp-help-documents', array( $this, 'render_listing_page' ) );
+		$hook = add_dashboard_page( _x( 'Publishing Help', 'page title', 'wp-help' ), _x( 'Publishing Help', 'menu title', 'wp-help' ), 'publish_posts', 'wp-help-documents', array( $this, 'render_listing_page' ) );
 		add_action( "load-{$hook}", array( $this, 'enqueue' ) );
 	}
 
 	public function do_meta_boxes( $page, $context ) {
 		if ( 'wp-help' == $page && 'side' == $context )
-			add_meta_box( 'cws-wp-help-meta', __( 'WP Help Options', 'wp-help' ), array( $this, 'meta_box' ), $page, 'side' );
+			add_meta_box( 'cws-wp-help-meta', _x( 'WP Help Options', 'meta box title', 'wp-help' ), array( $this, 'meta_box' ), $page, 'side' );
 	}
 
 	public function meta_box() {
@@ -170,11 +171,11 @@ class CWS_WP_Help_Plugin {
 			</style>
 		<?php endif; ?>
 <div class="wrap">
-	<?php screen_icon(); ?><h2><?php _e( 'Publishing Help', 'wp-help' ); ?></h2>
+	<?php screen_icon(); ?><h2><?php _ex( 'Publishing Help', 'h2 title', 'wp-help' ); ?></h2>
 <?php $pages = $this->get_help_topics_html(); ?>
 <?php if ( trim( $pages ) ) : ?>
 <div id="cws-wp-help-listing">
-<h3><?php _e( 'Help Topics', 'wp-help' ); ?><?php if ( current_user_can( 'publish_pages' ) ) : ?><span><a href="<?php echo admin_url( 'edit.php?post_type=wp-help' ); ?>"><?php _e( 'Manage', 'wp-help' ); ?></a></span><?php endif; ?></h3>
+<h3><?php _e( 'Help Topics', 'wp-help' ); ?><?php if ( current_user_can( 'publish_pages' ) ) : ?><span><a href="<?php echo admin_url( 'edit.php?post_type=wp-help' ); ?>"><?php _ex( 'Manage', 'verb. Button with limited space', 'wp-help' ); ?></a></span><?php endif; ?></h3>
 <ul>
 <?php echo $pages; ?>
 </ul>
