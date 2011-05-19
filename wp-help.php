@@ -146,7 +146,7 @@ class CWS_WP_Help_Plugin {
 
 	public function enqueue() {
 		$suffix = defined ('SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '.dev' : '';
-		wp_enqueue_style( 'cws-wp-help', plugins_url( "wp-help$suffix.css", __FILE__ ), array(), '20110518b' );
+		wp_enqueue_style( 'cws-wp-help', plugins_url( "css/wp-help$suffix.css", __FILE__ ), array(), '20110518b' );
 	}
 
 	public function page_link( $link, $post ) {
@@ -162,10 +162,10 @@ class CWS_WP_Help_Plugin {
 	}
 
 	public function render_listing_page() {
-		$document = absint( isset( $_GET['document'] ) ? $_GET['document'] : get_option( self::default_doc ) );
-		if ( $document ) : ?>
+		$document_id = absint( isset( $_GET['document'] ) ? $_GET['document'] : get_option( self::default_doc ) );
+		if ( $document_id ) : ?>
 			<style>
-			div#cws-wp-help-listing .page-item-<?php echo $document; ?> > a {
+			div#cws-wp-help-listing .page-item-<?php echo $document_id; ?> > a {
 				font-weight: bold;
 			}
 			</style>
@@ -181,8 +181,8 @@ class CWS_WP_Help_Plugin {
 </ul>
 </div>
 <div id="cws-wp-help-document">
-<?php if ( $_GET['document'] ) : ?>
-	<?php $document = new WP_Query( array( 'post_type' => 'wp-help', 'p' => absint( $_GET['document'] ) ) ); ?>
+<?php if ( $document_id ) : ?>
+	<?php $document = new WP_Query( array( 'post_type' => 'wp-help', 'p' => $document_id ) ); ?>
 	<?php if ( $document->have_posts() ) : $document->the_post(); ?>
 		<h2><?php the_title(); ?></h2>
 		<?php the_content(); ?>
