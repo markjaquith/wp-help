@@ -4,141 +4,165 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP Help 0.2-beta\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/wp-help\n"
-"POT-Creation-Date: 2011-05-19 17:08:50+00:00\n"
+"POT-Creation-Date: 2011-05-19 17:37:03+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2011-05-19 13:16-0500\n"
-"Last-Translator: Mark Jaquith <mark.gpl@txfx.net>\n"
+"PO-Revision-Date: 2010-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 
-#: wp-help.php:34
-#: wp-help.php:98
-#: wp-help.php:173
+#: wp-help.php:35
+msgctxt "post type label"
 msgid "Publishing Help"
 msgstr ""
 
-#: wp-help.php:51
+#: wp-help.php:52
 msgid "Help Documents"
 msgstr ""
 
-#: wp-help.php:52
+#: wp-help.php:53
 msgid "Help Document"
 msgstr ""
 
-#: wp-help.php:53
+#: wp-help.php:54
+msgctxt "i.e. Add new Help Document"
 msgid "Add New"
 msgstr ""
 
-#: wp-help.php:54
+#: wp-help.php:55
 msgid "Add New Help Document"
 msgstr ""
 
-#: wp-help.php:55
+#: wp-help.php:56
+msgctxt "i.e. Edit Help Document"
 msgid "Edit"
 msgstr ""
 
-#: wp-help.php:56
+#: wp-help.php:57
 msgid "Edit Help Document"
 msgstr ""
 
-#: wp-help.php:57
+#: wp-help.php:58
 msgid "New Help Document"
 msgstr ""
 
-#: wp-help.php:58
+#: wp-help.php:59
+msgctxt "i.e. View Help Document"
 msgid "View"
 msgstr ""
 
-#: wp-help.php:59
+#: wp-help.php:60
 msgid "View Help Document"
 msgstr ""
 
-#: wp-help.php:60
+#: wp-help.php:61
 msgid "Search Documents"
 msgstr ""
 
-#: wp-help.php:61
+#: wp-help.php:62
 msgid "No Help Documents Found"
 msgstr ""
 
-#: wp-help.php:62
+#: wp-help.php:63
 msgid "No Help Documents found in Trash"
 msgstr ""
 
-#: wp-help.php:63
+#: wp-help.php:64
 msgid "Parent Help Document"
 msgstr ""
 
-#: wp-help.php:104
+#: wp-help.php:99
+msgctxt "page title"
+msgid "Publishing Help"
+msgstr ""
+
+#: wp-help.php:99
+msgctxt "menu title"
+msgid "Publishing Help"
+msgstr ""
+
+#: wp-help.php:105
+msgctxt "meta box title"
 msgid "WP Help Options"
 msgstr ""
 
-#: wp-help.php:110
+#: wp-help.php:111
 msgid "Make this the default help document"
 msgstr ""
 
-#: wp-help.php:132
+#: wp-help.php:133
 msgid "Document updated. <a href=\"%s\">View document</a>"
 msgstr ""
 
-#: wp-help.php:133
+#: wp-help.php:134
 msgid "Custom field updated."
 msgstr ""
 
-#: wp-help.php:134
+#: wp-help.php:135
 msgid "Custom field deleted."
 msgstr ""
 
-#: wp-help.php:135
+#: wp-help.php:136
 msgid "Document updated."
 msgstr ""
 
-#: wp-help.php:136
+#: wp-help.php:137
 msgid "Document restored to revision from %s"
 msgstr ""
 
-#: wp-help.php:137
+#: wp-help.php:138
 msgid "Document published. <a href=\"%s\">View document</a>"
 msgstr ""
 
-#: wp-help.php:138
+#: wp-help.php:139
 msgid "Document saved."
 msgstr ""
 
-#: wp-help.php:139
-msgid "Document submitted. <a target=\"_blank\" href=\"%s\">Preview document</a>"
-msgstr ""
-
 #: wp-help.php:140
-msgid "Document scheduled for: <strong>%1$s</strong>. <a target=\"_blank\" href=\"%2$s\">Preview document</a>"
-msgstr ""
-
-#: wp-help.php:140
-msgid "M j, Y @ G:i"
+msgid ""
+"Document submitted. <a target=\"_blank\" href=\"%s\">Preview document</a>"
 msgstr ""
 
 #: wp-help.php:141
-msgid "Document draft updated. <a target=\"_blank\" href=\"%s\">Preview document</a>"
+msgid ""
+"Document scheduled for: <strong>%1$s</strong>. <a target=\"_blank\" href=\"%2"
+"$s\">Preview document</a>"
 msgstr ""
 
-#: wp-help.php:177
+#: wp-help.php:141
+msgid "M j, Y @ G:i"
+msgstr ""
+
+#: wp-help.php:142
+msgid ""
+"Document draft updated. <a target=\"_blank\" href=\"%s\">Preview document</a>"
+msgstr ""
+
+#: wp-help.php:174
+msgctxt "h2 title"
+msgid "Publishing Help"
+msgstr ""
+
+#: wp-help.php:178
 msgid "Help Topics"
 msgstr ""
 
-#: wp-help.php:177
+#: wp-help.php:178
+msgctxt "verb. Button with limited space"
 msgid "Manage"
 msgstr ""
 
-#: wp-help.php:189
+#: wp-help.php:190
 msgid "The requested help document could not be found"
 msgstr ""
 
-#: wp-help.php:195
-msgid "No published help documents found. <a href=\"%s\">Manage Help Documents</a>."
+#: wp-help.php:196
+msgid ""
+"No published help documents found. <a href=\"%s\">Manage Help Documents</a>."
 msgstr ""
 
-#: wp-help.php:197
+#: wp-help.php:198
 msgid "No help documents found. Contact the site administrator."
 msgstr ""
 
@@ -147,7 +171,9 @@ msgid "WP Help"
 msgstr ""
 
 #. Description of the plugin/theme
-msgid "Administrators can create detailed, hierarchical documentation for the site's authors and editors, viewable in the WordPress admin."
+msgid ""
+"Administrators can create detailed, hierarchical documentation for the "
+"site's authors and editors, viewable in the WordPress admin."
 msgstr ""
 
 #. Author of the plugin/theme
@@ -157,4 +183,3 @@ msgstr ""
 #. Author URI of the plugin/theme
 msgid "http://coveredwebservices.com/"
 msgstr ""
-
