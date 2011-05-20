@@ -8,14 +8,14 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2011-05-20 02:25+0300\n"
+"PO-Revision-Date: 2011-05-20 14:10+0300\n"
 "Last-Translator: Dzhamil Garaev <hello@facemann.ru>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 
 #: wp-help.php:35
 msgctxt "post type label"
 msgid "Publishing Help"
-msgstr "Опубликовать"
+msgstr "Справка"
 
 #: wp-help.php:52
 msgid "Help Documents"
@@ -75,12 +75,12 @@ msgstr "Родительская страница"
 #: wp-help.php:99
 msgctxt "page title"
 msgid "Publishing Help"
-msgstr "Опубликовать"
+msgstr "Справка"
 
 #: wp-help.php:99
 msgctxt "menu title"
 msgid "Publishing Help"
-msgstr "Опубликовать"
+msgstr "Справка"
 
 #: wp-help.php:105
 msgctxt "meta box title"
@@ -138,16 +138,16 @@ msgstr "Черновик страницы обновлён. <a target=\"_blank\"
 #: wp-help.php:174
 msgctxt "h2 title"
 msgid "Publishing Help"
-msgstr "Опубликовать"
+msgstr "Справка"
 
 #: wp-help.php:178
 msgid "Help Topics"
-msgstr "Рубрики"
+msgstr "Содержание"
 
 #: wp-help.php:178
 msgctxt "verb. Button with limited space"
 msgid "Manage"
-msgstr "Управление"
+msgstr "Редактировать"
 
 #: wp-help.php:190
 msgid "The requested help document could not be found"
@@ -155,7 +155,7 @@ msgstr "Запрашиваемся страница не найдена"
 
 #: wp-help.php:196
 msgid "No published help documents found. <a href=\"%s\">Manage Help Documents</a>."
-msgstr "Нет опубликованных страниц в документации. <a href=\"%s\">Управление</a>."
+msgstr "Нет опубликованных страниц в документации. <a href=\"%s\">Редактировать</a>."
 
 #: wp-help.php:198
 msgid "No help documents found. Contact the site administrator."
@@ -167,7 +167,7 @@ msgstr "WP Help"
 
 #. Description of the plugin/theme
 msgid "Administrators can create detailed, hierarchical documentation for the site's authors and editors, viewable in the WordPress admin."
-msgstr "Администраторы получают возможность создавать детальную, древовидную документацию для авторов и модераторов сайта, доступную для просмотра в админке WordPress'а."
+msgstr "Администраторы получают возможность создавать детальную, древовидную документацию для авторов и модераторов сайта, доступную для просмотра в админ-панели WordPress'а."
 
 #. Author of the plugin/theme
 msgid "Mark Jaquith"
