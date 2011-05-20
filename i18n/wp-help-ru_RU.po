@@ -8,7 +8,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2011-05-20 02:04+0300\n"
+"PO-Revision-Date: 2011-05-20 02:25+0300\n"
 "Last-Translator: Dzhamil Garaev <hello@facemann.ru>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 
@@ -54,7 +54,7 @@ msgstr "Просмотреть"
 
 #: wp-help.php:60
 msgid "View Help Document"
-msgstr "View Help Document"
+msgstr "Просмотреть страницу"
 
 #: wp-help.php:61
 msgid "Search Documents"
