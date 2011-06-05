@@ -2,7 +2,7 @@
 /*
 Plugin Name: WP Help
 Description: Administrators can create detailed, hierarchical documentation for the site's authors and editors, viewable in the WordPress admin.
-Version: 0.2-beta
+Version: 0.2
 Author: Mark Jaquith
 Author URI: http://coveredwebservices.com/
 Text Domain: wp-help
@@ -20,7 +20,7 @@ class CWS_WP_Help_Plugin {
 	public function init() {
 		// Translations
 		load_plugin_textdomain( 'wp-help', false, basename( dirname( __FILE__ ) ) . '/i18n' );
-		
+
 		// Actions and filters
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 		add_action( 'do_meta_boxes', array( $this, 'do_meta_boxes' ), 20, 2 );
