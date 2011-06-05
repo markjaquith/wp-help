@@ -46,9 +46,13 @@ Edit the help document you want to be the default. Find the "WP Help" meta box. 
 
 1. The Publishing Help screen, which lists and displays available help documents.
 
+== Upgrade Notice ==
+= 0.2 =
+Upgrade if you want to use WP Help in one of these languages: Bulgarian, German, Spanish, Mexican Spanish, Macedonian, Dutch, Brazilian Portuguese, or Russian.
+
 == Changelog ==
 = 0.2 =
-* Translations, for non-English users
+* Translations for: Bulgarian, German, Spanish, Mexican Spanish, Macedonian, Dutch, Brazilian Portuguese, and Russian. 
 
 = 0.1 =
 * Initial version
