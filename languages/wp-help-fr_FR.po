@@ -1,0 +1,182 @@
+# Copyright (C) 2010 WP Help
+# This file is distributed under the same license as the WP Help package.
+msgid ""
+msgstr ""
+"Project-Id-Version: WP Help 0.2-beta\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/wp-help\n"
+"POT-Creation-Date: 2011-05-19 17:37:03+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2011-06-30 10:24+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: FRANCE\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: wp-help.php:35
+msgctxt "post type label"
+msgid "Publishing Help"
+msgstr "Aide à l'administration du site"
+
+#: wp-help.php:52
+msgid "Help Documents"
+msgstr "Documents d'aide"
+
+#: wp-help.php:53
+msgid "Help Document"
+msgstr "Document d'aide"
+
+#: wp-help.php:54
+msgctxt "i.e. Add new Help Document"
+msgid "Add New"
+msgstr "Ajouter"
+
+#: wp-help.php:55
+msgid "Add New Help Document"
+msgstr "Ajouter un nouveau document d'aide"
+
+#: wp-help.php:56
+msgctxt "i.e. Edit Help Document"
+msgid "Edit"
+msgstr "Editer"
+
+#: wp-help.php:57
+msgid "Edit Help Document"
+msgstr "Editer le document d'aide"
+
+#: wp-help.php:58
+msgid "New Help Document"
+msgstr "Nouveau document d'aide"
+
+#: wp-help.php:59
+msgctxt "i.e. View Help Document"
+msgid "View"
+msgstr "Afficher"
+
+#: wp-help.php:60
+msgid "View Help Document"
+msgstr "Afficher le document d'aide"
+
+#: wp-help.php:61
+msgid "Search Documents"
+msgstr "Recherche"
+
+#: wp-help.php:62
+msgid "No Help Documents Found"
+msgstr "Aucun document trouvé"
+
+#: wp-help.php:63
+msgid "No Help Documents found in Trash"
+msgstr "Aucun document trouvé dans la corbeille"
+
+#: wp-help.php:64
+msgid "Parent Help Document"
+msgstr "Document d'aide parent"
+
+#: wp-help.php:99
+msgctxt "page title"
+msgid "Publishing Help"
+msgstr "Aide à l'administration du site"
+
+#: wp-help.php:99
+msgctxt "menu title"
+msgid "Publishing Help"
+msgstr "Aide à l'administration du site"
+
+#: wp-help.php:105
+msgctxt "meta box title"
+msgid "WP Help Options"
+msgstr "Options WP Help"
+
+#: wp-help.php:111
+msgid "Make this the default help document"
+msgstr "Faire de ce document le document par défaut"
+
+#: wp-help.php:133
+msgid "Document updated. <a href=\"%s\">View document</a>"
+msgstr "Document mis à jour. <a href=\"%s\">Afficher le document</a>"
+
+#: wp-help.php:134
+msgid "Custom field updated."
+msgstr "Champ personnalisé mis à jour."
+
+#: wp-help.php:135
+msgid "Custom field deleted."
+msgstr "Champ personnalisé supprimé."
+
+#: wp-help.php:136
+msgid "Document updated."
+msgstr "Document mis à jour."
+
+#: wp-help.php:137
+msgid "Document restored to revision from %s"
+msgstr "Document restauré depuis la sauvegarde du %s"
+
+#: wp-help.php:138
+msgid "Document published. <a href=\"%s\">View document</a>"
+msgstr "Document publié. <a href=\"%s\">Afficher le document</a>"
+
+#: wp-help.php:139
+msgid "Document saved."
+msgstr "Document sauvegardé."
+
+#: wp-help.php:140
+msgid "Document submitted. <a target=\"_blank\" href=\"%s\">Preview document</a>"
+msgstr "Document soumis. <a target=\"_blank\" href=\"%s\">Prévisualiser le document</a>"
+
+#: wp-help.php:141
+msgid "Document scheduled for: <strong>%1$s</strong>. <a target=\"_blank\" href=\"%2$s\">Preview document</a>"
+msgstr "Document programmé pour le : <strong>%1$s</strong>. <a target=\"_blank\" href=\"%2$s\">Prévisualiser le document</a>"
+
+#: wp-help.php:141
+msgid "M j, Y @ G:i"
+msgstr "j M Y @ G:i"
+
+#: wp-help.php:142
+msgid "Document draft updated. <a target=\"_blank\" href=\"%s\">Preview document</a>"
+msgstr "Brouillon du document mis à jour. <a target=\"_blank\" href=\"%s\">Prévisualiser le document</a>"
+
+#: wp-help.php:174
+msgctxt "h2 title"
+msgid "Publishing Help"
+msgstr "Aide à l'administration du site"
+
+#: wp-help.php:178
+msgid "Help Topics"
+msgstr "Sujets d'aide."
+
+#: wp-help.php:178
+msgctxt "verb. Button with limited space"
+msgid "Manage"
+msgstr "Organiser"
+
+#: wp-help.php:190
+msgid "The requested help document could not be found"
+msgstr "Le document d'aide demandé n'a pu être trouvé "
+
+#: wp-help.php:196
+msgid "No published help documents found. <a href=\"%s\">Manage Help Documents</a>."
+msgstr "Aucun document d'aide trouvé. <a href=\"%s\">Organiser les documents d'aide</a>."
+
+#: wp-help.php:198
+msgid "No help documents found. Contact the site administrator."
+msgstr "Aucun document d'aide trouvé. Contactez l'administrateur du site."
+
+#. Plugin Name of the plugin/theme
+msgid "WP Help"
+msgstr "WP Help"
+
+#. Description of the plugin/theme
+msgid "Administrators can create detailed, hierarchical documentation for the site's authors and editors, viewable in the WordPress admin."
+msgstr "Les administrateurs peuvent créer une documentation détaillée, hiérarchique à l'attention des auteurs et éditeurs du site, et accessible dans l'administration du site."
+
+#. Author of the plugin/theme
+msgid "Mark Jaquith"
+msgstr "Mark Jaquith"
+
+#. Author URI of the plugin/theme
+msgid "http://coveredwebservices.com/"
+msgstr "http://coveredwebservices.com/"
+
