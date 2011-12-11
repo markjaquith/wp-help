@@ -115,7 +115,7 @@ class CWS_WP_Help_Plugin {
 	}
 
 	public function save_post( $post_id ) {
-		if ( wp_verify_nonce( $_POST['_cws_wp_help_nonce'], 'cws-wp-help-save' ) ) {
+		if ( isset( $_POST['_cws_wp_help_nonce'] ) && wp_verify_nonce( $_POST['_cws_wp_help_nonce'], 'cws-wp-help-save' ) ) {
 			if ( isset( $_POST['cws_wp_help_make_default_doc'] ) ) {
 				// Make it the default_doc
 				update_option( self::default_doc, absint( $post_id ) );
