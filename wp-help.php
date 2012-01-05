@@ -19,7 +19,7 @@ class CWS_WP_Help_Plugin {
 
 	public function init() {
 		// Translations
-		load_plugin_textdomain( 'wp-help', false, basename( dirname( __FILE__ ) ) . '/i18n' );
+		load_plugin_textdomain( 'wp-help', false, basename( dirname( __FILE__ ) ) . '/languages' );
 
 		// Actions and filters
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
