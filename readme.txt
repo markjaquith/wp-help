@@ -2,8 +2,8 @@
 Contributors: markjaquith
 Donate link: http://txfx.net/wordpress-plugins/donate
 Tags: help, documentation, client sites, clients, docs
-Requires at least: 3.1
-Tested up to: 3.2
+Requires at least: 3.3
+Tested up to: 3.4
 Stable tag: 0.2
 
 Administrators can create detailed, hierarchical documentation for the site's authors and editors, viewable in the WordPress admin.
@@ -47,10 +47,16 @@ Edit the help document you want to be the default. Find the "WP Help" meta box. 
 1. The Publishing Help screen, which lists and displays available help documents.
 
 == Upgrade Notice ==
+= 0.3 =
+Upgrade for a French translation.
+
 = 0.2 =
 Upgrade if you want to use WP Help in one of these languages: Bulgarian, German, Spanish, Mexican Spanish, Macedonian, Dutch, Brazilian Portuguese, or Russian.
 
 == Changelog ==
+= 0.3 =
+* Translation for: French. Squashes a PHP Notice. Add an action hook so people can add their own styles. 
+
 = 0.2 =
 * Translations for: Bulgarian, German, Spanish, Mexican Spanish, Macedonian, Dutch, Brazilian Portuguese, and Russian. 
 
