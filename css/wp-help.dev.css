@@ -21,12 +21,17 @@ div#cws-wp-help-listing h3 {
 	padding: 0;
 	}
 
+div#cws-wp-help-listing h3 i {
+	font-style: normal;
+	}
+
 div#cws-wp-help-listing h3 span a {
 	text-decoration: none;
 	float: right;
 	font-size: 12px;
 	font-weight: normal;
 	padding: 3px 4px;
+	margin-left: 5px;
 	right: -5px;
 	top: -5px;
 	position: relative;
@@ -37,10 +42,10 @@ div#cws-wp-help-listing h3 span a {
 	background: #eee;
 	}
 
-	div#cws-wp-help-listing h3 span a:hover {
-		background: #fafafa;
-		border: 1px solid #c5c5c5;
-	}
+div#cws-wp-help-listing h3 span a:hover {
+	background: #fafafa;
+	border: 1px solid #c5c5c5;
+}
 
 div#cws-wp-help-listing ul {
 	margin: 5px 5px 5px 15px;
@@ -49,13 +54,50 @@ div#cws-wp-help-listing ul {
 
 div#cws-wp-help-listing > ul {
 	margin: 10px 5px 10px 20px;
-}
+	}
 
 div#cws-wp-help-listing ul ul {
 	list-style: square;
 	}
 
-div#cws-wp-help-document {
+div#cws-wp-help-document, div#cws-wp-help-settings {
 	max-width: 600px;
 	padding-left: 300px;
+	}
+
+div#cws-wp-help-settings, #cws-wp-help-listing-labels, #cws-wp-help-h2-label-wrap {
+	display: none;
+	}
+
+#cws-wp-help-listing-labels {
+	margin-bottom: -10px;
+	}
+
+input#cws-wp-help-listing-label {
+	font-family: sans-serif;
+	font-size: 14px;
+	font-weight: bold;
+	position: relative;
+	left: -6px;
+	top: -5px;
+	border: 1px dashed #dfdfdf;
+	width: 258px;
+	}
+
+#cws-wp-help-h2-label-wrap {
+	margin-bottom: -4px;
+	}
+
+input#cws-wp-help-h2-label {
+	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", sans-serif;
+	font-size: 23px;
+	color: #464646;
+	text-shadow: white 0 1px 0;
+	line-height: 29px;
+	position: relative;
+	top: -4px;
+	left: -5px;
+	margin: 9px 15px 0 0;
+	border: 1px dashed #dfdfdf;
+	width: 450px;
 	}

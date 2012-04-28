@@ -2,7 +2,7 @@
 /*
 Plugin Name: WP Help
 Description: Administrators can create detailed, hierarchical documentation for the site's authors and editors, viewable in the WordPress admin.
-Version: 0.3
+Version: 0.4-beta-1
 License: GPL
 Plugin URI: http://txfx.net/wordpress-plugins/wp-help/
 Author: Mark Jaquith
@@ -30,7 +30,9 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 class CWS_WP_Help_Plugin {
 	public static $instance;
+	private $options;
 	const default_doc = 'cws_wp_help_default_doc';
+	const OPTION = 'cws_wp_help';
 
 	public function __construct() {
 		self::$instance = $this;
@@ -38,6 +40,16 @@ class CWS_WP_Help_Plugin {
 	}
 
 	public function init() {
+		// Options
+		$this->options = get_option( self::OPTION );
+		if ( !$this->options ) {
+			add_option( self::OPTION, array(
+				'h2' => _x( 'Publishing Help', 'h2 default title', 'wp-help' ),
+				'h3' => _x( 'Help Topics', 'h3 default title', 'wp-help' ),
+				'key' => md5( wp_generate_password( 128, true, true ) ),
+			) );
+		}
+
 		// Translations
 		load_plugin_textdomain( 'wp-help', false, basename( dirname( __FILE__ ) ) . '/languages' );
 
@@ -48,6 +60,7 @@ class CWS_WP_Help_Plugin {
 		add_filter( 'post_type_link', array( $this, 'page_link' ), 10, 2 );
 		add_filter( 'post_updated_messages', array( $this, 'post_updated_messages' ) );
 		add_action( 'admin_init', array( $this, 'ajax_listener' ) );
+		add_action( 'wp_ajax_cws_wp_help_settings', array( $this, 'ajax_settings' ) );
 
 		// Register the wp-help post type
 		register_post_type( 'wp-help',
@@ -87,6 +100,26 @@ class CWS_WP_Help_Plugin {
 		);
 	}
 
+	private function get_option( $key ) {
+		return isset( $this->options[$key] ) ? $this->options[$key] : false;
+	}
+
+	private function update_options( $options ) {
+		$this->options = $options;
+		update_option( self::OPTION, $options );
+	}
+
+	public function ajax_settings() {
+		if ( isset( $_POST['nonce'] ) && wp_verify_nonce( $_POST['nonce'], 'cws-wp-help-settings' ) ) {
+			$this->options['h2'] = stripslashes( $_POST['h2'] );
+			$this->options['h3'] = stripslashes( $_POST['h3'] );
+			$this->update_options( $this->options );
+			die( '1' );
+		} else {
+			die( '-1' );
+		}
+	}
+
 	public function ajax_listener() {
 		if ( !defined( 'DOING_AJAX' ) || !DOING_AJAX || !isset( $_POST['action'] ) || 'wp-link-ajax' != $_POST['action'] )
 			return;
@@ -118,7 +151,7 @@ class CWS_WP_Help_Plugin {
 	}
 
 	public function admin_menu() {
-		$hook = add_dashboard_page( _x( 'Publishing Help', 'page title', 'wp-help' ), _x( 'Publishing Help', 'menu title', 'wp-help' ), 'publish_posts', 'wp-help-documents', array( $this, 'render_listing_page' ) );
+		$hook = add_dashboard_page( $this->get_option( 'h2' ), $this->get_option( 'h2' ), 'publish_posts', 'wp-help-documents', array( $this, 'render_listing_page' ) );
 		add_action( "load-{$hook}", array( $this, 'enqueue' ) );
 	}
 
@@ -168,7 +201,8 @@ class CWS_WP_Help_Plugin {
 
 	public function enqueue() {
 		$suffix = defined ('SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '.dev' : '';
-		wp_enqueue_style( 'cws-wp-help', plugins_url( "css/wp-help$suffix.css", __FILE__ ), array(), '20110518b' );
+		wp_enqueue_style( 'cws-wp-help', plugins_url( "css/wp-help$suffix.css", __FILE__ ), array(), '20120427' );
+		wp_enqueue_script( 'cws-wp-help', plugins_url( "js/wp-help$suffix.js", __FILE__ ), array( 'jquery' ), '20120427' );
 		do_action( 'cws_wp_help_load' ); // Use this to enqueue your own styles for things like shortcodes.
 	}
 
@@ -194,33 +228,8 @@ class CWS_WP_Help_Plugin {
 			</style>
 		<?php endif; ?>
 <div class="wrap">
-	<?php screen_icon(); ?><h2><?php _ex( 'Publishing Help', 'h2 title', 'wp-help' ); ?></h2>
-<?php $pages = $this->get_help_topics_html(); ?>
-<?php if ( trim( $pages ) ) : ?>
-<div id="cws-wp-help-listing">
-<h3><?php _e( 'Help Topics', 'wp-help' ); ?><?php if ( current_user_can( 'publish_pages' ) ) : ?><span><a href="<?php echo admin_url( 'edit.php?post_type=wp-help' ); ?>"><?php _ex( 'Manage', 'verb. Button with limited space', 'wp-help' ); ?></a></span><?php endif; ?></h3>
-<ul>
-<?php echo $pages; ?>
-</ul>
-</div>
-<div id="cws-wp-help-document">
-<?php if ( $document_id ) : ?>
-	<?php $document = new WP_Query( array( 'post_type' => 'wp-help', 'p' => $document_id ) ); ?>
-	<?php if ( $document->have_posts() ) : $document->the_post(); ?>
-		<h2><?php the_title(); ?></h2>
-		<?php the_content(); ?>
-	<?php else : ?>
-	<p><?php _e( 'The requested help document could not be found', 'wp-help' ); ?>
-	<?php endif; ?>
-<?php endif; ?>
-</div>
-<?php else : ?>
-	<?php if ( current_user_can( 'manage_options' ) ) : ?>
-		<p><?php printf( __( 'No published help documents found. <a href="%s">Manage Help Documents</a>.', 'wp-help' ), admin_url( 'edit.php?post_type=wp-help' ) ); ?></p>
-	<?php else : ?>
-		<p><?php _e( 'No help documents found. Contact the site administrator.', 'wp-help' ); ?></p>
-	<?php endif; ?>
-<?php endif; ?>
+	<?php screen_icon(); ?><div id="cws-wp-help-h2-label-wrap"><input type="text" id="cws-wp-help-h2-label" value="<?php echo esc_attr( $this->get_option( 'h2' ) ); ?>" /></div><h2><?php echo esc_html( $this->get_option( 'h2' ) ); ?></h2>
+	<?php include( dirname( __FILE__ ) . '/templates/list-documents.php' ); ?>
 </div>
 <?php
 	}
