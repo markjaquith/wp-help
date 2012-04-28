@@ -98,6 +98,46 @@ class CWS_WP_Help_Plugin {
 				)
 			)
 		);
+
+		// Check for API requests
+		if ( isset( $_REQUEST['wp-help-key'] ) && $this->get_option( 'key' ) == $_REQUEST['wp-help-key'] )
+			$this->api_request();
+	}
+
+	private function api_slurp(){
+		// WORK IN PROGRESS
+		$result = wp_remote_get( $this->get_option( 'slurp_url' ) );
+		if ( $result['response']['code'] == 200 ) {
+			// Yay
+			// To do: process the result
+			// To do: ask only for things that have changed (maybe?)
+			// get_post_by_guid() for helping to stitch post_parents together
+		}
+	}
+
+	private function api_request() {
+		die( json_encode( $this->get_topics_for_api() ) );
+	}
+
+	private function get_post_by_guid( $guid ) {
+		global $wpdb;
+		return $wpdb->get_var( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE guid = %s LIMIT 1;", $guid ) );
+	}
+
+	private function get_topics_for_api() {
+		// To do: convert local doc links into GUID shortcodes that the slurping site can process
+		$topics = new WP_Query( array( 'post_type' => 'wp-help', 'posts_per_page' => -1, 'post_status' => 'publish' ) );
+		$id_to_guid = array();
+		foreach ( $topics->posts as $k => $post ) {
+			$id_to_guid[$post->ID] = $post->guid;
+		}
+		foreach ( $topics->posts as $k => $post ) {
+			$c =& $topics->posts[$k];
+			if ( $post->post_parent )
+				$c->post_parent_guid = $id_to_guid[$post->post_parent];
+			unset( $c->post_parent, $c->post_author, $c->comment_count, $c->post_mime_type, $c->post_status, $c->post_type, $c->pinged, $c->to_ping, $c->menu_order, $c->filter, $c->ping_status, $c->comment_status, $c->post_password );
+		}
+		return $topics->posts;
 	}
 
 	private function get_option( $key ) {
