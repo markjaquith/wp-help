@@ -109,12 +109,27 @@ class CWS_WP_Help_Plugin {
 		update_option( self::OPTION, $options );
 	}
 
+	private function api_url() {
+		return home_url( '/?wp-help-key=' . $this->get_option( 'key' ) );
+	}
+
 	public function ajax_settings() {
 		if ( isset( $_POST['nonce'] ) && wp_verify_nonce( $_POST['nonce'], 'cws-wp-help-settings' ) ) {
+			$error = false;
 			$this->options['h2'] = stripslashes( $_POST['h2'] );
 			$this->options['h3'] = stripslashes( $_POST['h3'] );
+			$slurp_url = esc_url_raw( stripslashes( $_POST['slurp_url'] ) );
+			if ( $slurp_url === $this->api_url() )
+				$error = __( 'What are you doing? You&#8217;re going to create an infinite loop!' );
+			elseif ( strpos( $slurp_url, '?wp-help-key=' ) === false )
+				$error = __( 'That is not a WP Help URL. Make sure you copied it correctly.' );
+			else
+				$this->options['slurp_url'] = $slurp_url;
 			$this->update_options( $this->options );
-			die( '1' );
+			die( json_encode( array( 
+				'slurp_url' => $this->options['slurp_url'],
+				'error' => $error
+			) ) );
 		} else {
 			die( '-1' );
 		}

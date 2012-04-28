@@ -6,6 +6,16 @@
 				return $('#cws-wp-help-' + i);
 			},
 			init: function() {
+				// Clicking the source API URI
+				data.apiURL.click( function(){
+					this.select();
+				});
+
+				// Clicking the "Save Changes" button
+				data.saveButton.click( function() {
+					api.saveSettings();
+				});
+
 				// Clicking the "Settings" button
 				data.settingsButton.click( function(e) {
 					e.preventDefault();
@@ -46,7 +56,7 @@
 				hide.hide();
 				show.show();
 			},
-			revealSettings: function( autofocus ) {
+			revealSettings: function(autofocus) {
 				$([ data.h2, data.h3 ]).each( function() {
 					api.hideShow( this.display.wrap, this.edit.wrap );					
 				});
@@ -58,6 +68,7 @@
 				}
 			},
 			saveSettings: function() {
+				api.clearError();
 				$([ data.h2, data.h3 ]).each( function() {
 					this.display.text.text( this.edit.input.val() );
 				});
@@ -65,14 +76,29 @@
 					action: 'cws_wp_help_settings',
 					nonce: $('#_cws_wp_help_nonce').val(),
 					h2: data.h2.edit.input.val(),
-					h3: data.h3.edit.input.val()
-				}, api.hideSettings);
+					h3: data.h3.edit.input.val(),
+					slurp_url: data.slurp.val()
+				}, function(result) {
+					result = $.parseJSON( result );
+					data.slurp.val( result.slurp_url );
+					if ( result.error ) {
+						api.error( result.error );
+					} else {
+						api.hideSettings();
+					}
+				});
 			},
 			hideSettings: function() {
 				$([ data.h2, data.h3 ]).each( function() {
 					api.hideShow( this.edit.wrap, this.display.wrap );
 				});
 				api.fadeOutIn( data.settings, data.doc );
+			},
+			clearError: function(){
+				data.slurpError.html('').hide();
+			},
+			error: function(msg){
+				data.slurpError.html( '<p>' + msg + '</p>' ).fadeIn(150);
 			}
 		};
 
@@ -101,6 +127,10 @@
 			menu: $( '#adminmenu a.current' ),
 			doc: api.p( 'document' ),
 			settings: api.p( 'settings' ),
+			apiURL: api.p( 'api-url' ),
+			slurp: api.p( 'slurp-url' ),
+			slurpError: api.p( 'slurp-error' ),
+			saveButton: api.p( 'settings-save' ),
 			labels: $( '#cws-wp-help-listing-label, #cws-wp-help-h2-label' ),
 		};
 

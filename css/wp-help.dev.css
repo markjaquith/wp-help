@@ -101,3 +101,19 @@ input#cws-wp-help-h2-label {
 	border: 1px dashed #dfdfdf;
 	width: 450px;
 	}
+
+input#cws-wp-help-api-url, input#cws-wp-help-slurp-url {
+	width: 100%;
+	}
+
+#cws-wp-help-slurp-error {
+	display: none;
+	margin: 5px 0 15px;
+	background: #FFEBE8;
+	border-color: #CC0000;
+	padding: 0 0.6em;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	border-width: 1px;
+	border-style: solid;
+	}
