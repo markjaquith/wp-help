@@ -35,7 +35,7 @@
 				});
 
 				// Monitor for "return" presses in our text inputs
-				data.labels.bind( 'keydown', function(e) {
+				data.returnMonitor.bind( 'keydown', function(e) {
 					if ( 13 == e.which ) {
 						$( this ).blur();
 						api.saveSettings();
@@ -83,6 +83,7 @@
 					data.slurp.val( result.slurp_url );
 					if ( result.error ) {
 						api.error( result.error );
+						data.slurp.focus();
 					} else {
 						api.hideSettings();
 					}
@@ -131,7 +132,7 @@
 			slurp: api.p( 'slurp-url' ),
 			slurpError: api.p( 'slurp-error' ),
 			saveButton: api.p( 'settings-save' ),
-			labels: $( '#cws-wp-help-listing-label, #cws-wp-help-h2-label' ),
+			returnMonitor: $( '.wrap input[type="text"]' ),
 		};
 
 		// Bootstrap everything
