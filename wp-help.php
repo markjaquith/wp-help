@@ -31,8 +31,10 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 class CWS_WP_Help_Plugin {
 	public static $instance;
 	private $options;
+	private $admin_base = '';
 	const default_doc = 'cws_wp_help_default_doc';
 	const OPTION = 'cws_wp_help';
+	const MENU_SLUG = 'wp-help-documents';
 
 	public function __construct() {
 		self::$instance = $this;
@@ -61,6 +63,15 @@ class CWS_WP_Help_Plugin {
 		add_filter( 'post_updated_messages', array( $this, 'post_updated_messages' ) );
 		add_action( 'admin_init', array( $this, 'ajax_listener' ) );
 		add_action( 'wp_ajax_cws_wp_help_settings', array( $this, 'ajax_settings' ) );
+		if ( 'dashboard-submenu' != $this->get_option( 'menu_location' ) ) {
+			$this->admin_base = 'admin.php';
+			if ( 'bottom' != $this->get_option( 'menu_location' ) ) {
+				add_filter( 'custom_menu_order', '__return_true' );
+				add_filter( 'menu_order', array( $this, 'menu_order' ) );
+			}
+		} else {
+			$this->admin_base = 'index.php';
+		}
 
 		// Register the wp-help post type
 		register_post_type( 'wp-help',
@@ -140,6 +151,22 @@ class CWS_WP_Help_Plugin {
 		return $topics->posts;
 	}
 
+	public function menu_order( $menu ) {
+		$custom_order = array();
+		foreach ( $menu as $index => $item ) {
+			if ( 'index.php' == $item ) {
+				if ( 'below-dashboard' == $this->get_option( 'menu_location' ) )
+					$custom_order[] = 'index.php';
+				$custom_order[] = self::MENU_SLUG;
+				if ( 'above-dashboard' == $this->get_option( 'menu_location' ) )
+					$custom_order[] = 'index.php';
+			} elseif ( self::MENU_SLUG != $item ) {
+				$custom_order[] = $item;
+			}
+		}
+		return $custom_order;
+	}
+
 	private function get_option( $key ) {
 		return isset( $this->options[$key] ) ? $this->options[$key] : false;
 	}
@@ -156,8 +183,10 @@ class CWS_WP_Help_Plugin {
 	public function ajax_settings() {
 		if ( isset( $_POST['nonce'] ) && wp_verify_nonce( $_POST['nonce'], 'cws-wp-help-settings' ) ) {
 			$error = false;
+			$old_menu_location = $this->options['menu_location'];
 			$this->options['h2'] = stripslashes( $_POST['h2'] );
 			$this->options['h3'] = stripslashes( $_POST['h3'] );
+			$this->options['menu_location'] = stripslashes( $_POST['menu_location'] );
 			$slurp_url = stripslashes( $_POST['slurp_url'] );
 			if ( $slurp_url === $this->api_url() )
 				$error = __( 'What are you doing? You&#8217;re going to create an infinite loop!' );
@@ -168,10 +197,13 @@ class CWS_WP_Help_Plugin {
 			else
 				$this->options['slurp_url'] = esc_url_raw( $slurp_url );
 			$this->update_options( $this->options );
-			die( json_encode( array( 
+			$result = array( 
 				'slurp_url' => $this->options['slurp_url'],
 				'error' => $error
-			) ) );
+			);
+			if ( $old_menu_location != $this->options['menu_location'] )
+				$result['refresh'] = true;
+			die( json_encode( $result ) );
 		} else {
 			die( '-1' );
 		}
@@ -208,7 +240,10 @@ class CWS_WP_Help_Plugin {
 	}
 
 	public function admin_menu() {
-		$hook = add_dashboard_page( $this->get_option( 'h2' ), $this->get_option( 'h2' ), 'publish_posts', 'wp-help-documents', array( $this, 'render_listing_page' ) );
+		if ( 'dashboard-submenu' != $this->get_option( 'menu_location' ) )
+			$hook = add_menu_page( $this->get_option( 'h2' ), $this->get_option( 'h2' ), 'publish_posts', self::MENU_SLUG, array( $this, 'render_listing_page' ), plugin_dir_url( __FILE__ ) . '/images/icon-16.png' );
+		else
+			$hook = add_dashboard_page( $this->get_option( 'h2' ), $this->get_option( 'h2' ), 'publish_posts', self::MENU_SLUG, array( $this, 'render_listing_page' ) );
 		add_action( "load-{$hook}", array( $this, 'enqueue' ) );
 	}
 
@@ -266,7 +301,7 @@ class CWS_WP_Help_Plugin {
 	public function page_link( $link, $post ) {
 		$post = get_post( $post );
 		if ( 'wp-help' == $post->post_type )
-			return admin_url( 'index.php?page=wp-help-documents&document=' . absint( $post->ID ) );
+			return admin_url( $this->admin_base . '?page=' . self::MENU_SLUG . '&document=' . absint( $post->ID ) );
 		else
 			return $link;
 	}
@@ -285,7 +320,7 @@ class CWS_WP_Help_Plugin {
 			</style>
 		<?php endif; ?>
 <div class="wrap">
-	<?php screen_icon(); ?><div id="cws-wp-help-h2-label-wrap"><input type="text" id="cws-wp-help-h2-label" value="<?php echo esc_attr( $this->get_option( 'h2' ) ); ?>" /></div><h2><?php echo esc_html( $this->get_option( 'h2' ) ); ?></h2>
+	<?php screen_icon('wp-help'); ?><div id="cws-wp-help-h2-label-wrap"><input type="text" id="cws-wp-help-h2-label" value="<?php echo esc_attr( $this->get_option( 'h2' ) ); ?>" /></div><h2><?php echo esc_html( $this->get_option( 'h2' ) ); ?></h2>
 	<?php include( dirname( __FILE__ ) . '/templates/list-documents.php' ); ?>
 </div>
 <?php

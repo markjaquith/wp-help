@@ -77,6 +77,7 @@
 					nonce: $('#_cws_wp_help_nonce').val(),
 					h2: data.h2.edit.input.val(),
 					h3: data.h3.edit.input.val(),
+					menu_location: data.menuLocation.val(),
 					slurp_url: data.slurp.val()
 				}, function(result) {
 					result = $.parseJSON( result );
@@ -86,6 +87,15 @@
 						data.slurp.focus();
 					} else {
 						api.hideSettings();
+					}
+					if ( result.refresh ) {
+						var newLocation = String( window.location );
+						if ( data.menuLocation.val().indexOf( 'submenu' ) == -1 ) {
+							newLocation = newLocation.replace( '/index.php', '/admin.php' );
+						} else {
+							newLocation = newLocation.replace( '/admin.php', '/index.php' );
+						}
+						window.location = newLocation;
 					}
 				});
 			},
@@ -132,7 +142,8 @@
 			slurp: api.p( 'slurp-url' ),
 			slurpError: api.p( 'slurp-error' ),
 			saveButton: api.p( 'settings-save' ),
-			returnMonitor: $( '.wrap input[type="text"]' ),
+			menuLocation: api.p( 'menu-location' ),
+			returnMonitor: $( '.wrap input[type="text"]' )
 		};
 
 		// Bootstrap everything

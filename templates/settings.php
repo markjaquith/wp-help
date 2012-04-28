@@ -4,11 +4,21 @@
 
 <?php wp_nonce_field( 'cws-wp-help-settings', '_cws_wp_help_nonce', false, true ); ?>
 
-<h2><?php _e( 'WP Help Settings' ); ?></h2>
+<h2><?php _e( 'WP Help Settings', 'wp-help' ); ?></h2>
 
-<h3><?php _e( 'Headlines' ); ?></h3>
+<h3><?php _e( 'Headlines', 'wp-help' ); ?></h3>
 
 <p><?php _e( 'The main WP Help headline and document listing headline are directly editable.', 'wp-help' ); ?></p>
+
+<h3><?php _e( 'Menu Location', 'wp-help' ); ?></h3>
+
+<p><?php _e( 'Display the help documents menu item:', 'wp-help' ); ?> 
+	<select id="cws-wp-help-menu-location">
+		<option value="dashboard-submenu" <?php selected( 'dashboard-submenu', $this->get_option( 'menu_location' ) ); ?>><?php _e( 'as a Dashboard submenu' ); ?></option>
+		<option value="above-dashboard" <?php selected( 'above-dashboard', $this->get_option( 'menu_location' ) ); ?>><?php _e( 'above the Dashboard menu' ); ?></option>
+		<option value="below-dashboard" <?php selected( 'below-dashboard', $this->get_option( 'menu_location' ) ); ?>><?php _e( 'below the Dashboard menu' ); ?></option>
+		<option value="bottom" <?php selected( 'bottom', $this->get_option( 'menu_location' ) ); ?>><?php _e( 'at the bottom' ); ?></option>
+	</select></p>
 
 <h3><?php _ex( 'Sync Source', 'noun, h3 heading about synchronization', 'wp-help' ); ?></h3>
 

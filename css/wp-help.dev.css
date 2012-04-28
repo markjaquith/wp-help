@@ -117,3 +117,7 @@ input#cws-wp-help-api-url, input#cws-wp-help-slurp-url {
 	border-width: 1px;
 	border-style: solid;
 	}
+
+#icon-wp-help {
+	background: transparent url( '../images/icon-32.png' ) no-repeat;
+	}
