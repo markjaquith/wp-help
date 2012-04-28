@@ -186,7 +186,6 @@ class CWS_WP_Help_Plugin {
 			$old_menu_location = $this->options['menu_location'];
 			$this->options['h2'] = stripslashes( $_POST['h2'] );
 			$this->options['h3'] = stripslashes( $_POST['h3'] );
-			$this->options['menu_location'] = stripslashes( $_POST['menu_location'] );
 			$slurp_url = stripslashes( $_POST['slurp_url'] );
 			if ( $slurp_url === $this->api_url() )
 				$error = __( 'What are you doing? You&#8217;re going to create an infinite loop!' );
@@ -196,6 +195,8 @@ class CWS_WP_Help_Plugin {
 				$error = __( 'That is not a WP Help URL. Make sure you copied it correctly.' );
 			else
 				$this->options['slurp_url'] = esc_url_raw( $slurp_url );
+			if ( !$error )
+				$this->options['menu_location'] = stripslashes( $_POST['menu_location'] );
 			$this->update_options( $this->options );
 			$result = array( 
 				'slurp_url' => $this->options['slurp_url'],
@@ -293,8 +294,8 @@ class CWS_WP_Help_Plugin {
 
 	public function enqueue() {
 		$suffix = defined ('SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '.dev' : '';
-		wp_enqueue_style( 'cws-wp-help', plugins_url( "css/wp-help$suffix.css", __FILE__ ), array(), '20120427' );
-		wp_enqueue_script( 'cws-wp-help', plugins_url( "js/wp-help$suffix.js", __FILE__ ), array( 'jquery' ), '20120428' );
+		wp_enqueue_style( 'cws-wp-help', plugins_url( "css/wp-help$suffix.css", __FILE__ ), array(), '20120428b' );
+		wp_enqueue_script( 'cws-wp-help', plugins_url( "js/wp-help$suffix.js", __FILE__ ), array( 'jquery' ), '20120428b' );
 		do_action( 'cws_wp_help_load' ); // Use this to enqueue your own styles for things like shortcodes.
 	}
 
