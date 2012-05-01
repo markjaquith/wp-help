@@ -168,6 +168,8 @@ class CWS_WP_Help_Plugin {
 	}
 
 	private function get_option( $key ) {
+		if ( 'menu_location' == $key && isset( $_GET['wp-help-preview-menu-location'] ) )
+			return $_GET['wp-help-preview-menu-location'];
 		return isset( $this->options[$key] ) ? $this->options[$key] : false;
 	}
 
@@ -202,8 +204,6 @@ class CWS_WP_Help_Plugin {
 				'slurp_url' => $this->options['slurp_url'],
 				'error' => $error
 			);
-			if ( $old_menu_location != $this->options['menu_location'] )
-				$result['refresh'] = true;
 			die( json_encode( $result ) );
 		} else {
 			die( '-1' );
@@ -295,8 +295,17 @@ class CWS_WP_Help_Plugin {
 	public function enqueue() {
 		$suffix = defined ('SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '.dev' : '';
 		wp_enqueue_style( 'cws-wp-help', plugins_url( "css/wp-help$suffix.css", __FILE__ ), array(), '20120428b' );
-		wp_enqueue_script( 'cws-wp-help', plugins_url( "js/wp-help$suffix.js", __FILE__ ), array( 'jquery' ), '20120428b' );
+		wp_enqueue_script( 'cws-wp-help', plugins_url( "js/wp-help$suffix.js", __FILE__ ), array( 'jquery' ), '20120430' );
 		do_action( 'cws_wp_help_load' ); // Use this to enqueue your own styles for things like shortcodes.
+	}
+
+	public function maybe_just_menu() {
+		if ( isset( $_GET['wp-help-preview-menu-location'] ) )
+			add_action( 'in_admin_header', array( $this, 'kill_it' ), 0 );
+	}
+
+	public function kill_it() {
+		exit();
 	}
 
 	public function page_link( $link, $post ) {

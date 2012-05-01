@@ -7,7 +7,7 @@
 			},
 			init: function() {
 				// Clicking the source API URI
-				data.apiURL.click( function(){
+				data.apiURL.click( function() {
 					this.select();
 				});
 
@@ -23,13 +23,13 @@
 				});
 
 				// Doubleclick the h2
-				data.h2.display.text.dblclick( function(){
+				data.h2.display.text.dblclick( function() {
 					api.revealSettings();
 					data.h2.edit.input.focus();
 				});
 				
 				// Doubleclick the h3
-				data.h3.display.text.dblclick( function(){
+				data.h3.display.text.dblclick( function() {
 					api.revealSettings();
 					data.h3.edit.input.focus();
 				});
@@ -45,6 +45,21 @@
 				// Send h2 updates to the menu item as we type
 				data.h2.edit.input.bind( 'keyup', function() {
 					data.menu.text( $( this ).val() );
+				});
+
+				// Preview menu placement "live"
+				data.menuLocation.change( function() {
+					var newLocation = String( window.location ) + '&wp-help-preview-menu-location=' + data.menuLocation.val();
+					if ( data.menuLocation.val().indexOf( 'submenu' ) == -1 ) {
+						newLocation = newLocation.replace( '/index.php', '/admin.php' );
+					} else {
+						newLocation = newLocation.replace( '/admin.php', '/index.php' );
+					}
+					var commonScript = String( newLocation ).replace( /\/wp-admin\/.*$/, '/wp-admin/js/common.js' );
+					
+					$( '#adminmenu' ).load( newLocation + ' #adminmenu', function() {
+						$.getScript( commonScript ); // Makes the menu work again
+					});
 				});
 			},
 			fadeOutIn: function(first, second) {
@@ -87,15 +102,6 @@
 						data.slurp.focus();
 					} else {
 						api.hideSettings();
-					}
-					if ( result.refresh ) {
-						var newLocation = String( window.location );
-						if ( data.menuLocation.val().indexOf( 'submenu' ) == -1 ) {
-							newLocation = newLocation.replace( '/index.php', '/admin.php' );
-						} else {
-							newLocation = newLocation.replace( '/admin.php', '/index.php' );
-						}
-						window.location = newLocation;
 					}
 				});
 			},
