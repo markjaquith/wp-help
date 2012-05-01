@@ -55,15 +55,19 @@
 
 				// Preview menu placement "live"
 				data.menuLocation.change( function() {
-					var newLocation = String( window.location ) + '&wp-help-preview-menu-location=' + data.menuLocation.val();
+					var newLocation = String( window.location );
 					if ( data.menuLocation.val().indexOf( 'submenu' ) == -1 ) {
 						newLocation = newLocation.replace( '/index.php', '/admin.php' );
 					} else {
 						newLocation = newLocation.replace( '/admin.php', '/index.php' );
 					}
+					var newLocationPreview = String( newLocation ) + '&wp-help-preview-menu-location=' + data.menuLocation.val();
 					var commonScript = String( newLocation ).replace( /\/wp-admin\/.*$/, '/wp-admin/js/common.js' );
 					
-					$( '#adminmenu' ).load( newLocation + ' #adminmenu', function() {
+					$( '#adminmenu' ).load( newLocationPreview + ' #adminmenu', function() {
+						if ( window.history.replaceState ) {
+							window.history.replaceState( null, null, newLocation );
+						}
 						$.getScript( commonScript ); // Makes the menu work again
 						api.bindH2Updates(); // Makes live H2 previewing work again
 					});
@@ -148,7 +152,7 @@
 				}
 			},
 			settingsButton: api.p( 'settings-on' ),
-			menu: $( '#adminmenu a.current' ),
+			menu: function() { return $( '#adminmenu a.current' ); },
 			doc: api.p( 'document' ),
 			settings: api.p( 'settings' ),
 			apiURL: api.p( 'api-url' ),
