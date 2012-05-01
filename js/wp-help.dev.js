@@ -5,6 +5,15 @@
 			p: function(i) {
 				return $('#cws-wp-help-' + i);
 			},
+			bindH2Updates: function() {
+				// Refresh this in case we just moved the menu
+				data.menu = $( '#adminmenu a.current' );
+				data.menu.text( data.h2.edit.input.val() );
+				// Send h2 updates to the menu item as we type
+				data.h2.edit.input.bind( 'keyup', function() {
+					data.menu.text( $( this ).val() );
+				});
+			},
 			init: function() {
 				// Clicking the source API URI
 				data.apiURL.click( function() {
@@ -42,10 +51,7 @@
 					}
 				});
 
-				// Send h2 updates to the menu item as we type
-				data.h2.edit.input.bind( 'keyup', function() {
-					data.menu.text( $( this ).val() );
-				});
+				api.bindH2Updates();
 
 				// Preview menu placement "live"
 				data.menuLocation.change( function() {
@@ -59,6 +65,7 @@
 					
 					$( '#adminmenu' ).load( newLocation + ' #adminmenu', function() {
 						$.getScript( commonScript ); // Makes the menu work again
+						api.bindH2Updates(); // Makes live H2 previewing work again
 					});
 				});
 			},
