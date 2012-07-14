@@ -157,7 +157,7 @@ class CWS_WP_Help_Plugin {
 				}
 			}
 			// Delete any abandoned posts
-			$topics = new WP_Query( array( 'post_type' => 'wp-help', 'posts_per_page' => -1, 'post_status' => 'any' ) );
+			$topics = new WP_Query( array( 'post_type' => 'wp-help', 'posts_per_page' => -1, 'post_status' => 'any', 'meta_key' => 'cws_wp_help_slurp_id' ) );
 			if ( $topics->posts ) {
 				foreach ( $topics->posts as $p ) {
 					if ( $source_id = get_post_meta( $p->ID, 'cws_wp_help_slurp_id', true ) ) {
@@ -169,7 +169,19 @@ class CWS_WP_Help_Plugin {
 					}
 				}
 			}
-			// TODO Reparenting
+			// TODO Reparenting and link fixing
+			$topics = new WP_Query( array( 'post_type' => 'wp-help', 'posts_per_page' => -1, 'post_status' => 'any', 'meta_key' => 'cws_wp_help_slurp_id' ) );	
+			if ( $topics->posts ) {
+				foreach ( $topics->posts as $p ) {
+					// Quick string check first
+					if ( strpos( $p->post_content, 'wp-help-link:' ) === false )
+						continue;
+					$new_content = $this->make_links_local( $p->post_content );
+					if ( $new_content !== $p->post_content ) {
+						wp_update_post( array( 'ID' => $p->ID, 'post_content' => $new_content ) );
+					}
+				}
+			}
 		}
 	}
 
@@ -186,6 +198,17 @@ class CWS_WP_Help_Plugin {
 
 	private function convert_links( $content ) {
 		return preg_replace_callback( '#href=(["\'])([^\\1]+)\\1#', array( $this, 'convert_links_cb' ), $content );
+	}
+
+	public function make_links_local_cb( $matches ) {
+		global $wpdb;
+		$local_id = $wpdb->get_var( $wpdb->prepare( "SELECT post_id FROM $wpdb->postmeta WHERE meta_key='cws_wp_help_slurp_id' AND meta_value = %s", $matches[2] ) );
+		return 'href=' . $matches[1] . get_permalink( $local_id ) . $matches[1];
+		return $matches[0];
+	}
+
+	private function make_links_local( $content ) {
+		return preg_replace_callback( '#href=(["\'])wp-help-link:([^\\1]+)\\1#', array( $this, 'make_links_local_cb' ), $content );
 	}
 
 	private function get_topics_for_api() {
