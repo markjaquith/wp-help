@@ -62,6 +62,7 @@ class CWS_WP_Help_Plugin {
 
 		// Actions and filters
 		add_action( self::CRON_HOOK, array( $this, 'api_slurp' ) );
+		add_filter( 'map_meta_cap', array( $this, 'map_meta_cap'), 10, 4 );
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 		add_action( 'do_meta_boxes', array( $this, 'do_meta_boxes' ), 20, 2 );
 		add_action( 'save_post', array( $this, 'save_post' ) );
@@ -94,8 +95,8 @@ class CWS_WP_Help_Plugin {
 					'edit_others_posts' => 'manage_options',
 					'delete_posts' => 'manage_options',
 					'read_private_posts' => 'manage_options',
-					'edit_post' => 'manage_options',
-					'delete_post' => 'manage_options',
+					'edit_post' => 'wp_help_meta_cap',
+					'delete_post' => 'wp_help_meta_cap',
 					'read_post' => 'read'
 				),
 				'labels' => array (
@@ -122,6 +123,17 @@ class CWS_WP_Help_Plugin {
 
 		// Debug:
 		// $this->api_slurp();
+	}
+
+	public function map_meta_cap( $caps, $cap, $user_id, $args ) {
+		if ( $cap === 'wp_help_meta_cap' ) {
+			// If this belongs to the currently connected slurp source, disallow editing
+			if ( $this->get_slurp_source_key() === get_post_meta( $args[0], 'cws_wp_help_slurp_source', true ) )
+				$caps = array( 'do_not_allow' );
+			else
+				$caps = array( 'manage_options' );
+		}
+		return $caps;
 	}
 
 	private function get_slurp_source_key() {
