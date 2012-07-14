@@ -148,6 +148,8 @@ class CWS_WP_Help_Plugin {
 				$p['post_type'] = 'wp-help';
 				$p['post_status'] = 'publish';
 				$copy = $p;
+				if ( isset( $copy['default'] ) )
+					update_option( self::default_doc, $copy['ID'] );
 				if ( isset( $source_id_to_local_id[$p['ID']] ) ) {
 					// Exists. We know the local ID.
 					$copy['ID'] = $source_id_to_local_id[$p['ID']];
@@ -231,16 +233,15 @@ class CWS_WP_Help_Plugin {
 
 	private function get_topics_for_api() {
 		$topics = new WP_Query( array( 'post_type' => 'wp-help', 'posts_per_page' => -1, 'post_status' => 'publish' ) );
+		$default_doc = get_option( self::default_doc );
 		foreach ( $topics->posts as $k => $post ) {
 			$c =& $topics->posts[$k];
-			/*
-			if ( $post->post_parent )
-				$c->post_parent_guid = $id_to_guid[$post->post_parent];
-			*/
 			unset( $c->guid, $c->post_author, $c->comment_count, $c->post_mime_type, $c->post_status, $c->post_type, $c->pinged, $c->to_ping, $c->menu_order, $c->filter, $c->ping_status, $c->comment_status, $c->post_password );
 			if ( !$c->post_parent ) // If it doesn't exist, we'll assume 0
 				unset( $c->post_parent );
 			$c->post_content = $this->convert_links( $c->post_content );
+			if ( $c->ID == $default_doc )
+				$c->default = true;
 		}
 		return $topics->posts;
 	}
