@@ -121,28 +121,60 @@ class CWS_WP_Help_Plugin {
 
 	private function api_slurp(){
 		// WORK IN PROGRESS
-		$result = wp_remote_get( $this->get_option( 'slurp_url' ) );
+		$result = wp_remote_get( add_query_arg( 'time', time(), $this->get_option( 'slurp_url' ) ) );
 		if ( $result['response']['code'] == 200 ) {
+			$topics = new WP_Query( array( 'post_type' => 'wp-help', 'posts_per_page' => -1, 'post_status' => 'any' ) );
+			$source_id_to_local_id = array();
+			if ( $topics->posts ) {
+				foreach ( $topics->posts as $p ) {
+					if ( $source_id = get_post_meta( $p->ID, 'cws_wp_help_slurp_id', true ) )
+						$source_id_to_local_id[$source_id] = $p->ID;
+				}
+			}
 			$posts = json_decode( $result['body'] );
-			// Get our local posts
+			$source_post_ids = array();
+			// First pass: just insert whatever is missing, without fixing post_parent_id
 			foreach ( $posts as $p ) {
 				$p = (array) $p;
+				$source_post_ids[absint( $p['ID'] )] = absint( $p['ID'] );
+				// These things are implied in the API, but we need to set them before inserting locally
+				$p['post_type'] = 'wp-help';
+				$p['post_status'] = 'publish';
+				$copy = $p;
+				if ( isset( $source_id_to_local_id[$p['ID']] ) ) {
+					// Exists. We know the local ID.
+					$copy['ID'] = $source_id_to_local_id[$p['ID']];
+					wp_update_post( $copy );
+				} else {
+					// This is new. Insert it.
+					unset( $copy['ID'] );
+					$new_local_id = wp_insert_post( $copy );
 
-				var_dump( $p ); die();
+					// Update our lookup table
+					$source_id_to_local_id[$p['ID']] = $new_local_id;
+					// Update postmeta
+					update_post_meta( $new_local_id, 'cws_wp_help_slurp_id', absint( $p['ID'] ) );
+				}
 			}
-			// Yay
-			// To do: process the result
-			// To do: ask only for things that have changed (maybe?)
+			// Delete any abandoned posts
+			$topics = new WP_Query( array( 'post_type' => 'wp-help', 'posts_per_page' => -1, 'post_status' => 'any' ) );
+			if ( $topics->posts ) {
+				foreach ( $topics->posts as $p ) {
+					if ( $source_id = get_post_meta( $p->ID, 'cws_wp_help_slurp_id', true ) ) {
+						// This was slurped. Was it absent from the API response?
+						if ( !isset( $source_post_ids[absint($source_id)] ) ) {
+							// Wasn't in the response. Delete it.
+							wp_delete_post( $p->ID );
+						}
+					}
+				}
+			}
+			// TODO Reparenting
 		}
 	}
 
 	private function api_request() {
 		die( json_encode( $this->get_topics_for_api() ) );
-	}
-
-	private function get_post_by_guid( $guid ) {
-		global $wpdb;
-		return $wpdb->get_var( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE guid = %s LIMIT 1;", $guid ) );
 	}
 
 	public function convert_links_cb( $matches ) {
@@ -158,12 +190,6 @@ class CWS_WP_Help_Plugin {
 
 	private function get_topics_for_api() {
 		$topics = new WP_Query( array( 'post_type' => 'wp-help', 'posts_per_page' => -1, 'post_status' => 'publish' ) );
-		/*
-		$id_to_guid = array();
-		foreach ( $topics->posts as $k => $post ) {
-			$id_to_guid[$post->ID] = $post->guid;
-		}
-		*/
 		foreach ( $topics->posts as $k => $post ) {
 			$c =& $topics->posts[$k];
 			/*
