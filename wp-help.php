@@ -119,21 +119,24 @@ class CWS_WP_Help_Plugin {
 			$this->api_slurp();
 	}
 
+	private function get_slurp_source_key() {
+		return substr( md5( $this->get_option( 'slurp_url' ) ), 0, 8 );
+	}
+
 	private function api_slurp(){
-		// WORK IN PROGRESS
 		$result = wp_remote_get( add_query_arg( 'time', time(), $this->get_option( 'slurp_url' ) ) );
 		if ( $result['response']['code'] == 200 ) {
-			$topics = new WP_Query( array( 'post_type' => 'wp-help', 'posts_per_page' => -1, 'post_status' => 'any' ) );
+			$topics = new WP_Query( array( 'post_type' => 'wp-help', 'posts_per_page' => -1, 'post_status' => 'publish' ) );
 			$source_id_to_local_id = array();
 			if ( $topics->posts ) {
 				foreach ( $topics->posts as $p ) {
-					if ( $source_id = get_post_meta( $p->ID, 'cws_wp_help_slurp_id', true ) )
+					if ( $this->get_slurp_source_key() === get_post_meta( $p->ID, 'cws_wp_help_slurp_source', true ) && $source_id = get_post_meta( $p->ID, 'cws_wp_help_slurp_id', true ) )
 						$source_id_to_local_id[$source_id] = $p->ID;
 				}
 			}
 			$posts = json_decode( $result['body'] );
 			$source_post_ids = array();
-			// First pass: just insert whatever is missing, without fixing post_parent_id
+			// First pass: just insert whatever is missing, without fixing post_parent
 			foreach ( $posts as $p ) {
 				$p = (array) $p;
 				$source_post_ids[absint( $p['ID'] )] = absint( $p['ID'] );
@@ -154,6 +157,7 @@ class CWS_WP_Help_Plugin {
 					$source_id_to_local_id[$p['ID']] = $new_local_id;
 					// Update postmeta
 					update_post_meta( $new_local_id, 'cws_wp_help_slurp_id', absint( $p['ID'] ) );
+					update_post_meta( $new_local_id, 'cws_wp_help_slurp_source', $this->get_slurp_source_key() );
 				}
 			}
 			// Delete any abandoned posts
@@ -161,24 +165,30 @@ class CWS_WP_Help_Plugin {
 			if ( $topics->posts ) {
 				foreach ( $topics->posts as $p ) {
 					if ( $source_id = get_post_meta( $p->ID, 'cws_wp_help_slurp_id', true ) ) {
-						// This was slurped. Was it absent from the API response?
-						if ( !isset( $source_post_ids[absint($source_id)] ) ) {
+						// This was slurped. Was it absent from the API response? Or was it from a different source?
+						if ( $this->get_slurp_source_key() !== get_post_meta( $p->ID, 'cws_wp_help_slurp_source', true ) || !isset( $source_post_ids[absint($source_id)] ) ) {
 							// Wasn't in the response. Delete it.
 							wp_delete_post( $p->ID );
 						}
 					}
 				}
 			}
-			// TODO Reparenting and link fixing
-			$topics = new WP_Query( array( 'post_type' => 'wp-help', 'posts_per_page' => -1, 'post_status' => 'any', 'meta_key' => 'cws_wp_help_slurp_id' ) );	
+			// Reparenting and link fixing
+			$topics = new WP_Query( array( 'post_type' => 'wp-help', 'posts_per_page' => -1, 'post_status' => 'publish', 'meta_key' => 'cws_wp_help_slurp_id' ) );	
 			if ( $topics->posts ) {
 				foreach ( $topics->posts as $p ) {
-					// Quick string check first
-					if ( strpos( $p->post_content, 'wp-help-link:' ) === false )
-						continue;
-					$new_content = $this->make_links_local( $p->post_content );
-					if ( $new_content !== $p->post_content ) {
-						wp_update_post( array( 'ID' => $p->ID, 'post_content' => $new_content ) );
+					$new = array();
+					if ( strpos( $p->post_content, 'wp-help-link:' ) !== false ) {
+						$new['post_content'] = $this->make_links_local( $p->post_content );
+						if ( $new['post_content'] === $p->post_content )
+							unset( $new['post_content'] );
+					}
+					$new['post_parent'] = $this->local_id_from_slurp_id( $p->post_parent );
+					if ( $new['post_parent'] === $p->post_parent )
+						unset( $new['post_parent'] );
+					if ( $new ) {
+						$new['ID'] = $p->ID;
+						wp_update_post( $new );
 					}
 				}
 			}
@@ -201,14 +211,18 @@ class CWS_WP_Help_Plugin {
 	}
 
 	public function make_links_local_cb( $matches ) {
-		global $wpdb;
-		$local_id = $wpdb->get_var( $wpdb->prepare( "SELECT post_id FROM $wpdb->postmeta WHERE meta_key='cws_wp_help_slurp_id' AND meta_value = %s", $matches[2] ) );
+		$local_id = $this->local_id_from_slurp_id( $matches[2] );
 		return 'href=' . $matches[1] . get_permalink( $local_id ) . $matches[1];
 		return $matches[0];
 	}
 
 	private function make_links_local( $content ) {
 		return preg_replace_callback( '#href=(["\'])wp-help-link:([^\\1]+)\\1#', array( $this, 'make_links_local_cb' ), $content );
+	}
+
+	private function local_id_from_slurp_id( $id ) {
+		global $wpdb;
+		return $wpdb->get_var( $wpdb->prepare( "SELECT post_id FROM $wpdb->postmeta WHERE meta_key='cws_wp_help_slurp_id' AND meta_value = %s", $id ) );
 	}
 
 	private function get_topics_for_api() {
