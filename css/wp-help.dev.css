@@ -69,6 +69,14 @@ div#cws-wp-help-settings, #cws-wp-help-listing-labels, #cws-wp-help-h2-label-wra
 	display: none;
 	}
 
+div#cws-wp-help-settings ul {
+	padding-left: 25px;
+}
+
+div#cws-wp-help-settings li {
+	list-style: square;
+}
+
 #cws-wp-help-listing-labels {
 	margin-bottom: -10px;
 	}
