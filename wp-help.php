@@ -123,7 +123,9 @@ class CWS_WP_Help_Plugin {
 		return substr( md5( $this->get_option( 'slurp_url' ) ), 0, 8 );
 	}
 
-	private function api_slurp(){
+	private function api_slurp() {
+		if ( !$this->get_option( 'slurp_url' ) )
+			return;
 		$result = wp_remote_get( add_query_arg( 'time', time(), $this->get_option( 'slurp_url' ) ) );
 		if ( $result['response']['code'] == 200 ) {
 			$topics = new WP_Query( array( 'post_type' => 'wp-help', 'posts_per_page' => -1, 'post_status' => 'publish' ) );
