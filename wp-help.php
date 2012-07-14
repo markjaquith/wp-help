@@ -119,6 +119,9 @@ class CWS_WP_Help_Plugin {
 		// Check for API requests
 		if ( isset( $_REQUEST['wp-help-key'] ) && $this->get_option( 'key' ) === $_REQUEST['wp-help-key'] )
 			$this->api_request();
+
+		// Debug:
+		// $this->api_slurp();
 	}
 
 	private function get_slurp_source_key() {
@@ -148,8 +151,6 @@ class CWS_WP_Help_Plugin {
 				$p['post_type'] = 'wp-help';
 				$p['post_status'] = 'publish';
 				$copy = $p;
-				if ( isset( $copy['default'] ) )
-					update_option( self::default_doc, $copy['ID'] );
 				if ( isset( $source_id_to_local_id[$p['ID']] ) ) {
 					// Exists. We know the local ID.
 					$copy['ID'] = $source_id_to_local_id[$p['ID']];
@@ -164,6 +165,13 @@ class CWS_WP_Help_Plugin {
 					// Update postmeta
 					update_post_meta( $new_local_id, 'cws_wp_help_slurp_id', absint( $p['ID'] ) );
 					update_post_meta( $new_local_id, 'cws_wp_help_slurp_source', $this->get_slurp_source_key() );
+				}
+			}
+			// Set the default document
+			foreach ( $posts as $p ) {
+				if ( isset( $p->default ) && isset( $source_id_to_local_id[ $p->ID ] ) ) {
+					update_option( self::default_doc, $source_id_to_local_id[ $p->ID ] );
+					break;
 				}
 			}
 			// Delete any abandoned posts
@@ -218,7 +226,8 @@ class CWS_WP_Help_Plugin {
 
 	public function make_links_local_cb( $matches ) {
 		$local_id = $this->local_id_from_slurp_id( $matches[2] );
-		return 'href=' . $matches[1] . get_permalink( $local_id ) . $matches[1];
+		if ( $local_id )
+			return 'href=' . $matches[1] . get_permalink( absint( $local_id ) ) . $matches[1];
 		return $matches[0];
 	}
 
