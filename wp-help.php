@@ -43,13 +43,13 @@ class CWS_WP_Help_Plugin {
 
 	public function init() {
 		// Options
-		$this->options = get_option( self::OPTION );
-		if ( !$this->options ) {
+		if ( ! $this->options = get_option( self::OPTION ) ) {
 			add_option( self::OPTION, array(
 				'h2' => _x( 'Publishing Help', 'h2 default title', 'wp-help' ),
 				'h3' => _x( 'Help Topics', 'h3 default title', 'wp-help' ),
 				'key' => md5( wp_generate_password( 128, true, true ) ),
 			) );
+			$this->options = get_option( self::OPTION );
 		}
 
 		// Translations
