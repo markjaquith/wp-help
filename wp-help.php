@@ -35,6 +35,7 @@ class CWS_WP_Help_Plugin {
 	const default_doc = 'cws_wp_help_default_doc';
 	const OPTION = 'cws_wp_help';
 	const MENU_SLUG = 'wp-help-documents';
+	const CRON_HOOK = 'cws_wp_help_update';
 
 	public function __construct() {
 		self::$instance = $this;
@@ -52,10 +53,15 @@ class CWS_WP_Help_Plugin {
 			$this->options = get_option( self::OPTION );
 		}
 
+		// Cron jobs
+		if ( !wp_next_scheduled( self::CRON_HOOK ) )
+			wp_schedule_event( current_time( 'timestamp' ), 'daily', self::CRON_HOOK );
+
 		// Translations
 		load_plugin_textdomain( 'wp-help', false, basename( dirname( __FILE__ ) ) . '/languages' );
 
 		// Actions and filters
+		add_action( self::CRON_HOOK, array( $this, 'api_slurp' ) );
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 		add_action( 'do_meta_boxes', array( $this, 'do_meta_boxes' ), 20, 2 );
 		add_action( 'save_post', array( $this, 'save_post' ) );
@@ -111,19 +117,15 @@ class CWS_WP_Help_Plugin {
 		);
 
 		// Check for API requests
-		if ( isset( $_REQUEST['wp-help-key'] ) && $this->get_option( 'key' ) == $_REQUEST['wp-help-key'] )
+		if ( isset( $_REQUEST['wp-help-key'] ) && $this->get_option( 'key' ) === $_REQUEST['wp-help-key'] )
 			$this->api_request();
-
-		// Slurps are manual for now, while in development
-		if ( isset( $_REQUEST['wp-help-slurp'] ) )
-			$this->api_slurp();
 	}
 
 	private function get_slurp_source_key() {
 		return substr( md5( $this->get_option( 'slurp_url' ) ), 0, 8 );
 	}
 
-	private function api_slurp() {
+	public function api_slurp() {
 		if ( !$this->get_option( 'slurp_url' ) )
 			return;
 		$result = wp_remote_get( add_query_arg( 'time', time(), $this->get_option( 'slurp_url' ) ) );
@@ -292,6 +294,8 @@ class CWS_WP_Help_Plugin {
 			if ( !$error )
 				$this->options['menu_location'] = stripslashes( $_POST['menu_location'] );
 			$this->update_options( $this->options );
+			// Force an update in the background
+			wp_schedule_single_event( current_time( 'timestamp' ), self::CRON_HOOK );
 			$result = array( 
 				'slurp_url' => $this->options['slurp_url'],
 				'error' => $error

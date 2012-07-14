@@ -28,6 +28,8 @@
 
 <p><?php _e( 'Pull in help documents from this WP Help secret URL:', 'wp-help' ); ?><br /><input id="cws-wp-help-slurp-url" class="regular-text" type="text" value="<?php echo esc_url( $this->get_option( 'slurp_url' ) ); ?>" /></p>
 
+<p><i>Note: sync pull refreshes once a day. You can manually refresh by saving the setting again.</i></p>
+
 <?php submit_button( __( 'Save Changes', 'wp-help' ), 'primary', 'cws-wp-help-settings-save', true ); ?>
 
 <div id="cws-wp-help-slurp-error"></div>
