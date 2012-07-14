@@ -113,16 +113,26 @@ class CWS_WP_Help_Plugin {
 		// Check for API requests
 		if ( isset( $_REQUEST['wp-help-key'] ) && $this->get_option( 'key' ) == $_REQUEST['wp-help-key'] )
 			$this->api_request();
+
+		// Slurps are manual for now, while in development
+		if ( isset( $_REQUEST['wp-help-slurp'] ) )
+			$this->api_slurp();
 	}
 
 	private function api_slurp(){
 		// WORK IN PROGRESS
 		$result = wp_remote_get( $this->get_option( 'slurp_url' ) );
 		if ( $result['response']['code'] == 200 ) {
+			$posts = json_decode( $result['body'] );
+			// Get our local posts
+			foreach ( $posts as $p ) {
+				$p = (array) $p;
+
+				var_dump( $p ); die();
+			}
 			// Yay
 			// To do: process the result
 			// To do: ask only for things that have changed (maybe?)
-			// get_post_by_guid() for helping to stitch post_parents together
 		}
 	}
 
@@ -135,18 +145,35 @@ class CWS_WP_Help_Plugin {
 		return $wpdb->get_var( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE guid = %s LIMIT 1;", $guid ) );
 	}
 
+	public function convert_links_cb( $matches ) {
+		if ( preg_match( '#page=wp-help-documents&(amp;)?document=([0-9]+)#', $matches[2], $url ) ) {
+			return 'href=' . $matches[1] . 'wp-help-link:' . $url[2] . $matches[1];
+		}
+		return $matches[0];
+	}
+
+	private function convert_links( $content ) {
+		return preg_replace_callback( '#href=(["\'])([^\\1]+)\\1#', array( $this, 'convert_links_cb' ), $content );
+	}
+
 	private function get_topics_for_api() {
-		// To do: convert local doc links into GUID shortcodes that the slurping site can process
 		$topics = new WP_Query( array( 'post_type' => 'wp-help', 'posts_per_page' => -1, 'post_status' => 'publish' ) );
+		/*
 		$id_to_guid = array();
 		foreach ( $topics->posts as $k => $post ) {
 			$id_to_guid[$post->ID] = $post->guid;
 		}
+		*/
 		foreach ( $topics->posts as $k => $post ) {
 			$c =& $topics->posts[$k];
+			/*
 			if ( $post->post_parent )
 				$c->post_parent_guid = $id_to_guid[$post->post_parent];
-			unset( $c->post_parent, $c->post_author, $c->comment_count, $c->post_mime_type, $c->post_status, $c->post_type, $c->pinged, $c->to_ping, $c->menu_order, $c->filter, $c->ping_status, $c->comment_status, $c->post_password );
+			*/
+			unset( $c->guid, $c->post_author, $c->comment_count, $c->post_mime_type, $c->post_status, $c->post_type, $c->pinged, $c->to_ping, $c->menu_order, $c->filter, $c->ping_status, $c->comment_status, $c->post_password );
+			if ( !$c->post_parent ) // If it doesn't exist, we'll assume 0
+				unset( $c->post_parent );
+			$c->post_content = $this->convert_links( $c->post_content );
 		}
 		return $topics->posts;
 	}
