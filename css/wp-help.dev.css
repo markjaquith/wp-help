@@ -39,7 +39,8 @@
 	-moz-border-radius: 3px;
 	-khtml-border-radius: 3px;
 	-webkit-border-radius: 3px;
-	background: #eee;
+	background: #fff;
+	box-shadow: #ddd 1px 1px 3px;
 	}
 
 #cws-wp-help-listing h3 span a:hover {
@@ -99,6 +100,7 @@ input#cws-wp-help-listing-label {
 	top: -5px;
 	border: 1px dashed #dfdfdf;
 	width: 258px;
+	background: #ffffee;
 	}
 
 #cws-wp-help-h2-label-wrap {
@@ -117,6 +119,7 @@ input#cws-wp-help-h2-label {
 	margin: 9px 15px 0 0;
 	border: 1px dashed #dfdfdf;
 	width: 450px;
+	background: #ffffee;
 	}
 
 input#cws-wp-help-api-url, input#cws-wp-help-slurp-url {
