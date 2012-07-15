@@ -174,10 +174,12 @@ class CWS_WP_Help_Plugin {
 					// Exists. We know the local ID.
 					$copy['ID'] = $source_id_to_local_id[$p['ID']];
 					wp_update_post( $copy );
+					wp_cache_delete( 'get_pages', 'posts' ); // See: http://core.trac.wordpress.org/ticket/21279
 				} else {
 					// This is new. Insert it.
 					unset( $copy['ID'] );
 					$new_local_id = wp_insert_post( $copy );
+					wp_cache_delete( 'get_pages', 'posts' ); // See: http://core.trac.wordpress.org/ticket/21279
 
 					// Update our lookup table
 					$source_id_to_local_id[$p['ID']] = $new_local_id;
@@ -222,6 +224,7 @@ class CWS_WP_Help_Plugin {
 					if ( $new ) {
 						$new['ID'] = $p->ID;
 						wp_update_post( $new );
+						wp_cache_delete( 'get_pages', 'posts' ); // See: http://core.trac.wordpress.org/ticket/21279
 					}
 				}
 			}
