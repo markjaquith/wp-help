@@ -2,7 +2,7 @@
 /*
 Plugin Name: WP Help
 Description: Administrators can create detailed, hierarchical documentation for the site's authors and editors, viewable in the WordPress admin.
-Version: 0.4-beta-1
+Version: 0.4-beta-2
 License: GPL
 Plugin URI: http://txfx.net/wordpress-plugins/wp-help/
 Author: Mark Jaquith
@@ -123,6 +123,13 @@ class CWS_WP_Help_Plugin {
 
 		// Debug:
 		// $this->api_slurp();
+	}
+
+	private function explain_slurp( $id ) {
+		if ( current_user_can( 'manage_options' ) && !current_user_can( 'edit_post', $id ) ) {
+			// Post is remote. Explain
+			echo ' <small>&mdash; Remote document</small>';
+		}
 	}
 
 	public function map_meta_cap( $caps, $cap, $user_id, $args ) {
@@ -445,7 +452,7 @@ class CWS_WP_Help_Plugin {
 		$document_id = absint( isset( $_GET['document'] ) ? $_GET['document'] : get_option( self::default_doc ) );
 		if ( $document_id ) : ?>
 			<style>
-			div#cws-wp-help-listing .page-item-<?php echo $document_id; ?> > a {
+			#cws-wp-help-listing .page-item-<?php echo $document_id; ?> > a {
 				font-weight: bold;
 			}
 			</style>

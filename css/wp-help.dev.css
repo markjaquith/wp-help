@@ -1,4 +1,4 @@
-div#cws-wp-help-listing {
+#cws-wp-help-listing {
 	width: 250px;
 	float: left;
 	margin: 10px 10px 10px 0;
@@ -12,20 +12,20 @@ div#cws-wp-help-listing {
 	min-height: 400px;
 	}
 
-div#cws-wp-help-listing ul li a {
+#cws-wp-help-listing ul li a {
 	text-decoration: none;
 }
 
-div#cws-wp-help-listing h3 {
+#cws-wp-help-listing h3 {
 	margin: 0;
 	padding: 0;
 	}
 
-div#cws-wp-help-listing h3 i {
+#cws-wp-help-listing h3 i {
 	font-style: normal;
 	}
 
-div#cws-wp-help-listing h3 span a {
+#cws-wp-help-listing h3 span a {
 	text-decoration: none;
 	float: right;
 	font-size: 12px;
@@ -42,40 +42,49 @@ div#cws-wp-help-listing h3 span a {
 	background: #eee;
 	}
 
-div#cws-wp-help-listing h3 span a:hover {
+#cws-wp-help-listing h3 span a:hover {
 	background: #fafafa;
 	border: 1px solid #c5c5c5;
 }
 
-div#cws-wp-help-listing ul {
+#cws-wp-help-listing ul {
 	margin: 5px 5px 5px 15px;
 	list-style: circle;
 	}
 
-div#cws-wp-help-listing > ul {
+#cws-wp-help-listing > ul {
 	margin: 10px 5px 10px 20px;
 	}
 
-div#cws-wp-help-listing ul ul {
+#cws-wp-help-listing ul ul {
 	list-style: square;
 	}
 
-div#cws-wp-help-document, div#cws-wp-help-settings {
+#cws-wp-help-document, #cws-wp-help-settings {
 	max-width: 600px;
 	padding-left: 300px;
 	}
 
-div#cws-wp-help-settings, #cws-wp-help-listing-labels, #cws-wp-help-h2-label-wrap {
+#cws-wp-help-document h2 small {
+	font-size: 12px;
+	font-family: sans-serif;
+	}
+
+#cws-wp-help-document h2 small a {
+	text-decoration: none;
+	}
+
+#cws-wp-help-settings, #cws-wp-help-listing-labels, #cws-wp-help-h2-label-wrap {
 	display: none;
 	}
 
-div#cws-wp-help-settings ul {
+#cws-wp-help-settings ul {
 	padding-left: 25px;
-}
+	}
 
-div#cws-wp-help-settings li {
+#cws-wp-help-settings li {
 	list-style: square;
-}
+	}
 
 #cws-wp-help-listing-labels {
 	margin-bottom: -10px;
