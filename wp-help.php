@@ -257,9 +257,11 @@ class CWS_WP_Help_Plugin {
 	private function local_id_from_slurp_id( $id ) {
 		if ( !$id )
 			return false;
-		global $wpdb;
-		$local = $wpdb->get_var( $wpdb->prepare( "SELECT post_id FROM $wpdb->postmeta WHERE meta_key = '_cws_wp_help_slurp_id' AND meta_value = %s", $id ) );
-		return $local;
+		$local = new WP_Query( array( 'post_type' => 'wp-help', 'posts_per_page' => 1, 'post_status' => 'publish', 'meta_query' => array( array( 'key' => '_cws_wp_help_slurp_id', 'value' => $id ) ) ) );
+
+		if ( $local->posts )
+			return $local->posts[0]->ID;
+		return false;
 	}
 
 	private function get_topics_for_api() {
