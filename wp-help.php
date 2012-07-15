@@ -370,9 +370,9 @@ class CWS_WP_Help_Plugin {
 
 	public function admin_menu() {
 		if ( 'dashboard-submenu' != $this->get_option( 'menu_location' ) )
-			$hook = add_menu_page( $this->get_option( 'h2' ), $this->get_option( 'h2' ), 'publish_posts', self::MENU_SLUG, array( $this, 'render_listing_page' ), plugin_dir_url( __FILE__ ) . '/images/icon-16.png' );
+			$hook = add_menu_page( $this->get_option( 'h2' ), $this->get_option( 'h2' ), 'edit_posts', self::MENU_SLUG, array( $this, 'render_listing_page' ), plugin_dir_url( __FILE__ ) . '/images/icon-16.png' );
 		else
-			$hook = add_dashboard_page( $this->get_option( 'h2' ), $this->get_option( 'h2' ), 'publish_posts', self::MENU_SLUG, array( $this, 'render_listing_page' ) );
+			$hook = add_dashboard_page( $this->get_option( 'h2' ), $this->get_option( 'h2' ), 'edit_posts', self::MENU_SLUG, array( $this, 'render_listing_page' ) );
 		add_action( "load-{$hook}", array( $this, 'enqueue' ) );
 	}
 
