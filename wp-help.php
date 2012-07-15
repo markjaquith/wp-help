@@ -70,6 +70,7 @@ class CWS_WP_Help_Plugin {
 		add_filter( 'post_updated_messages', array( $this, 'post_updated_messages' ) );
 		add_action( 'admin_init', array( $this, 'ajax_listener' ) );
 		add_action( 'wp_ajax_cws_wp_help_settings', array( $this, 'ajax_settings' ) );
+		add_action( 'clean_post_cache', array( $this, 'clean_post_cache' ), 10, 2 );
 		if ( 'dashboard-submenu' != $this->get_option( 'menu_location' ) ) {
 			$this->admin_base = 'admin.php';
 			if ( 'bottom' != $this->get_option( 'menu_location' ) ) {
@@ -125,6 +126,11 @@ class CWS_WP_Help_Plugin {
 		// $this->api_slurp();
 	}
 
+	public function clean_post_cache( $post_id, $post ) {
+		if ( 'wp-help' === $post->post_type )
+			wp_cache_delete( 'get_pages', 'posts' ); // See: http://core.trac.wordpress.org/ticket/21279
+	}
+
 	private function explain_slurp( $id ) {
 		if ( current_user_can( 'manage_options' ) && !current_user_can( 'edit_post', $id ) ) {
 			// Post is remote. Explain
@@ -174,12 +180,10 @@ class CWS_WP_Help_Plugin {
 					// Exists. We know the local ID.
 					$copy['ID'] = $source_id_to_local_id[$p['ID']];
 					wp_update_post( $copy );
-					wp_cache_delete( 'get_pages', 'posts' ); // See: http://core.trac.wordpress.org/ticket/21279
 				} else {
 					// This is new. Insert it.
 					unset( $copy['ID'] );
 					$new_local_id = wp_insert_post( $copy );
-					wp_cache_delete( 'get_pages', 'posts' ); // See: http://core.trac.wordpress.org/ticket/21279
 
 					// Update our lookup table
 					$source_id_to_local_id[$p['ID']] = $new_local_id;
@@ -224,7 +228,6 @@ class CWS_WP_Help_Plugin {
 					if ( $new ) {
 						$new['ID'] = $p->ID;
 						wp_update_post( $new );
-						wp_cache_delete( 'get_pages', 'posts' ); // See: http://core.trac.wordpress.org/ticket/21279
 					}
 				}
 			}
