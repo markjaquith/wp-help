@@ -34,13 +34,13 @@
 				// Doubleclick the h2
 				data.h2.display.text.dblclick( function() {
 					api.revealSettings();
-					data.h2.edit.input.focus();
+					data.h2.edit.input.focus().select();
 				});
 				
 				// Doubleclick the h3
 				data.h3.display.text.dblclick( function() {
 					api.revealSettings();
-					data.h3.edit.input.focus();
+					data.h3.edit.input.focus().select();
 				});
 
 				// Monitor for "return" presses in our text inputs
@@ -90,7 +90,7 @@
 				api.fadeOutIn( data.doc, data.settings );
 				if ( autofocus ) {
 					(function(h2) {
-						h2.focus().val( h2.val() );
+						h2.focus().select();
 					})(data.h2.edit.input);
 				}
 			},
