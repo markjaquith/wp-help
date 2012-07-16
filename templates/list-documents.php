@@ -5,7 +5,8 @@
 <div id="cws-wp-help-listing">
 <?php if ( current_user_can( 'publish_pages' ) || current_user_can( 'manage_options' ) ) : ?>
 	<div id="cws-wp-help-actions">
-	<?php if ( current_user_can( 'publish_pages' ) ) : ?><span><a href="<?php echo admin_url( 'post-new.php?post_type=wp-help' ); ?>"><?php _ex( 'Add New', 'Button with limited space', 'wp-help' ); ?></a></span><span><a href="<?php echo admin_url( 'edit.php?post_type=wp-help' ); ?>"><?php _ex( 'Manage', 'verb. Button with limited space', 'wp-help' ); ?></a></span><?php endif; ?><?php if ( current_user_can( 'manage_options' ) ) : ?><span><a href="#" id="cws-wp-help-settings-on"><?php _ex( 'Settings', 'Button with limited space' ); ?></a></span><?php endif; ?>
+	<?php if ( current_user_can( 'manage_options' ) ) : ?><a href="#" id="cws-wp-help-settings-on"><?php _ex( 'Settings', 'Button with limited space' ); ?></a><?php endif; ?>
+	<?php if ( current_user_can( 'publish_pages' ) ) : ?><a href="<?php echo admin_url( 'post-new.php?post_type=wp-help' ); ?>" id="cws-wp-help-add-new"><?php _ex( 'Add New', 'Button with limited space', 'wp-help' ); ?></a><a href="<?php echo admin_url( 'edit.php?post_type=wp-help' ); ?>" id="cws-wp-help-manage"><?php _ex( 'Manage', 'verb. Button with limited space', 'wp-help' ); ?></a><?php endif; ?>
 	<div class="clear"></div>
 	</div>
 <?php endif; ?>
