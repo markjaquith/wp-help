@@ -33,9 +33,9 @@ class CWS_WP_Help_Plugin {
 	private $options;
 	private $admin_base = '';
 	const default_doc = 'cws_wp_help_default_doc';
-	const OPTION = 'cws_wp_help';
-	const MENU_SLUG = 'wp-help-documents';
-	const CRON_HOOK = 'cws_wp_help_update';
+	const OPTION      = 'cws_wp_help';
+	const MENU_SLUG   = 'wp-help-documents';
+	const CRON_HOOK   = 'cws_wp_help_update';
 
 	public function __construct() {
 		self::$instance = $this;
@@ -61,19 +61,19 @@ class CWS_WP_Help_Plugin {
 		load_plugin_textdomain( 'wp-help', false, basename( dirname( __FILE__ ) ) . '/languages' );
 
 		// Actions and filters
-		add_action( self::CRON_HOOK, array( $this, 'api_slurp' ) );
-		add_filter( 'map_meta_cap', array( $this, 'map_meta_cap'), 10, 4 );
-		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
-		add_action( 'do_meta_boxes', array( $this, 'do_meta_boxes' ), 20, 2 );
-		add_action( 'save_post', array( $this, 'save_post' ) );
-		add_filter( 'post_type_link', array( $this, 'page_link' ), 10, 2 );
-		add_filter( 'post_updated_messages', array( $this, 'post_updated_messages' ) );
-		add_action( 'admin_init', array( $this, 'ajax_listener' ) );
-		add_action( 'wp_ajax_cws_wp_help_settings', array( $this, 'ajax_settings' ) );
-		add_action( 'clean_post_cache', array( $this, 'clean_post_cache' ), 10, 2 );
-		add_action( 'delete_post', array( $this, 'delete_post' ) );
-		add_action( 'wp_trash_post', array( $this, 'delete_post' ) );
-		add_action( 'load-post.php', array( $this, 'load_post' ), 10 );
+		add_action( self::CRON_HOOK,                array( $this, 'api_slurp'             )        );
+		add_filter( 'map_meta_cap',                 array( $this, 'map_meta_cap'          ), 10, 4 );
+		add_action( 'admin_menu',                   array( $this, 'admin_menu'            )        );
+		add_action( 'do_meta_boxes',                array( $this, 'do_meta_boxes'         ), 20, 2 );
+		add_action( 'save_post',                    array( $this, 'save_post'             )        );
+		add_filter( 'post_type_link',               array( $this, 'page_link'             ), 10, 2 );
+		add_filter( 'post_updated_messages',        array( $this, 'post_updated_messages' )        );
+		add_action( 'admin_init',                   array( $this, 'ajax_listener'         )        );
+		add_action( 'wp_ajax_cws_wp_help_settings', array( $this, 'ajax_settings'         )        );
+		add_action( 'clean_post_cache',             array( $this, 'clean_post_cache'      ), 10, 2 );
+		add_action( 'delete_post',                  array( $this, 'delete_post'           )        );
+		add_action( 'wp_trash_post',                array( $this, 'delete_post'           )        );
+		add_action( 'load-post.php',                array( $this, 'load_post'             )        );
 		if ( 'dashboard-submenu' != $this->get_option( 'menu_location' ) ) {
 			$this->admin_base = 'admin.php';
 			if ( 'bottom' != $this->get_option( 'menu_location' ) ) {
@@ -101,22 +101,22 @@ class CWS_WP_Help_Plugin {
 					'read_private_posts' => 'publish_pages',
 					'edit_post'          => 'wp_help_meta_cap',
 					'delete_post'        => 'wp_help_meta_cap',
-					'read_post'          => 'edit_posts'
+					'read_post'          => 'edit_posts',
 				),
 				'labels' => array (
-					'name'               => __( 'Help Documents', 'wp-help' ),
-					'singular_name'      => __( 'Help Document', 'wp-help' ),
+					'name'               => __( 'Help Documents',                        'wp-help' ),
+					'singular_name'      => __( 'Help Document',                         'wp-help' ),
+					'add_new_item'       => __( 'Add New Help Document',                 'wp-help' ),
+					'edit_item'          => __( 'Edit Help Document',                    'wp-help' ),
+					'new_item'           => __( 'New Help Document',                     'wp-help' ),
+					'view_item'          => __( 'View Help Document',                    'wp-help' ),
+					'search_items'       => __( 'Search Documents',                      'wp-help' ),
+					'not_found'          => __( 'No Help Documents Found',               'wp-help' ),
+					'not_found_in_trash' => __( 'No Help Documents found in Trash',      'wp-help' ),
+					'parent'             => __( 'Parent Help Document',                  'wp-help' ),
 					'add_new'            => _x( 'Add New', 'i.e. Add new Help Document', 'wp-help' ),
-					'add_new_item'       => __( 'Add New Help Document', 'wp-help' ),
-					'edit'               => _x( 'Edit', 'i.e. Edit Help Document', 'wp-help' ),
-					'edit_item'          => __( 'Edit Help Document', 'wp-help' ),
-					'new_item'           => __( 'New Help Document', 'wp-help' ),
-					'view'               => _x( 'View', 'i.e. View Help Document', 'wp-help' ),
-					'view_item'          => __( 'View Help Document', 'wp-help' ),
-					'search_items'       => __( 'Search Documents', 'wp-help' ),
-					'not_found'          => __( 'No Help Documents Found', 'wp-help' ),
-					'not_found_in_trash' => __( 'No Help Documents found in Trash', 'wp-help' ),
-					'parent'             => __( 'Parent Help Document', 'wp-help' )
+					'edit'               => _x( 'Edit',    'i.e. Edit Help Document',    'wp-help' ),
+					'view'               => _x( 'View',    'i.e. View Help Document',    'wp-help' ),
 				)
 			)
 		);
