@@ -76,6 +76,8 @@
 #cws-wp-help-document h2 small {
 	font-size: 12px;
 	font-family: sans-serif;
+	color: #888;
+	text-shadow: white 0 1px 0;
 	}
 
 #cws-wp-help-document h2 small a {

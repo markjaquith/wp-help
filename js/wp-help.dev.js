@@ -92,7 +92,7 @@
 				$([ data.h2, data.h3 ]).each( function() {
 					api.hideShow( this.display.wrap, this.edit.wrap );
 				});
-				data.actions.fadeTo( 100, 0 ).slideUp( 150 );
+				data.actions.fadeTo( 200, 0.3 );
 				api.fadeOutIn( data.doc, data.settings );
 				if ( autofocus ) {
 					(function(h2) {
@@ -131,7 +131,7 @@
 				$([ data.h2, data.h3 ]).each( function() {
 					api.hideShow( this.edit.wrap, this.display.wrap );
 				});
-				data.actions.slideDown( 150 ).fadeTo( 100, 1 );
+				data.actions.fadeTo( 200, 1 );
 				api.fadeOutIn( data.settings, data.doc );
 			},
 			clearError: function(){
