@@ -71,6 +71,7 @@ class CWS_WP_Help_Plugin {
 		add_action( 'admin_init', array( $this, 'ajax_listener' ) );
 		add_action( 'wp_ajax_cws_wp_help_settings', array( $this, 'ajax_settings' ) );
 		add_action( 'clean_post_cache', array( $this, 'clean_post_cache' ), 10, 2 );
+		add_action( 'load-post.php', array( $this, 'load_post' ), 10 );
 		if ( 'dashboard-submenu' != $this->get_option( 'menu_location' ) ) {
 			$this->admin_base = 'admin.php';
 			if ( 'bottom' != $this->get_option( 'menu_location' ) ) {
@@ -136,6 +137,19 @@ class CWS_WP_Help_Plugin {
 			// Post is remote. Explain
 			echo ' <small>&mdash; Remote document</small>';
 		}
+	}
+
+	public function load_post() {
+		if ( isset( $_GET['post'] ) ) {
+			if ( 'wp-help' === get_post_type( $_GET['post'] ) ) {
+				wp_enqueue_script( 'jquery' );
+				add_action( 'admin_footer', array( $this, 'add_manage_link' ) );
+			}
+		}
+	}
+
+	public function add_manage_link() {
+		?><script>jQuery( '.wrap:first h2:first a:first' ).before( '<a href="edit.php?post_type=wp-help" class="add-new-h2"><?php echo esc_js( _x( 'Manage', 'verb. Button with limited space', 'wp-help' ) ); ?></a>' );</script><?php
 	}
 
 	public function map_meta_cap( $caps, $cap, $user_id, $args ) {
