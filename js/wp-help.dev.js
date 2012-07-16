@@ -116,6 +116,7 @@
 						api.hideSettings();
 					}
 					if ( result.topics ) {
+						api.p( 'nodocs' ).remove();
 						api.p('listing ul').html( result.topics );
 					}
 				});
