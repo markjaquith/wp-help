@@ -115,6 +115,10 @@
 					} else {
 						api.hideSettings();
 					}
+					if ( result.refresh ) {
+						// Should I just use an XHR to pull down the box? Probably.
+						document.location = document.location;
+					}
 				});
 			},
 			hideSettings: function() {

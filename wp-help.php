@@ -71,6 +71,8 @@ class CWS_WP_Help_Plugin {
 		add_action( 'admin_init', array( $this, 'ajax_listener' ) );
 		add_action( 'wp_ajax_cws_wp_help_settings', array( $this, 'ajax_settings' ) );
 		add_action( 'clean_post_cache', array( $this, 'clean_post_cache' ), 10, 2 );
+		add_action( 'delete_post', array( $this, 'delete_post' ) );
+		add_action( 'wp_trash_post', array( $this, 'delete_post' ) );
 		add_action( 'load-post.php', array( $this, 'load_post' ), 10 );
 		if ( 'dashboard-submenu' != $this->get_option( 'menu_location' ) ) {
 			$this->admin_base = 'admin.php';
@@ -125,6 +127,14 @@ class CWS_WP_Help_Plugin {
 
 		// Debug:
 		// $this->api_slurp();
+	}
+
+	public function delete_post( $post_id ) {
+		if ( 'wp-help' === get_post_type( $post_id ) ) {
+			// If the default doc was deleted, kill the option
+			if ( absint( get_option( self::default_doc ) ) === absint( $post_id ) )
+				update_option( self::default_doc, 0 );
+		}
 	}
 
 	public function clean_post_cache( $post_id, $post ) {
@@ -333,7 +343,9 @@ class CWS_WP_Help_Plugin {
 	public function ajax_settings() {
 		if ( isset( $_POST['nonce'] ) && wp_verify_nonce( $_POST['nonce'], 'cws-wp-help-settings' ) ) {
 			$error = false;
+			$refresh = false;
 			$old_menu_location = $this->options['menu_location'];
+			$old_slurp_url = $this->options['slurp_url'];
 			$this->options['h2'] = stripslashes( $_POST['h2'] );
 			$this->options['h3'] = stripslashes( $_POST['h3'] );
 			$slurp_url = stripslashes( $_POST['slurp_url'] );
@@ -345,15 +357,19 @@ class CWS_WP_Help_Plugin {
 				$error = __( 'That is not a WP Help URL. Make sure you copied it correctly.' );
 			else
 				$this->options['slurp_url'] = esc_url_raw( $slurp_url );
+			if ( $this->options['slurp_url'] !== $old_slurp_url && !empty( $this->options['slurp_url'] ) )
+				$refresh = true;
 			if ( !$error )
 				$this->options['menu_location'] = stripslashes( $_POST['menu_location'] );
 			$this->update_options( $this->options );
-			// Force an update in the background
-			wp_schedule_single_event( current_time( 'timestamp' ), self::CRON_HOOK );
 			$result = array( 
 				'slurp_url' => $this->options['slurp_url'],
 				'error' => $error
 			);
+			if ( $refresh ) {
+				$result['refresh'] = true;
+				$this->api_slurp();
+			}
 			die( json_encode( $result ) );
 		} else {
 			die( '-1' );
