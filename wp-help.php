@@ -64,7 +64,7 @@ class CWS_WP_Help_Plugin {
 		add_action( self::CRON_HOOK,                array( $this, 'api_slurp'             )        );
 		add_filter( 'map_meta_cap',                 array( $this, 'map_meta_cap'          ), 10, 4 );
 		add_action( 'admin_menu',                   array( $this, 'admin_menu'            )        );
-		add_action( 'do_meta_boxes',                array( $this, 'do_meta_boxes'         ), 20, 2 );
+		add_action( 'post_submitbox_misc_actions',  array( $this, 'submitbox_actions'     )        );
 		add_action( 'save_post',                    array( $this, 'save_post'             )        );
 		add_filter( 'post_type_link',               array( $this, 'page_link'             ), 10, 2 );
 		add_filter( 'post_updated_messages',        array( $this, 'post_updated_messages' )        );
@@ -417,15 +417,12 @@ class CWS_WP_Help_Plugin {
 		add_action( "load-{$hook}", array( $this, 'enqueue' ) );
 	}
 
-	public function do_meta_boxes( $page, $context ) {
-		if ( 'wp-help' == $page && 'side' == $context )
-			add_meta_box( 'cws-wp-help-meta', _x( 'WP Help Options', 'meta box title', 'wp-help' ), array( $this, 'meta_box' ), $page, 'side' );
-	}
-
-	public function meta_box() {
+	public function submitbox_actions() {
+		if ( 'wp-help' !== get_post_type() )
+			return;
 		global $post;
 		wp_nonce_field( 'cws-wp-help-save', '_cws_wp_help_nonce', false, true ); ?>
-		<p><input type="checkbox" name="cws_wp_help_make_default_doc" id="cws_wp_help_make_default_doc" <?php checked( $post->ID == get_option( self::default_doc ) ); ?> /> <label for="cws_wp_help_make_default_doc"><?php _e( 'Make this the default help document', 'wp-help' ); ?></label></p>
+		<div class="misc-pub-section"><input type="checkbox" name="cws_wp_help_make_default_doc" id="cws_wp_help_make_default_doc" <?php checked( $post->ID == get_option( self::default_doc ) ); ?> /> &nbsp;<label for="cws_wp_help_make_default_doc"><?php _e( 'Set as default help document', 'wp-help' ); ?></label></div>
 		<?php
 	}
 
