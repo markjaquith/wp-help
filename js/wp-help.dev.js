@@ -115,9 +115,8 @@
 					} else {
 						api.hideSettings();
 					}
-					if ( result.refresh ) {
-						// Should I just use an XHR to pull down the box? Probably.
-						document.location = document.location;
+					if ( result.topics ) {
+						api.p('listing ul').html( result.topics );
 					}
 				});
 			},

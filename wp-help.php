@@ -367,8 +367,8 @@ class CWS_WP_Help_Plugin {
 				'error' => $error
 			);
 			if ( $refresh ) {
-				$result['refresh'] = true;
 				$this->api_slurp();
+				$result['topics'] = $this->get_help_topics_html();
 			}
 			die( json_encode( $result ) );
 		} else {
