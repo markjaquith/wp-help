@@ -93,6 +93,7 @@
 					api.hideShow( this.display.wrap, this.edit.wrap );
 				});
 				data.actions.fadeTo( 200, 0.3 );
+				api.p( 'listing ul' ).fadeTo( 200, 0.3 );
 				api.fadeOutIn( data.doc, data.settings );
 				if ( autofocus ) {
 					(function(h2) {
@@ -123,7 +124,7 @@
 					}
 					if ( result.topics ) {
 						api.p( 'nodocs' ).remove();
-						api.p('listing ul').html( result.topics );
+						api.p( 'listing ul' ).html( result.topics );
 					}
 				});
 			},
@@ -132,6 +133,7 @@
 					api.hideShow( this.edit.wrap, this.display.wrap );
 				});
 				data.actions.fadeTo( 200, 1 );
+				api.p( 'listing ul' ).fadeTo( 200, 1 );
 				api.fadeOutIn( data.settings, data.doc );
 			},
 			clearError: function(){

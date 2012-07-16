@@ -369,6 +369,9 @@ class CWS_WP_Help_Plugin {
 			if ( $refresh ) {
 				$this->api_slurp();
 				$result['topics'] = $this->get_help_topics_html();
+			} elseif ( !empty( $this->options['slurp_url'] ) ) {
+				// It didn't change, but we should trigger an update in the background
+				wp_schedule_single_event( current_time( 'timestamp' ), self::CRON_HOOK );
 			}
 			die( json_encode( $result ) );
 		} else {
@@ -461,7 +464,7 @@ class CWS_WP_Help_Plugin {
 	public function enqueue() {
 		$suffix = defined ('SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '.dev' : '';
 		wp_enqueue_style( 'cws-wp-help', plugins_url( "css/wp-help$suffix.css", __FILE__ ), array(), '20120716b' );
-		wp_enqueue_script( 'cws-wp-help', plugins_url( "js/wp-help$suffix.js", __FILE__ ), array( 'jquery' ), '20120716b' );
+		wp_enqueue_script( 'cws-wp-help', plugins_url( "js/wp-help$suffix.js", __FILE__ ), array( 'jquery' ), '20120716c' );
 		do_action( 'cws_wp_help_load' ); // Use this to enqueue your own styles for things like shortcodes.
 	}
 
