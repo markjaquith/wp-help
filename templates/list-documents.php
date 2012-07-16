@@ -3,8 +3,14 @@
 <?php $pages = $this->get_help_topics_html(); ?>
 <?php if ( trim( $pages ) ) : ?>
 <div id="cws-wp-help-listing">
+<?php if ( current_user_can( 'publish_pages' ) || current_user_can( 'manage_options' ) ) : ?>
+	<div id="cws-wp-help-actions">
+	<?php if ( current_user_can( 'publish_pages' ) ) : ?><span><a href="<?php echo admin_url( 'edit.php?post_type=wp-help' ); ?>"><?php _ex( 'Manage', 'verb. Button with limited space', 'wp-help' ); ?></a></span><?php endif; ?><?php if ( current_user_can( 'manage_options' ) ) : ?><span><a href="#" id="cws-wp-help-settings-on"><?php _ex( 'Settings', 'Button with limited space' ); ?></a></span><?php endif; ?>
+	<div class="clear"></div>
+	</div>
+<?php endif; ?>
 <div id="cws-wp-help-listing-labels"><input type="text" id="cws-wp-help-listing-label" value="<?php echo esc_attr( $this->get_option( 'h3' ) ); ?>" /></div>
-<h3><i><?php echo esc_html( $this->get_option( 'h3' ) ); ?></i><?php if ( current_user_can( 'publish_pages' ) ) : ?><span><a href="<?php echo admin_url( 'edit.php?post_type=wp-help' ); ?>"><?php _ex( 'Manage', 'verb. Button with limited space', 'wp-help' ); ?></a></span><?php endif; ?><?php if ( current_user_can( 'manage_options' ) ) : ?><span><a href="#" id="cws-wp-help-settings-on"><?php _ex( 'Settings', 'Button with limited space' ); ?></a></span><?php endif; ?></h3>
+<h3><?php echo esc_html( $this->get_option( 'h3' ) ); ?></h3>
 <ul>
 <?php echo $pages; ?>
 </ul>

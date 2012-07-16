@@ -91,14 +91,14 @@ class CWS_WP_Help_Plugin {
 				'hierarchical' => true,
 				'supports' => array( 'title', 'editor', 'revisions', 'page-attributes' ),
 				'capabilities' => array(
-					'publish_posts' => 'manage_options',
-					'edit_posts' => 'manage_options',
-					'edit_others_posts' => 'manage_options',
-					'delete_posts' => 'manage_options',
-					'read_private_posts' => 'manage_options',
+					'publish_posts' => 'publish_pages',
+					'edit_posts' => 'publish_pages',
+					'edit_others_posts' => 'publish_pages',
+					'delete_posts' => 'publish_pages',
+					'read_private_posts' => 'publish_pages',
 					'edit_post' => 'wp_help_meta_cap',
 					'delete_post' => 'wp_help_meta_cap',
-					'read_post' => 'read'
+					'read_post' => 'edit_posts'
 				),
 				'labels' => array (
 					'name' => __( 'Help Documents', 'wp-help' ),
@@ -144,7 +144,7 @@ class CWS_WP_Help_Plugin {
 			if ( $this->get_slurp_source_key() === get_post_meta( $args[0], '_cws_wp_help_slurp_source', true ) )
 				$caps = array( 'do_not_allow' );
 			else
-				$caps = array( 'manage_options' );
+				$caps = array( 'publish_pages' );
 		}
 		return $caps;
 	}

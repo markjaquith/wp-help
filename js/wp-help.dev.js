@@ -84,8 +84,9 @@
 			},
 			revealSettings: function(autofocus) {
 				$([ data.h2, data.h3 ]).each( function() {
-					api.hideShow( this.display.wrap, this.edit.wrap );					
+					api.hideShow( this.display.wrap, this.edit.wrap );
 				});
+				data.actions.fadeTo( 200, 0 ).slideUp( 200 );
 				api.fadeOutIn( data.doc, data.settings );
 				if ( autofocus ) {
 					(function(h2) {
@@ -120,6 +121,7 @@
 				$([ data.h2, data.h3 ]).each( function() {
 					api.hideShow( this.edit.wrap, this.display.wrap );
 				});
+				data.actions.slideDown( 200 ).fadeTo( 200, 1 );
 				api.fadeOutIn( data.settings, data.doc );
 			},
 			clearError: function(){
@@ -137,8 +139,8 @@
 					wrap: api.p( 'h2-label-wrap' )
 				},
 				display: {
-					text: $('.wrap h2:first'),
-					wrap: $('.wrap h2:first'),
+					text: $( '.wrap h2:first' ),
+					wrap: $( '.wrap h2:first' )
 				}
 			},
 			h3: {
@@ -147,13 +149,14 @@
 					wrap: api.p( 'listing-labels' )
 				},
 				display: {
-					text: api.p( 'listing h3 i' ),
+					text: api.p( 'listing h3' ),
 					wrap: api.p( 'listing h3' )
 				}
 			},
 			settingsButton: api.p( 'settings-on' ),
 			menu: function() { return $( '#adminmenu a.current' ); },
 			doc: api.p( 'document' ),
+			actions: api.p( 'actions' ),
 			settings: api.p( 'settings' ),
 			apiURL: api.p( 'api-url' ),
 			slurp: api.p( 'slurp-url' ),

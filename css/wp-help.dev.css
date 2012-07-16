@@ -14,18 +14,18 @@
 
 #cws-wp-help-listing ul li a {
 	text-decoration: none;
-}
+	}
 
 #cws-wp-help-listing h3 {
 	margin: 0;
 	padding: 0;
 	}
 
-#cws-wp-help-listing h3 i {
-	font-style: normal;
+#cws-wp-help-actions {
+	padding-bottom: 5px;
 	}
 
-#cws-wp-help-listing h3 span a {
+#cws-wp-help-actions span a {
 	text-decoration: none;
 	float: right;
 	font-size: 12px;
@@ -43,10 +43,10 @@
 	box-shadow: #ddd 1px 1px 3px;
 	}
 
-#cws-wp-help-listing h3 span a:hover {
+#cws-wp-help-actions span a:hover {
 	background: #fafafa;
 	border: 1px solid #c5c5c5;
-}
+	}
 
 #cws-wp-help-listing ul {
 	margin: 5px 5px 5px 15px;
