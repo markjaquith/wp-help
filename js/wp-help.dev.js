@@ -25,6 +25,12 @@
 					api.saveSettings();
 				});
 
+				// Clicking the "Cancel" button (settings)
+				data.cancelLink.click( function(e){
+					e.preventDefault();
+					api.hideSettings();
+				});
+
 				// Clicking the "Settings" button
 				data.settingsButton.click( function(e) {
 					e.preventDefault();
@@ -166,6 +172,7 @@
 			slurp: api.p( 'slurp-url' ),
 			slurpError: api.p( 'slurp-error' ),
 			saveButton: api.p( 'settings-save' ),
+			cancelLink: api.p( 'settings-cancel' ),
 			menuLocation: api.p( 'menu-location' ),
 			returnMonitor: $( '.wrap input[type="text"]' )
 		};

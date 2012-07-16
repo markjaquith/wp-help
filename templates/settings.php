@@ -35,7 +35,7 @@
 		<li>Synced documents cannot be modified locally while syncing is still enabled.</li>
 	</ul></i></p>
 
-<?php submit_button( __( 'Save Changes', 'wp-help' ), 'primary', 'cws-wp-help-settings-save', true ); ?>
+<p class="submit"><?php submit_button( __( 'Save Changes', 'wp-help' ), 'primary', 'cws-wp-help-settings-save', false ); ?> <a href="#" id="cws-wp-help-settings-cancel">Cancel</a></p>
 
 <div id="cws-wp-help-slurp-error"></div>
 
