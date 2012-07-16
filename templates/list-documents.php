@@ -5,7 +5,7 @@
 <div id="cws-wp-help-listing">
 <?php if ( current_user_can( 'publish_pages' ) || current_user_can( 'manage_options' ) ) : ?>
 	<div id="cws-wp-help-actions">
-	<?php if ( current_user_can( 'publish_pages' ) ) : ?><span><a href="<?php echo admin_url( 'edit.php?post_type=wp-help' ); ?>"><?php _ex( 'Manage', 'verb. Button with limited space', 'wp-help' ); ?></a></span><?php endif; ?><?php if ( current_user_can( 'manage_options' ) ) : ?><span><a href="#" id="cws-wp-help-settings-on"><?php _ex( 'Settings', 'Button with limited space' ); ?></a></span><?php endif; ?>
+	<?php if ( current_user_can( 'publish_pages' ) ) : ?><span><a href="<?php echo admin_url( 'post-new.php?post_type=wp-help' ); ?>"><?php _ex( 'Add New', 'Button with limited space', 'wp-help' ); ?></a></span><span><a href="<?php echo admin_url( 'edit.php?post_type=wp-help' ); ?>"><?php _ex( 'Manage', 'verb. Button with limited space', 'wp-help' ); ?></a></span><?php endif; ?><?php if ( current_user_can( 'manage_options' ) ) : ?><span><a href="#" id="cws-wp-help-settings-on"><?php _ex( 'Settings', 'Button with limited space' ); ?></a></span><?php endif; ?>
 	<div class="clear"></div>
 	</div>
 <?php endif; ?>
@@ -32,7 +32,7 @@
 </div>
 <?php else : ?>
 	<?php if ( current_user_can( 'manage_options' ) ) : ?>
-		<p><?php printf( __( 'No published help documents found. <a href="%s">Manage Help Documents</a>.', 'wp-help' ), admin_url( 'edit.php?post_type=wp-help' ) ); ?></p>
+		<p><?php printf( __( 'No published help documents found. <a href="%s">Add New Help Document</a>.', 'wp-help' ), admin_url( 'post-new.php?post_type=wp-help' ) ); ?></p>
 	<?php else : ?>
 		<p><?php _e( 'No help documents found. Contact the site administrator.', 'wp-help' ); ?></p>
 	<?php endif; ?>
