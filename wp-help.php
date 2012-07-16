@@ -87,36 +87,36 @@ class CWS_WP_Help_Plugin {
 		// Register the wp-help post type
 		register_post_type( 'wp-help',
 			array(
-				'label' => _x( 'Publishing Help', 'post type label', 'wp-help' ),
-				'public' => false,
-				'show_ui' => true,
+				'label'        => _x( 'Publishing Help', 'post type label', 'wp-help' ),
+				'public'       => false,
+				'show_ui'      => true,
 				'show_in_menu' => false,
 				'hierarchical' => true,
-				'supports' => array( 'title', 'editor', 'revisions', 'page-attributes' ),
+				'supports'     => array( 'title', 'editor', 'revisions', 'page-attributes' ),
 				'capabilities' => array(
-					'publish_posts' => 'publish_pages',
-					'edit_posts' => 'publish_pages',
-					'edit_others_posts' => 'publish_pages',
-					'delete_posts' => 'publish_pages',
+					'publish_posts'      => 'publish_pages',
+					'edit_posts'         => 'publish_pages',
+					'edit_others_posts'  => 'publish_pages',
+					'delete_posts'       => 'publish_pages',
 					'read_private_posts' => 'publish_pages',
-					'edit_post' => 'wp_help_meta_cap',
-					'delete_post' => 'wp_help_meta_cap',
-					'read_post' => 'edit_posts'
+					'edit_post'          => 'wp_help_meta_cap',
+					'delete_post'        => 'wp_help_meta_cap',
+					'read_post'          => 'edit_posts'
 				),
 				'labels' => array (
-					'name' => __( 'Help Documents', 'wp-help' ),
-					'singular_name' => __( 'Help Document', 'wp-help' ),
-					'add_new' => _x( 'Add New', 'i.e. Add new Help Document', 'wp-help' ),
-					'add_new_item' => __( 'Add New Help Document', 'wp-help' ),
-					'edit' => _x( 'Edit', 'i.e. Edit Help Document', 'wp-help' ),
-					'edit_item' => __( 'Edit Help Document', 'wp-help' ),
-					'new_item' => __( 'New Help Document', 'wp-help' ),
-					'view' => _x( 'View', 'i.e. View Help Document', 'wp-help' ),
-					'view_item' => __( 'View Help Document', 'wp-help' ),
-					'search_items' => __( 'Search Documents', 'wp-help' ),
-					'not_found' => __( 'No Help Documents Found', 'wp-help' ),
+					'name'               => __( 'Help Documents', 'wp-help' ),
+					'singular_name'      => __( 'Help Document', 'wp-help' ),
+					'add_new'            => _x( 'Add New', 'i.e. Add new Help Document', 'wp-help' ),
+					'add_new_item'       => __( 'Add New Help Document', 'wp-help' ),
+					'edit'               => _x( 'Edit', 'i.e. Edit Help Document', 'wp-help' ),
+					'edit_item'          => __( 'Edit Help Document', 'wp-help' ),
+					'new_item'           => __( 'New Help Document', 'wp-help' ),
+					'view'               => _x( 'View', 'i.e. View Help Document', 'wp-help' ),
+					'view_item'          => __( 'View Help Document', 'wp-help' ),
+					'search_items'       => __( 'Search Documents', 'wp-help' ),
+					'not_found'          => __( 'No Help Documents Found', 'wp-help' ),
 					'not_found_in_trash' => __( 'No Help Documents found in Trash', 'wp-help' ),
-					'parent' => __( 'Parent Help Document', 'wp-help' )
+					'parent'             => __( 'Parent Help Document', 'wp-help' )
 				)
 			)
 		);
