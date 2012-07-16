@@ -22,6 +22,7 @@
 <?php echo $pages; ?>
 </ul>
 </div>
+
 <?php if ( current_user_can( 'manage_options' ) ) : ?>
 	<?php include( dirname( __FILE__ ) . '/settings.php' ); ?>
 <?php endif; ?>
@@ -33,7 +34,7 @@
 		<h2><?php the_title(); ?><?php edit_post_link( 'edit', ' <small>', '</small>' ); ?><?php $this->explain_slurp( $document_id ); ?></h2>
 		<?php the_content(); ?>
 	<?php else : ?>
-	<p><?php _e( 'The requested help document could not be found', 'wp-help' ); ?>
+		<p><?php _e( 'The requested help document could not be found.', 'wp-help' ); ?></p>
 	<?php endif; ?>
 <?php endif; ?>
 </div>

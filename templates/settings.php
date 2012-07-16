@@ -28,12 +28,12 @@
 
 <p><?php _e( 'Pull in help documents from this WP Help secret URL:', 'wp-help' ); ?><br /><input id="cws-wp-help-slurp-url" class="regular-text" type="text" value="<?php echo esc_url( $this->get_option( 'slurp_url' ) ); ?>" /></p>
 
-<p><i>Note:
-	<ul>
-		<li>Sync pull refreshes automatically once a day.</li>
-		<li>You can manually refresh by saving the setting again.</li>
-		<li>Synced documents cannot be modified locally while syncing is still enabled.</li>
-	</ul></i></p>
+<p>Note:</p>
+<ul>
+	<li>Sync pull refreshes automatically once a day.</li>
+	<li>You can manually refresh by saving the setting again.</li>
+	<li>Synced documents cannot be modified locally while syncing is still enabled.</li>
+</ul>
 
 <p class="submit"><?php submit_button( __( 'Save Changes', 'wp-help' ), 'primary', 'cws-wp-help-settings-save', false ); ?> <a href="#" id="cws-wp-help-settings-cancel">Cancel</a></p>
 

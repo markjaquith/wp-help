@@ -1,6 +1,7 @@
 #cws-wp-help-listing {
 	width: 250px;
 	float: left;
+	clear: both;
 	margin: 10px 10px 10px 0;
 	padding: 10px;
 	border: 1px solid #ddd;
@@ -94,6 +95,7 @@
 
 #cws-wp-help-settings li {
 	list-style: square;
+	font-style: italic;
 	}
 
 #cws-wp-help-settings-cancel {
@@ -136,7 +138,7 @@ input#cws-wp-help-h2-label {
 	}
 
 input#cws-wp-help-api-url, input#cws-wp-help-slurp-url {
-	width: 100%;
+	width: 90%;
 	}
 
 #cws-wp-help-slurp-error {
