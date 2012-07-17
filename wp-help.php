@@ -207,7 +207,7 @@ class CWS_WP_Help_Plugin {
 	private function explain_slurp( $id ) {
 		if ( current_user_can( 'manage_options' ) && !current_user_can( 'edit_post', $id ) ) {
 			// Post is remote. Explain
-			echo ' <small>&mdash; Remote document</small>';
+			echo ' <small>' . __( '&mdash; Remote document', 'wp-help' ) . '</small>';
 		}
 	}
 
@@ -419,11 +419,11 @@ class CWS_WP_Help_Plugin {
 			$this->options['h3'] = stripslashes( $_POST['h3'] );
 			$slurp_url = stripslashes( $_POST['slurp_url'] );
 			if ( $slurp_url === $this->api_url() )
-				$error = __( 'What are you doing? You&#8217;re going to create an infinite loop!' );
+				$error = __( 'What are you doing? You&#8217;re going to create an infinite loop!', 'wp-help' );
 			elseif ( empty( $slurp_url ) )
 				$this->options['slurp_url'] = '';
 			elseif ( strpos( $slurp_url, '?wp-help-key=' ) === false )
-				$error = __( 'That is not a WP Help URL. Make sure you copied it correctly.' );
+				$error = __( 'That is not a WP Help URL. Make sure you copied it correctly.', 'wp-help' );
 			else
 				$this->options['slurp_url'] = esc_url_raw( $slurp_url );
 			if ( $this->options['slurp_url'] !== $old_slurp_url && !empty( $this->options['slurp_url'] ) )

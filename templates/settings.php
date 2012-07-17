@@ -14,10 +14,10 @@
 
 <p><?php _e( 'Display the help documents menu item:', 'wp-help' ); ?> 
 	<select id="cws-wp-help-menu-location">
-		<option value="dashboard-submenu" <?php selected( 'dashboard-submenu', $this->get_option( 'menu_location' ) ); ?>><?php _e( 'as a Dashboard submenu' ); ?></option>
-		<option value="above-dashboard" <?php selected( 'above-dashboard', $this->get_option( 'menu_location' ) ); ?>><?php _e( 'above the Dashboard menu' ); ?></option>
-		<option value="below-dashboard" <?php selected( 'below-dashboard', $this->get_option( 'menu_location' ) ); ?>><?php _e( 'below the Dashboard menu' ); ?></option>
-		<option value="bottom" <?php selected( 'bottom', $this->get_option( 'menu_location' ) ); ?>><?php _e( 'at the bottom' ); ?></option>
+		<option value="dashboard-submenu" <?php selected( 'dashboard-submenu', $this->get_option( 'menu_location' ) ); ?>><?php _e( 'as a Dashboard submenu', 'wp-help' ); ?></option>
+		<option value="above-dashboard" <?php selected( 'above-dashboard', $this->get_option( 'menu_location' ) ); ?>><?php _e( 'above the Dashboard menu', 'wp-help' ); ?></option>
+		<option value="below-dashboard" <?php selected( 'below-dashboard', $this->get_option( 'menu_location' ) ); ?>><?php _e( 'below the Dashboard menu', 'wp-help' ); ?></option>
+		<option value="bottom" <?php selected( 'bottom', $this->get_option( 'menu_location' ) ); ?>><?php _e( 'at the bottom', 'wp-help' ); ?></option>
 	</select></p>
 
 <h3><?php _ex( 'Sync Source', 'noun, h3 heading about synchronization', 'wp-help' ); ?></h3>
@@ -28,14 +28,14 @@
 
 <p><?php _e( 'Pull in help documents from this WP Help secret URL:', 'wp-help' ); ?><br /><input id="cws-wp-help-slurp-url" class="regular-text" type="text" value="<?php echo esc_url( $this->get_option( 'slurp_url' ) ); ?>" /></p>
 
-<p>Note:</p>
+<p><?php _e( 'Note:', 'wp-help' ); ?></p>
 <ul>
-	<li>Sync pull refreshes automatically once a day.</li>
-	<li>You can manually refresh by saving the setting again.</li>
-	<li>Synced documents cannot be modified locally while syncing is still enabled.</li>
+	<li><?php _e( 'Sync pull refreshes automatically once a day.', 'wp-help' ); ?></li>
+	<li><?php _e( 'You can manually refresh by saving the setting again.', 'wp-help' ); ?></li>
+	<li><?php _e( 'Synced documents cannot be modified locally while syncing is still enabled.', 'wp-help' ); ?></li>
 </ul>
 
-<p class="submit"><?php submit_button( __( 'Save Changes', 'wp-help' ), 'primary', 'cws-wp-help-settings-save', false ); ?> <a href="#" id="cws-wp-help-settings-cancel">Cancel</a></p>
+<p class="submit"><?php submit_button( __( 'Save Changes', 'wp-help' ), 'primary', 'cws-wp-help-settings-save', false ); ?> <a href="#" id="cws-wp-help-settings-cancel"><?php _e( 'Cancel', 'wp-help' ); ?></a></p>
 
 <div id="cws-wp-help-slurp-error"></div>
 
