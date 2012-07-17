@@ -15,6 +15,12 @@
 				});
 			},
 			init: function() {
+				// Small CSS Tweaks for Firefox
+				if ( $.browser.mozilla ) {
+					data.h2.edit.input.css( 'top', '-3px' ).css( 'margin-bottom', '1px' );
+					data.h3.edit.input.css( 'margin-top', '2px' ).css( 'margin-bottom', '2.25px' );
+				}
+
 				// Clicking the source API URI
 				data.apiURL.click( function() {
 					this.select();

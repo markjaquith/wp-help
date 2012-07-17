@@ -30,6 +30,7 @@
 	text-decoration: none;
 	float: right;
 	font-size: 12px;
+	max-height: 16px;
 	font-weight: normal;
 	padding: 3px 4px;
 	margin-left: 5px;
@@ -108,7 +109,7 @@
 
 input#cws-wp-help-listing-label {
 	font-family: sans-serif;
-	font-size: 14px;
+	font-size: 1.17em;
 	font-weight: bold;
 	position: relative;
 	left: -6px;
@@ -138,7 +139,7 @@ input#cws-wp-help-h2-label {
 	}
 
 input#cws-wp-help-api-url, input#cws-wp-help-slurp-url {
-	width: 90%;
+	width: 100%;
 	}
 
 #cws-wp-help-slurp-error {
