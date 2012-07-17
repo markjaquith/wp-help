@@ -44,16 +44,19 @@ class CWS_WP_Help_Plugin {
 
 	public function init() {
 		// Options
-		if ( ! $this->options = get_option( self::OPTION ) ) {
-			add_option( self::OPTION, array(
-				'h2' => _x( 'Publishing Help', 'h2 default title', 'wp-help' ),
-				'h3' => _x( 'Help Topics', 'h3 default title', 'wp-help' ),
-				'key' => md5( wp_generate_password( 128, true, true ) ),
-			) );
-			$this->options = get_option( self::OPTION );
+		$raw_options = get_option( self::OPTION );
+		if ( !is_array( $raw_options ) )
+			$raw_options = array();
+		if ( !isset( $raw_options['key'] ) ) {
+			// Normally, we shouldn't set defaults, but the key is a
+			// generate-once deal, so we do that now if it does not exist.
+			$raw_options['key'] = md5( wp_generate_password( 128, true, true ) );
+			update_option( self::OPTION, $raw_options );
 		}
+		// Now grab the options, with defaults merged in
+		$this->options = $this->get_options();
 
-		// Cron jobs
+		// Cron job
 		if ( !wp_next_scheduled( self::CRON_HOOK ) )
 			wp_schedule_event( current_time( 'timestamp' ), 'daily', self::CRON_HOOK );
 
@@ -127,6 +130,21 @@ class CWS_WP_Help_Plugin {
 
 		// Debug:
 		// $this->api_slurp();
+	}
+
+	private function get_option_defaults() {
+		return apply_filters( 'cws_wp_help_option_defaults', array(
+				'h2'            => _x( 'Publishing Help', 'h2 default title', 'wp-help' ),
+				'h3'            => _x( 'Help Topics', 'h3 default title', 'wp-help' ),
+				'menu_location' => 'below-dashboard',
+		) );
+	}
+
+	private function get_options() {
+		$raw_options = get_option( self::OPTION );
+		if ( !is_array( $raw_options ) )
+			$raw_options = array();
+		return array_merge( $this->get_option_defaults(), $raw_options );
 	}
 
 	public function delete_post( $post_id ) {
