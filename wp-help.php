@@ -77,6 +77,7 @@ class CWS_WP_Help_Plugin {
 		add_action( 'delete_post',                  array( $this, 'delete_post'           )        );
 		add_action( 'wp_trash_post',                array( $this, 'delete_post'           )        );
 		add_action( 'load-post.php',                array( $this, 'load_post'             )        );
+		add_action( 'load-post-new.php',            array( $this, 'load_post_new'         )        );
 		if ( 'dashboard-submenu' != $this->get_option( 'menu_location' ) ) {
 			$this->admin_base = 'admin.php';
 			if ( 'bottom' != $this->get_option( 'menu_location' ) ) {
@@ -176,8 +177,15 @@ class CWS_WP_Help_Plugin {
 		}
 	}
 
+	public function load_post_new() {
+		if ( isset( $_GET['post_type'] ) && 'wp-help' === $_GET['post_type'] ) {
+			wp_enqueue_script( 'jquery' );
+			add_action( 'admin_footer', array( $this, 'add_manage_link' ) );
+		}
+	}
+
 	public function add_manage_link() {
-		?><script>jQuery( '.wrap:first h2:first a:first' ).before( '<a href="edit.php?post_type=wp-help" class="add-new-h2"><?php echo esc_js( _x( 'Manage', 'verb. Button with limited space', 'wp-help' ) ); ?></a>' );</script><?php
+		?><script>(function($){var a=$('.wrap:first h2:first a:first');var i=' <a href="edit.php?post_type=wp-help" class="add-new-h2"><?php echo esc_js( _x( 'Manage', 'verb. Button with limited space', 'wp-help' ) ); ?></a> ';if(a.length)a.before(i);else $('.wrap:first h2:first').append(i);})(jQuery);</script><?php
 	}
 
 	public function map_meta_cap( $caps, $cap, $user_id, $args ) {
