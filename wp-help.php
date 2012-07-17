@@ -32,6 +32,7 @@ class CWS_WP_Help_Plugin {
 	public static $instance;
 	private $options;
 	private $admin_base = '';
+	private $help_topics_html;
 	const default_doc = 'cws_wp_help_default_doc';
 	const OPTION      = 'cws_wp_help';
 	const MENU_SLUG   = 'wp-help-documents';
@@ -78,6 +79,7 @@ class CWS_WP_Help_Plugin {
 		add_action( 'wp_trash_post',                array( $this, 'delete_post'           )        );
 		add_action( 'load-post.php',                array( $this, 'load_post'             )        );
 		add_action( 'load-post-new.php',            array( $this, 'load_post_new'         )        );
+		add_action( 'wp_dashboard_setup',           array( $this, 'wp_dashboard_setup'    )        );
 		if ( 'dashboard-submenu' != $this->get_option( 'menu_location' ) ) {
 			$this->admin_base = 'admin.php';
 			if ( 'bottom' != $this->get_option( 'menu_location' ) ) {
@@ -87,7 +89,8 @@ class CWS_WP_Help_Plugin {
 		} else {
 			$this->admin_base = 'index.php';
 		}
-
+		add_filter( 'page_attributes_dropdown_pages_args', array( $this, 'page_attributes_dropdown' ), 10, 2 );
+		
 		// Register the wp-help post type
 		register_post_type( 'wp-help',
 			array(
@@ -148,12 +151,52 @@ class CWS_WP_Help_Plugin {
 		return array_merge( $this->get_option_defaults(), $raw_options );
 	}
 
+	public function wp_dashboard_setup() {
+		if ( current_user_can( apply_filters( 'cws_wp_help_view_documents_cap', 'edit_posts' ) ) ) {
+			$this->help_topics_html = $this->get_help_topics_html();
+			if ( $this->help_topics_html )
+				wp_add_dashboard_widget( 'cws-wp-help-dashboard-widget', $this->get_option( 'h2' ), array( $this, 'dashboard_widget' ) );
+		}
+	}
+
+	public function dashboard_widget() {
+		?><style>
+		#cws-wp-help-dashboard-listing ul {
+			margin: 5px 5px 5px 15px;
+			list-style: square;
+		}
+
+		#cws-wp-help-dashboard-listing {
+			margin: 10px 5px 10px 20px;
+			list-style: circle;
+		}
+
+		#cws-wp-help-dashboard-listing > ul {
+			list-style: square;
+		}
+		</style><?php
+		echo '<ul id="cws-wp-help-dashboard-listing">';
+		echo $this->help_topics_html;
+		echo '</ul>';
+	}
+
 	public function delete_post( $post_id ) {
 		if ( 'wp-help' === get_post_type( $post_id ) ) {
 			// If the default doc was deleted, kill the option
 			if ( absint( get_option( self::default_doc ) ) === absint( $post_id ) )
 				update_option( self::default_doc, 0 );
 		}
+	}
+
+	public function page_attributes_dropdown( $args, $post ) {
+		if ( 'wp-help' !== get_post_type( $post ) )
+			return $args;
+		$pages = get_pages( array( 'post_type' => 'wp-help', 'child_of' => 0, 'parent' => 0, 'post_status' => 'publish', 'hierarchical' => false, 'meta_key' => '_cws_wp_help_slurp_source', 'meta_value' => $this->get_slurp_source_key() ) );
+		$args['exclude'] = array();
+		foreach ( $pages as $p ) {
+			$args['exclude'][] = absint( $p->ID );
+		}
+		return $args;
 	}
 
 	public function clean_post_cache( $post_id, $post ) {
@@ -509,7 +552,7 @@ class CWS_WP_Help_Plugin {
 	}
 
 	private function get_help_topics_html() {
-		return wp_list_pages( array( 'post_type' => 'wp-help', 'hierarchical' => true, 'echo' => false, 'title_li' => '' ) );
+		return trim( wp_list_pages( array( 'post_type' => 'wp-help', 'hierarchical' => true, 'echo' => false, 'title_li' => '' ) ) );
 	}
 
 	public function render_listing_page() {
