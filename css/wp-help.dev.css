@@ -90,12 +90,12 @@
 	display: none;
 	}
 
-#cws-wp-help-settings ul {
+#cws-wp-help-settings ul, #cws-wp-help-document ul {
 	padding-left: 25px;
+	list-style: square;
 	}
 
 #cws-wp-help-settings li {
-	list-style: square;
 	font-style: italic;
 	}
 
