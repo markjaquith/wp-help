@@ -34,6 +34,7 @@
 				// Clicking the "Cancel" button (settings)
 				data.cancelLink.click( function(e){
 					e.preventDefault();
+					api.restoreSettings();
 					api.hideSettings();
 				});
 
@@ -106,6 +107,14 @@
 						h2.focus().select();
 					})(data.h2.edit.input);
 				}
+			},
+			restoreSettings: function() {
+				$( 'input, select', data.settings ).each( function(){
+					var i = $(this);
+					if ( i.data( 'original-value' ) ) {
+						i.val( i.data( 'original-value' ) ).change();
+					}
+				});
 			},
 			saveSettings: function() {
 				api.clearError();

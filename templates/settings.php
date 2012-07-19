@@ -13,7 +13,7 @@
 <h3><?php _e( 'Menu Location', 'wp-help' ); ?></h3>
 
 <p><?php _e( 'Display the help documents menu item:', 'wp-help' ); ?> 
-	<select id="cws-wp-help-menu-location">
+	<select id="cws-wp-help-menu-location" data-original-value="<?php echo esc_attr( $this->get_option( 'menu_location' ) ); ?>">
 		<option value="dashboard-submenu" <?php selected( 'dashboard-submenu', $this->get_option( 'menu_location' ) ); ?>><?php _e( 'as a Dashboard submenu', 'wp-help' ); ?></option>
 		<option value="above-dashboard" <?php selected( 'above-dashboard', $this->get_option( 'menu_location' ) ); ?>><?php _e( 'above the Dashboard menu', 'wp-help' ); ?></option>
 		<option value="below-dashboard" <?php selected( 'below-dashboard', $this->get_option( 'menu_location' ) ); ?>><?php _e( 'below the Dashboard menu', 'wp-help' ); ?></option>
@@ -26,7 +26,7 @@
 
 <h3><?php _e( 'Sync Pull', 'wp-help' ); ?></h3>
 
-<p><?php _e( 'Pull in help documents from this WP Help secret URL:', 'wp-help' ); ?><br /><input id="cws-wp-help-slurp-url" class="regular-text" type="text" value="<?php echo esc_url( $this->get_option( 'slurp_url' ) ); ?>" /></p>
+<p><?php _e( 'Pull in help documents from this WP Help secret URL:', 'wp-help' ); ?><br /><input id="cws-wp-help-slurp-url" class="regular-text" type="text" value="<?php echo esc_url( $this->get_option( 'slurp_url' ) ); ?>" data-original-value="<?php echo esc_url( $this->get_option( 'slurp_url' ) ); ?>" /></p>
 
 <p><?php _e( 'Note:', 'wp-help' ); ?></p>
 <ul>
