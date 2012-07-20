@@ -359,7 +359,10 @@ class CWS_WP_Help_Plugin {
 	}
 
 	private function convert_links( $content ) {
-		return preg_replace_callback( '#href=(["\'])([^\\1]+)\\1#', array( $this, 'convert_links_cb' ), $content );
+		$content = preg_replace_callback( '#href=(["\'])([^\\1]+)\\1#', array( $this, 'convert_links_cb' ), $content );
+		$admin_url = parse_url( admin_url( '/' ) );
+		$content = preg_replace( '#(https?)://' . preg_quote( $admin_url['host'] . $admin_url['path'], '#' ) . '#', '', $content );
+		return $content;
 	}
 
 	public function make_links_local_cb( $matches ) {
