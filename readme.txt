@@ -69,6 +69,8 @@ Upgrade if you want to use WP Help in one of these languages: Bulgarian, German,
 == Changelog ==
 = 1.1 =
 * Feature: drag and drop reordering of the documents list.
+* Feature: local /wp-admin/ links are rewritten when shared through the API so that they're wp-admin relative and thus work on the destination site.
+* Improvement: more consistent cap checks, so plugins can consistently customize who can do what.
 * Improvement: restore settings form to previous state when "cancel" is clicked.
 
 = 1.0 =
