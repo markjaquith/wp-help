@@ -112,7 +112,7 @@ class CWS_WP_Help_Plugin {
 					'read_private_posts' => 'publish_pages',
 					'edit_post'          => 'wp_help_meta_cap',
 					'delete_post'        => 'wp_help_meta_cap',
-					'read_post'          => 'edit_posts',
+					'read_post'          => apply_filters( 'cws_wp_help_view_documents_cap', 'edit_posts' ),
 				),
 				'labels' => array (
 					'name'               => __( 'Help Documents',                        'wp-help' ),
@@ -155,8 +155,12 @@ class CWS_WP_Help_Plugin {
 		return array_merge( $this->get_option_defaults(), $raw_options );
 	}
 
+	private function get_cap( $cap ) {
+		return get_post_type_object( self::POST_TYPE )->cap->{$cap};
+	}
+
 	public function wp_dashboard_setup() {
-		if ( current_user_can( apply_filters( 'cws_wp_help_view_documents_cap', 'edit_posts' ) ) ) {
+		if ( current_user_can( $this->get_cap( 'read_post' ) ) ) {
 			$this->help_topics_html = $this->get_help_topics_html();
 			if ( $this->help_topics_html )
 				wp_add_dashboard_widget( 'cws-wp-help-dashboard-widget', $this->get_option( 'h2' ), array( $this, 'dashboard_widget' ) );
@@ -249,7 +253,7 @@ class CWS_WP_Help_Plugin {
 			if ( $this->is_slurped( $args[0] ) )
 				$caps = array( 'do_not_allow' );
 			else
-				$caps = array( get_post_type_object( self::POST_TYPE )->cap->publish_posts );
+				$caps = array( $this->get_cap( 'publish_posts' ) );
 		}
 		return $caps;
 	}
@@ -466,7 +470,7 @@ class CWS_WP_Help_Plugin {
 	}
 
 	public function ajax_reorder() {
-		if ( current_user_can( get_post_type_object( self::POST_TYPE )->cap->publish_posts ) && isset( $_POST['nonce'] ) && wp_verify_nonce( $_POST['nonce'], 'cws-wp-help-reorder' ) ) {
+		if ( current_user_can( $this->get_cap( 'publish_posts' ) ) && isset( $_POST['nonce'] ) && wp_verify_nonce( $_POST['nonce'], 'cws-wp-help-reorder' ) ) {
 			$order = array();
 			foreach( $_POST['order'] as $o ) {
 				$order[] = absint( str_replace( 'page-', '', $o ) );
@@ -513,9 +517,9 @@ class CWS_WP_Help_Plugin {
 
 	public function admin_menu() {
 		if ( 'dashboard-submenu' != $this->get_option( 'menu_location' ) )
-			$hook = add_menu_page( $this->get_option( 'h2' ), $this->get_option( 'h2' ), apply_filters( 'cws_wp_help_view_documents_cap', 'edit_posts' ), self::MENU_SLUG, array( $this, 'render_listing_page' ), plugin_dir_url( __FILE__ ) . 'images/icon-16.png' );
+			$hook = add_menu_page( $this->get_option( 'h2' ), $this->get_option( 'h2' ), $this->get_cap( 'read_post' ), self::MENU_SLUG, array( $this, 'render_listing_page' ), plugin_dir_url( __FILE__ ) . 'images/icon-16.png' );
 		else
-			$hook = add_dashboard_page( $this->get_option( 'h2' ), $this->get_option( 'h2' ), apply_filters( 'cws_wp_help_view_documents_cap', 'edit_posts' ), self::MENU_SLUG, array( $this, 'render_listing_page' ) );
+			$hook = add_dashboard_page( $this->get_option( 'h2' ), $this->get_option( 'h2' ), $this->get_cap( 'read_post' ), self::MENU_SLUG, array( $this, 'render_listing_page' ) );
 		add_action( "load-{$hook}", array( $this, 'enqueue' ) );
 	}
 

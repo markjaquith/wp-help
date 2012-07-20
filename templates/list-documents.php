@@ -19,7 +19,7 @@
 	<?php endif; ?>
 <?php endif; ?>
 <div id="cws-wp-help-listing-wrap">
-<ul<?php if ( current_user_can( get_post_type_object( self::POST_TYPE )->cap->publish_posts ) ) { echo " data-nonce='" . wp_create_nonce( 'cws-wp-help-reorder' ) . "'"; } ?>>
+<ul<?php if ( current_user_can( $this->get_cap( 'publish_posts' ) ) ) { echo " data-nonce='" . wp_create_nonce( 'cws-wp-help-reorder' ) . "'"; } ?>>
 <?php echo $pages; ?>
 </ul>
 </div>
