@@ -249,7 +249,7 @@ class CWS_WP_Help_Plugin {
 			if ( $this->is_slurped( $args[0] ) )
 				$caps = array( 'do_not_allow' );
 			else
-				$caps = array( 'publish_pages' );
+				$caps = array( get_post_type_object( self::POST_TYPE )->cap->publish_posts );
 		}
 		return $caps;
 	}
