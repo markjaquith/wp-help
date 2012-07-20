@@ -14,12 +14,46 @@
 					data.menu.text( $( this ).val() );
 				});
 			},
+			sortable: function() {
+				$( this ).sortable({
+					opacity: 0.8,
+					placeholder: 'cws-wp-help-placeholder',
+					axis: 'y',
+					cursor: 'move',
+					cursorAt: { left: 0, top: 0 },
+					distance: 10,
+					delay: 50,
+					handle: 'a',
+					containment: data.containment,
+					items: '> li',
+					start: function( e, ui ) {
+						$( '.cws-wp-help-placeholder' ).height( $( ui.item ).height() - 2 ); // -2 for the border
+					},
+					update: function( e, ui ) {
+						$.post( ajaxurl, {
+							action: 'cws_wp_help_reorder',
+							nonce: data.ul.data( 'nonce' ),
+							order: $(this).sortable( 'toArray' )
+						});
+					}
+				});
+				$( this ).find( "> li:not(.cws-wp-help-is-slurped) > ul > li:nth-child(2)" ).parent( 'ul' ).each( api.sortable );
+			},
 			init: function() {
 				// Small CSS Tweaks for Firefox
 				if ( $.browser.mozilla ) {
 					data.h2.edit.input.css( 'top', '-3px' ).css( 'margin-bottom', '1px' );
 					data.h3.edit.input.css( 'margin-top', '2px' ).css( 'margin-bottom', '2.25px' );
 				}
+
+				// Sortable
+				data.ul.each( api.sortable );
+				data.containment.height( data.listing.height() - 20 + 'px' );
+
+				// Add IDs to the list
+				data.ul.find( 'li.page_item' ).each( function() {
+					$(this).attr( 'id', 'page-' + $(this).attr( 'class' ).match( /page-item-([0-9]+)/ )[1] );
+				});
 
 				// Clicking the source API URI
 				data.apiURL.click( function() {
@@ -100,7 +134,7 @@
 					api.hideShow( this.display.wrap, this.edit.wrap );
 				});
 				data.actions.fadeTo( 200, 0.3 );
-				api.p( 'listing ul' ).fadeTo( 200, 0.3 );
+				data.ul.fadeTo( 200, 0.3 );
 				api.fadeOutIn( data.doc, data.settings );
 				if ( autofocus ) {
 					(function(h2) {
@@ -139,7 +173,7 @@
 					}
 					if ( result.topics ) {
 						api.p( 'nodocs' ).remove();
-						api.p( 'listing ul' ).html( result.topics );
+						data.ul.html( result.topics );
 					}
 				});
 			},
@@ -148,7 +182,7 @@
 					api.hideShow( this.edit.wrap, this.display.wrap );
 				});
 				data.actions.fadeTo( 200, 1 );
-				api.p( 'listing ul' ).fadeTo( 200, 1 );
+				data.ul.fadeTo( 200, 1 );
 				api.fadeOutIn( data.settings, data.doc );
 			},
 			clearError: function(){
@@ -183,8 +217,11 @@
 			settingsButton: api.p( 'settings-on' ),
 			menu: function() { return $( '#adminmenu a.current' ); },
 			doc: api.p( 'document' ),
+			containment: api.p( 'listing-wrap > ul' ).parent( 'div' ),
+			ul: api.p( 'listing-wrap > ul' ),
 			actions: api.p( 'actions' ),
 			settings: api.p( 'settings' ),
+			listing: api.p( 'listing' ),
 			apiURL: api.p( 'api-url' ),
 			slurp: api.p( 'slurp-url' ),
 			slurpError: api.p( 'slurp-error' ),

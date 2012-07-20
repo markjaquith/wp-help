@@ -18,9 +18,11 @@
 		<p><?php _e( 'There are no help documents yet.', 'wp-help' ); ?></p>
 	<?php endif; ?>
 <?php endif; ?>
-<ul>
+<div id="cws-wp-help-listing-wrap">
+<ul<?php if ( current_user_can( get_post_type_object( 'wp-help' )->cap->publish_posts ) ) { echo " data-nonce='" . wp_create_nonce( 'cws-wp-help-reorder' ) . "'"; } ?>>
 <?php echo $pages; ?>
 </ul>
+</div>
 </div>
 
 <?php if ( current_user_can( 'manage_options' ) ) : ?>

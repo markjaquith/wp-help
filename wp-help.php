@@ -2,7 +2,7 @@
 /*
 Plugin Name: WP Help
 Description: Administrators can create detailed, hierarchical documentation for the site's authors and editors, viewable in the WordPress admin.
-Version: 1.0.1
+Version: 1.1-beta-1
 License: GPL
 Plugin URI: http://txfx.net/wordpress-plugins/wp-help/
 Author: Mark Jaquith
@@ -33,6 +33,7 @@ class CWS_WP_Help_Plugin {
 	private $options;
 	private $admin_base = '';
 	private $help_topics_html;
+	private $filter_wp_list_pages = false;
 	const default_doc = 'cws_wp_help_default_doc';
 	const OPTION      = 'cws_wp_help';
 	const MENU_SLUG   = 'wp-help-documents';
@@ -74,12 +75,14 @@ class CWS_WP_Help_Plugin {
 		add_filter( 'post_updated_messages',        array( $this, 'post_updated_messages' )        );
 		add_action( 'admin_init',                   array( $this, 'ajax_listener'         )        );
 		add_action( 'wp_ajax_cws_wp_help_settings', array( $this, 'ajax_settings'         )        );
+		add_action( 'wp_ajax_cws_wp_help_reorder',  array( $this, 'ajax_reorder'          )        );
 		add_action( 'clean_post_cache',             array( $this, 'clean_post_cache'      ), 10, 2 );
 		add_action( 'delete_post',                  array( $this, 'delete_post'           )        );
 		add_action( 'wp_trash_post',                array( $this, 'delete_post'           )        );
 		add_action( 'load-post.php',                array( $this, 'load_post'             )        );
 		add_action( 'load-post-new.php',            array( $this, 'load_post_new'         )        );
 		add_action( 'wp_dashboard_setup',           array( $this, 'wp_dashboard_setup'    )        );
+		add_filter( 'page_css_class',               array( $this, 'page_css_class'        ), 10, 5 );
 		if ( 'dashboard-submenu' != $this->get_option( 'menu_location' ) ) {
 			$this->admin_base = 'admin.php';
 			if ( 'bottom' != $this->get_option( 'menu_location' ) ) {
@@ -188,6 +191,14 @@ class CWS_WP_Help_Plugin {
 		}
 	}
 
+	public function page_css_class( $classes, $page, $depth, $args, $current_page ) {
+		if ( !$this->filter_wp_list_pages )
+			return $classes;
+		if ( $this->is_slurped( $page->ID ) )
+			$classes[] = 'cws-wp-help-is-slurped';
+		return $classes;
+	}
+
 	public function page_attributes_dropdown( $args, $post ) {
 		if ( 'wp-help' !== get_post_type( $post ) )
 			return $args;
@@ -234,7 +245,7 @@ class CWS_WP_Help_Plugin {
 	public function map_meta_cap( $caps, $cap, $user_id, $args ) {
 		if ( $cap === 'wp_help_meta_cap' ) {
 			// If this belongs to the currently connected slurp source, disallow editing
-			if ( $this->get_slurp_source_key() === get_post_meta( $args[0], '_cws_wp_help_slurp_source', true ) )
+			if ( $this->is_slurped( $args[0] ) )
 				$caps = array( 'do_not_allow' );
 			else
 				$caps = array( 'publish_pages' );
@@ -246,6 +257,10 @@ class CWS_WP_Help_Plugin {
 		return substr( md5( $this->get_option( 'slurp_url' ) ), 0, 8 );
 	}
 
+	private function is_slurped( $post_id ) {
+		 return $this->get_slurp_source_key() === get_post_meta( $post_id, '_cws_wp_help_slurp_source', true );
+	}
+
 	public function api_slurp() {
 		if ( !$this->get_option( 'slurp_url' ) )
 			return;
@@ -255,7 +270,7 @@ class CWS_WP_Help_Plugin {
 			$source_id_to_local_id = array();
 			if ( $topics->posts ) {
 				foreach ( $topics->posts as $p ) {
-					if ( $this->get_slurp_source_key() === get_post_meta( $p->ID, '_cws_wp_help_slurp_source', true ) && $source_id = get_post_meta( $p->ID, '_cws_wp_help_slurp_id', true ) )
+					if ( $this->is_slurped( $p->ID ) && $source_id = get_post_meta( $p->ID, '_cws_wp_help_slurp_id', true ) )
 						$source_id_to_local_id[$source_id] = $p->ID;
 				}
 			}
@@ -298,7 +313,7 @@ class CWS_WP_Help_Plugin {
 				foreach ( $topics->posts as $p ) {
 					if ( $source_id = get_post_meta( $p->ID, '_cws_wp_help_slurp_id', true ) ) {
 						// This was slurped. Was it absent from the API response? Or was it from a different source?
-						if ( $this->get_slurp_source_key() !== get_post_meta( $p->ID, '_cws_wp_help_slurp_source', true ) || !isset( $source_post_ids[absint($source_id)] ) ) {
+						if ( !$this->is_slurped( $p->ID ) || !isset( $source_post_ids[absint($source_id)] ) ) {
 							// Wasn't in the response. Delete it.
 							wp_delete_post( $p->ID );
 						}
@@ -368,9 +383,10 @@ class CWS_WP_Help_Plugin {
 		$default_doc = get_option( self::default_doc );
 		foreach ( $topics->posts as $k => $post ) {
 			$c =& $topics->posts[$k];
-			unset( $c->guid, $c->post_author, $c->comment_count, $c->post_mime_type, $c->post_status, $c->post_type, $c->pinged, $c->to_ping, $c->menu_order, $c->filter, $c->ping_status, $c->comment_status, $c->post_password );
-			if ( !$c->post_parent ) // If it doesn't exist, we'll assume 0
-				unset( $c->post_parent );
+			unset( $c->guid, $c->post_author, $c->comment_count, $c->post_mime_type, $c->post_status, $c->post_type, $c->pinged, $c->to_ping, $c->filter, $c->ping_status, $c->comment_status, $c->post_password );
+			if ( !$c->post_parent ) {
+				unset( $c->menu_order, $c->post_parent );
+			}
 			$c->post_content = $this->convert_links( $c->post_content );
 			if ( $c->ID == $default_doc )
 				$c->default = true;
@@ -410,7 +426,7 @@ class CWS_WP_Help_Plugin {
 	}
 
 	public function ajax_settings() {
-		if ( isset( $_POST['nonce'] ) && wp_verify_nonce( $_POST['nonce'], 'cws-wp-help-settings' ) ) {
+		if ( current_user_can( 'manage_options' ) && isset( $_POST['nonce'] ) && wp_verify_nonce( $_POST['nonce'], 'cws-wp-help-settings' ) ) {
 			$error = false;
 			$refresh = false;
 			$old_menu_location = $this->options['menu_location'];
@@ -445,6 +461,22 @@ class CWS_WP_Help_Plugin {
 			die( json_encode( $result ) );
 		} else {
 			die( '-1' );
+		}
+	}
+
+	public function ajax_reorder() {
+		if ( current_user_can( get_post_type_object( 'wp-help' )->cap->publish_posts ) && isset( $_POST['nonce'] ) && wp_verify_nonce( $_POST['nonce'], 'cws-wp-help-reorder' ) ) {
+			$order = array();
+			foreach( $_POST['order'] as $o ) {
+				$order[] = absint( str_replace( 'page-', '', $o ) );
+			}
+			$val = 0;
+			foreach ( $order as $o ) {
+				$val += 100;
+				if ( $p = get_page( $o ) ) {
+					wp_update_post( array( 'ID' => $p->ID, 'menu_order' => $val ) );
+				}
+			}
 		}
 	}
 
@@ -530,7 +562,7 @@ class CWS_WP_Help_Plugin {
 	public function enqueue() {
 		$suffix = defined ('SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '.dev' : '';
 		wp_enqueue_style( 'cws-wp-help', plugins_url( "css/wp-help$suffix.css", __FILE__ ), array(), '20120717' );
-		wp_enqueue_script( 'cws-wp-help', plugins_url( "js/wp-help$suffix.js", __FILE__ ), array( 'jquery' ), '20120719' );
+		wp_enqueue_script( 'cws-wp-help', plugins_url( "js/wp-help$suffix.js", __FILE__ ), array( 'jquery', 'jquery-ui-sortable' ), '20120719' );
 		do_action( 'cws_wp_help_load' ); // Use this to enqueue your own styles for things like shortcodes.
 	}
 
@@ -552,7 +584,10 @@ class CWS_WP_Help_Plugin {
 	}
 
 	private function get_help_topics_html() {
-		return trim( wp_list_pages( array( 'post_type' => 'wp-help', 'hierarchical' => true, 'echo' => false, 'title_li' => '' ) ) );
+		$this->filter_wp_list_pages = true;
+		$output = trim( wp_list_pages( array( 'post_type' => 'wp-help', 'hierarchical' => true, 'echo' => false, 'title_li' => '' ) ) );
+		$this->filter_wp_list_pages = false;
+		return $output;
 	}
 
 	public function render_listing_page() {

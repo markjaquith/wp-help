@@ -67,8 +67,9 @@ Upgrade for a French translation.
 Upgrade if you want to use WP Help in one of these languages: Bulgarian, German, Spanish, Mexican Spanish, Macedonian, Dutch, Brazilian Portuguese, or Russian.
 
 == Changelog ==
-= 1.0.1 =
-* Improvement: restore settings form to previous state when "cancel" is clicked
+= 1.1 =
+* Feature: drag and drop reordering of the documents list.
+* Improvement: restore settings form to previous state when "cancel" is clicked.
 
 = 1.0 =
 * Feature: sync help documents from another WP Help install.
