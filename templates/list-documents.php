@@ -19,7 +19,7 @@
 	<?php endif; ?>
 <?php endif; ?>
 <div id="cws-wp-help-listing-wrap">
-<ul<?php if ( current_user_can( get_post_type_object( 'wp-help' )->cap->publish_posts ) ) { echo " data-nonce='" . wp_create_nonce( 'cws-wp-help-reorder' ) . "'"; } ?>>
+<ul<?php if ( current_user_can( get_post_type_object( self::POST_TYPE )->cap->publish_posts ) ) { echo " data-nonce='" . wp_create_nonce( 'cws-wp-help-reorder' ) . "'"; } ?>>
 <?php echo $pages; ?>
 </ul>
 </div>
@@ -31,7 +31,7 @@
 
 <div id="cws-wp-help-document">
 <?php if ( $document_id ) : ?>
-	<?php $document = new WP_Query( array( 'post_type' => 'wp-help', 'p' => $document_id ) ); ?>
+	<?php $document = new WP_Query( array( 'post_type' => self::POST_TYPE, 'p' => $document_id ) ); ?>
 	<?php if ( $document->have_posts() ) : $document->the_post(); ?>
 		<h2><?php the_title(); ?><?php edit_post_link( 'edit', ' <small>', '</small>' ); ?><?php $this->explain_slurp( $document_id ); ?></h2>
 		<?php the_content(); ?>
