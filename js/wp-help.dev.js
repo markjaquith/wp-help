@@ -23,7 +23,7 @@
 					cursorAt: { left: 0, top: 0 },
 					distance: 10,
 					delay: 50,
-					handle: 'a',
+					handle: '.sort-handle',
 					containment: data.containment,
 					items: '> li',
 					start: function( e, ui ) {
@@ -47,7 +47,7 @@
 				}
 
 				// Sortable
-				data.ul.each( api.sortable );
+				data.ulSortable.each( api.sortable );
 				data.containment.height( data.listing.height() - 20 + 'px' );
 
 				// Add IDs to the list
@@ -219,6 +219,7 @@
 			doc: api.p( 'document' ),
 			containment: api.p( 'listing-wrap > ul' ).parent( 'div' ),
 			ul: api.p( 'listing-wrap > ul' ),
+			ulSortable: api.p( 'listing-wrap > ul.can-sort' ),
 			actions: api.p( 'actions' ),
 			settings: api.p( 'settings' ),
 			listing: api.p( 'listing' ),

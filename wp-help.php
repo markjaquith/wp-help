@@ -84,6 +84,7 @@ class CWS_WP_Help_Plugin {
 		add_action( 'load-post-new.php',            array( $this, 'load_post_new'         )        );
 		add_action( 'wp_dashboard_setup',           array( $this, 'wp_dashboard_setup'    )        );
 		add_filter( 'page_css_class',               array( $this, 'page_css_class'        ), 10, 5 );
+		add_filter( 'wp_list_pages',                array( $this, 'wp_list_pages'         )        );
 		if ( 'dashboard-submenu' != $this->get_option( 'menu_location' ) ) {
 			$this->admin_base = 'admin.php';
 			if ( 'bottom' != $this->get_option( 'menu_location' ) ) {
@@ -202,6 +203,12 @@ class CWS_WP_Help_Plugin {
 		if ( $this->is_slurped( $page->ID ) )
 			$classes[] = 'cws-wp-help-is-slurped';
 		return $classes;
+	}
+
+	public function wp_list_pages( $html ) {
+		if ( !$this->filter_wp_list_pages )
+			return $html;
+		return preg_replace( '#<li [^>]+>#', '$0<img class="sort-handle" src="' . plugins_url( "images/sort.png", __FILE__ ) . '" />', $html );
 	}
 
 	public function page_attributes_dropdown( $args, $post ) {

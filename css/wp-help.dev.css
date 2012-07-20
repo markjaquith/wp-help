@@ -70,10 +70,6 @@
 	list-style: square;
 	}
 
-#cws-wp-help-listing ul.ui-sortable a:hover {
-	cursor: move;
-	}
-
 #cws-wp-help-document, #cws-wp-help-settings {
 	max-width: 600px;
 	padding-left: 300px;
@@ -165,9 +161,11 @@ input#cws-wp-help-api-url, input#cws-wp-help-slurp-url {
 	}
 
 .cws-wp-help-placeholder {
-	background: #eee;
+	background: #dadada;
 	height: 40px;
-	border: 1px dashed #ddd;
+	padding-left: 17px;
+	left: -17px;
+	border: 1px dashed #bbb;
 	-moz-border-radius: 3px;
 	-khtml-border-radius: 3px;
 	-webkit-border-radius: 3px;
@@ -176,4 +174,27 @@ input#cws-wp-help-api-url, input#cws-wp-help-slurp-url {
 
 #cws-wp-help-listing-wrap {
 	/* background: pink; */
+	}
+
+#cws-wp-help-listing-wrap ul > li > img.sort-handle {
+	display: none;
+	}
+
+#cws-wp-help-listing-wrap ul.ui-sortable > li {
+	position: relative;
+	}
+
+#cws-wp-help-listing-wrap ul.ui-sortable > li {
+	list-style: none;
+	}
+
+#cws-wp-help-listing-wrap ul.ui-sortable > li > img.sort-handle {
+	display: inline;
+	position: absolute;
+	left: -17px;
+	vertical-align: middle;
+	}
+
+#cws-wp-help-listing-wrap ul.can-sort .sort-handle:hover {
+	cursor: move;
 	}
