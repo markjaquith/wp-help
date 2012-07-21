@@ -24,7 +24,6 @@
 					distance: 10,
 					delay: 50,
 					handle: '.sort-handle',
-					containment: data.containment,
 					items: '> li',
 					start: function( e, ui ) {
 						$( '.cws-wp-help-placeholder' ).height( $( ui.item ).height() - 2 ); // -2 for the border
@@ -48,7 +47,6 @@
 
 				// Sortable
 				data.ulSortable.each( api.sortable );
-				data.containment.height( data.listing.height() - 20 + 'px' );
 
 				// Add IDs to the list
 				data.ul.find( 'li.page_item' ).each( function() {
@@ -217,7 +215,7 @@
 			settingsButton: api.p( 'settings-on' ),
 			menu: function() { return $( '#adminmenu a.current' ); },
 			doc: api.p( 'document' ),
-			containment: api.p( 'listing-wrap > ul' ).parent( 'div' ),
+			// containment: api.p( 'listing-wrap > ul' ).parent( 'div' ),
 			ul: api.p( 'listing-wrap > ul' ),
 			ulSortable: api.p( 'listing-wrap > ul.can-sort' ),
 			actions: api.p( 'actions' ),
