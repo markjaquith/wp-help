@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the WP Help package.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Help 1.0\n"
+"Project-Id-Version: WP Help 1.1\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/wp-help\n"
-"POT-Creation-Date: 2012-07-17 18:47:30+00:00\n"
+"POT-Creation-Date: 2012-07-22 07:24:09+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -22,7 +22,7 @@ msgctxt "Button with limited space"
 msgid "Add New"
 msgstr ""
 
-#: templates/list-documents.php:8 wp-help.php:231
+#: templates/list-documents.php:8 wp-help.php:267
 msgctxt "verb. Button with limited space"
 msgid "Manage"
 msgstr ""
@@ -35,7 +35,7 @@ msgstr ""
 msgid "There are no help documents yet."
 msgstr ""
 
-#: templates/list-documents.php:37
+#: templates/list-documents.php:39
 msgid "The requested help document could not be found."
 msgstr ""
 
@@ -119,136 +119,140 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: wp-help.php:97
+#: wp-help.php:108
 msgctxt "post type label"
 msgid "Publishing Help"
 msgstr ""
 
-#: wp-help.php:114
+#: wp-help.php:125
 msgid "Help Documents"
 msgstr ""
 
-#: wp-help.php:115
+#: wp-help.php:126
 msgid "Help Document"
 msgstr ""
 
-#: wp-help.php:116
+#: wp-help.php:127
 msgid "Add New Help Document"
 msgstr ""
 
-#: wp-help.php:117
+#: wp-help.php:128
 msgid "Edit Help Document"
 msgstr ""
 
-#: wp-help.php:118
+#: wp-help.php:129
 msgid "New Help Document"
 msgstr ""
 
-#: wp-help.php:119
+#: wp-help.php:130
 msgid "View Help Document"
 msgstr ""
 
-#: wp-help.php:120
+#: wp-help.php:131
 msgid "Search Documents"
 msgstr ""
 
-#: wp-help.php:121
+#: wp-help.php:132
 msgid "No Help Documents Found"
 msgstr ""
 
-#: wp-help.php:122
+#: wp-help.php:133
 msgid "No Help Documents found in Trash"
 msgstr ""
 
-#: wp-help.php:123
+#: wp-help.php:134
 msgid "Parent Help Document"
 msgstr ""
 
-#: wp-help.php:124
+#: wp-help.php:135
 msgctxt "i.e. Add new Help Document"
 msgid "Add New"
 msgstr ""
 
-#: wp-help.php:125
+#: wp-help.php:136
 msgctxt "i.e. Edit Help Document"
 msgid "Edit"
 msgstr ""
 
-#: wp-help.php:126
+#: wp-help.php:137
 msgctxt "i.e. View Help Document"
 msgid "View"
 msgstr ""
 
-#: wp-help.php:141
+#: wp-help.php:152
 msgctxt "h2 default title"
 msgid "Publishing Help"
 msgstr ""
 
-#: wp-help.php:142
+#: wp-help.php:153
 msgctxt "h3 default title"
 msgid "Help Topics"
 msgstr ""
 
-#: wp-help.php:210
+#: wp-help.php:170
+msgid "Donate"
+msgstr ""
+
+#: wp-help.php:246
 msgid "&mdash; Remote document"
 msgstr ""
 
-#: wp-help.php:422
+#: wp-help.php:472
 msgid "What are you doing? You&#8217;re going to create an infinite loop!"
 msgstr ""
 
-#: wp-help.php:426
+#: wp-help.php:476
 msgid "That is not a WP Help URL. Make sure you copied it correctly."
 msgstr ""
 
-#: wp-help.php:494
+#: wp-help.php:565
 msgid "Set as default help document"
 msgstr ""
 
-#: wp-help.php:516
+#: wp-help.php:587
 msgid "Document updated. <a href=\"%s\">View document</a>"
 msgstr ""
 
-#: wp-help.php:517
+#: wp-help.php:588
 msgid "Custom field updated."
 msgstr ""
 
-#: wp-help.php:518
+#: wp-help.php:589
 msgid "Custom field deleted."
 msgstr ""
 
-#: wp-help.php:519
+#: wp-help.php:590
 msgid "Document updated."
 msgstr ""
 
-#: wp-help.php:520
+#: wp-help.php:591
 msgid "Document restored to revision from %s"
 msgstr ""
 
-#: wp-help.php:521
+#: wp-help.php:592
 msgid "Document published. <a href=\"%s\">View document</a>"
 msgstr ""
 
-#: wp-help.php:522
+#: wp-help.php:593
 msgid "Document saved."
 msgstr ""
 
-#: wp-help.php:523
+#: wp-help.php:594
 msgid ""
 "Document submitted. <a target=\"_blank\" href=\"%s\">Preview document</a>"
 msgstr ""
 
-#: wp-help.php:524
+#: wp-help.php:595
 msgid ""
 "Document scheduled for: <strong>%1$s</strong>. <a target=\"_blank\" href="
 "\"%2$s\">Preview document</a>"
 msgstr ""
 
-#: wp-help.php:524
+#: wp-help.php:595
 msgid "M j, Y @ G:i"
 msgstr ""
 
-#: wp-help.php:525
+#: wp-help.php:596
 msgid ""
 "Document draft updated. <a target=\"_blank\" href=\"%s\">Preview document</a>"
 msgstr ""
