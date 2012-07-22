@@ -408,18 +408,19 @@ class CWS_WP_Help_Plugin {
 	}
 
 	private function get_topics_for_api() {
-		$topics = new WP_Query( array( 'post_type' => self::POST_TYPE, 'posts_per_page' => -1, 'post_status' => 'publish' ) );
+		$topics = new WP_Query( array( 'post_type' => self::POST_TYPE, 'posts_per_page' => -1, 'post_status' => 'publish', 'orderby' => 'parent menu_order', 'order' => 'ASC' ) );
 		$default_doc = get_option( self::default_doc );
+		$menu_order = array();
 		foreach ( $topics->posts as $k => $post ) {
 			$c =& $topics->posts[$k];
 			unset( $c->guid, $c->post_author, $c->comment_count, $c->post_mime_type, $c->post_status, $c->post_type, $c->pinged, $c->to_ping, $c->filter, $c->ping_status, $c->comment_status, $c->post_password );
+			if ( isset( $menu_order[$c->post_parent] ) )
+				$menu_order[$c->post_parent]++;
+			else
+				$menu_order[$c->post_parent] = 1;
+			$c->menu_order = $menu_order[$c->post_parent];
 			if ( !$c->post_parent )
 				unset( $c->post_parent );
-			if ( $c->menu_order < 0 )
-				$c->menu_order = 100000 + $c->menu_order;
-			if ( $c->menu_order > 100000 )
-				$c->menu_order = $c->menu_order - 90000;
-
 			$c->post_content = $this->convert_links( $c->post_content );
 			if ( $c->ID == $default_doc )
 				$c->default = true;
