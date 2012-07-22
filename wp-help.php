@@ -308,7 +308,7 @@ class CWS_WP_Help_Plugin {
 				// These things are implied in the API, but we need to set them before inserting locally
 				$p['post_type'] = self::POST_TYPE;
 				$p['post_status'] = 'publish';
-				$p['menu_order'] += 100000;
+				// $p['menu_order'] += 100000;
 				$copy = $p;
 				if ( isset( $source_id_to_local_id[$p['ID']] ) ) {
 					// Exists. We know the local ID.
@@ -416,7 +416,7 @@ class CWS_WP_Help_Plugin {
 			if ( !$c->post_parent )
 				unset( $c->post_parent );
 			if ( $c->menu_order < 0 )
-				$c->menu_order = 100000 - $c->menu_order;
+				$c->menu_order = 100000 + $c->menu_order;
 			if ( $c->menu_order > 100000 )
 				$c->menu_order = $c->menu_order - 90000;
 
