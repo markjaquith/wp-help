@@ -20,6 +20,7 @@
 					placeholder: 'cws-wp-help-placeholder',
 					axis: 'y',
 					cursor: 'move',
+					cancel: '.cws-wp-help-is-slurped',
 					cursorAt: { left: 0, top: 0 },
 					distance: 10,
 					delay: 50,
