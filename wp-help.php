@@ -167,7 +167,7 @@ class CWS_WP_Help_Plugin {
 	}
 
 	public function action_links( $links ) {
-		$links['donate'] = '<a href="http://txfx.net/wordpress-plugins/donate">' . __( 'Donate' ) . '</a>';
+		$links['donate'] = '<a href="http://txfx.net/wordpress-plugins/donate">' . __( 'Donate', 'wp-help' ) . '</a>';
 		return $links;
 	}
 
