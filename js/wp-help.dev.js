@@ -5,6 +5,12 @@
 			p: function(i) {
 				return $('#cws-wp-help-' + i);
 			},
+			loading: function() {
+				data.loading.show();
+			},
+			loaded: function() {
+				data.loading.hide();
+			},
 			bindH2Updates: function() {
 				// Refresh this in case we just moved the menu
 				data.menu = $( '#adminmenu a.current' );
@@ -34,14 +40,27 @@
 						placeholder.height( item.height() + offset );
 					},
 					update: function( e, ui ) {
+						api.loading();
 						$.post( ajaxurl, {
 							action: 'cws_wp_help_reorder',
 							nonce: data.ul.data( 'nonce' ),
 							order: $(this).sortable( 'toArray' )
+						},
+						function() {
+							api.loaded();
 						});
 					}
 				});
 				$( this ).find( "> li:not(.cws-wp-help-is-slurped) > ul > li:nth-child(2)" ).parent( 'ul' ).each( api.sortable );
+			},
+			sortableInit: function() {
+				// Wrap remote docs
+				data.ul.find( '> #cws-wp-help-remote-docs-block > li' ).unwrap();
+				data.ul.find( '> li.cws-wp-help-is-slurped:first' ).before( '<div id="cws-wp-help-remote-docs-block"></div>' );
+				data.ul.find( '> li.cws-wp-help-is-slurped' ).detach().appendTo( '#cws-wp-help-remote-docs-block' );
+
+				// Sortable
+				data.ulSortable.each( api.sortable );
 			},
 			init: function() {
 				// Small CSS Tweaks for Firefox
@@ -50,12 +69,8 @@
 					data.h3.edit.input.css( 'margin-top', '2px' ).css( 'margin-bottom', '2.25px' );
 				}
 
-				// Wrap remote docs
-				data.ul.find( '> li.cws-wp-help-is-slurped:first' ).before( '<div id="cws-wp-help-remote-docs-block"></div>' );
-				data.ul.find( '> li.cws-wp-help-is-slurped' ).detach().appendTo( '#cws-wp-help-remote-docs-block' );
-
 				// Sortable
-				data.ulSortable.each( api.sortable );
+				api.sortableInit();
 
 				// Add IDs to the list
 				data.ul.find( 'li.page_item' ).each( function() {
@@ -158,6 +173,7 @@
 				});
 			},
 			saveSettings: function() {
+				api.loading();
 				api.clearError();
 				$([ data.h2, data.h3 ]).each( function() {
 					this.display.text.text( this.edit.input.val() );
@@ -181,7 +197,9 @@
 					if ( result.topics ) {
 						api.p( 'nodocs' ).remove();
 						data.ul.html( result.topics );
+						api.sortableInit();
 					}
+					api.loaded();
 				});
 			},
 			hideSettings: function() {
@@ -236,6 +254,7 @@
 			saveButton: api.p( 'settings-save' ),
 			cancelLink: api.p( 'settings-cancel' ),
 			menuLocation: api.p( 'menu-location' ),
+			loading: api.p( 'loading' ),
 			returnMonitor: $( '.wrap input[type="text"]' )
 		};
 

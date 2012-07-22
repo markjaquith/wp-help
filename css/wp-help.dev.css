@@ -165,6 +165,7 @@ input#cws-wp-help-api-url, input#cws-wp-help-slurp-url {
 	height: 40px;
 	padding-left: 17px;
 	left: -17px;
+	position: relative;
 	border: 1px dashed #bbb;
 	-moz-border-radius: 3px;
 	-khtml-border-radius: 3px;
@@ -203,4 +204,10 @@ input#cws-wp-help-api-url, input#cws-wp-help-slurp-url {
 
 #cws-wp-help-listing-wrap ul.can-sort .sort-handle:hover {
 	cursor: move;
+	}
+
+#cws-wp-help-loading {
+	position: absolute;
+	top: 19px;
+	left: 27px;
 	}

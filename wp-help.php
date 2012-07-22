@@ -511,7 +511,8 @@ class CWS_WP_Help_Plugin {
 				}
 				$val += 10;
 				if ( $p = get_page( $o ) ) {
-					wp_update_post( array( 'ID' => $p->ID, 'menu_order' => $val ) );
+					if ( intval( $p->menu_order ) !== $val )
+						wp_update_post( array( 'ID' => $p->ID, 'menu_order' => $val ) );
 				}
 			}
 		}
@@ -637,7 +638,7 @@ class CWS_WP_Help_Plugin {
 			</style>
 		<?php endif; ?>
 <div class="wrap">
-	<?php screen_icon(self::POST_TYPE); ?><div id="cws-wp-help-h2-label-wrap"><input type="text" id="cws-wp-help-h2-label" value="<?php echo esc_attr( $this->get_option( 'h2' ) ); ?>" /></div><h2><?php echo esc_html( $this->get_option( 'h2' ) ); ?></h2>
+	<?php screen_icon(self::POST_TYPE); ?><div id="cws-wp-help-h2-label-wrap"><input type="text" id="cws-wp-help-h2-label" value="<?php echo esc_attr( $this->get_option( 'h2' ) ); ?>" /></div><img id="cws-wp-help-loading" src="<?php echo plugins_url( '/images/loading.gif', __FILE__ ); ?>" style="display:none;" /><h2><?php echo esc_html( $this->get_option( 'h2' ) ); ?></h2>
 	<?php include( dirname( __FILE__ ) . '/templates/list-documents.php' ); ?>
 </div>
 <?php
