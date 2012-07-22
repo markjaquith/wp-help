@@ -99,8 +99,8 @@ class CWS_WP_Help_Plugin {
 		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'action_links' ) );
 		add_filter( 'network_admin_plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'action_links') );
 
-		// Temporary debug
-		add_filter( 'the_title', function( $title, $post_id ) { $post = get_post( $post_id ); return $title . ' [' . $post->menu_order . ']'; }, 10, 2 );
+		// menu_order debug
+		// add_filter( 'the_title', function( $title, $post_id ) { $post = get_post( $post_id ); return $title . ' [' . $post->menu_order . ']'; }, 10, 2 );
 
 		// Register the wp-help post type
 		register_post_type( self::POST_TYPE,
@@ -600,8 +600,8 @@ class CWS_WP_Help_Plugin {
 
 	public function enqueue() {
 		$suffix = defined ('SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '.dev' : '';
-		wp_enqueue_style( 'cws-wp-help', plugins_url( "css/wp-help$suffix.css", __FILE__ ), array(), '20120721' );
-		wp_enqueue_script( 'cws-wp-help', plugins_url( "js/wp-help$suffix.js", __FILE__ ), array( 'jquery', 'jquery-ui-sortable' ), '20120721' );
+		wp_enqueue_style( 'cws-wp-help', plugins_url( "css/wp-help$suffix.css", __FILE__ ), array(), '20120721b' );
+		wp_enqueue_script( 'cws-wp-help', plugins_url( "js/wp-help$suffix.js", __FILE__ ), array( 'jquery', 'jquery-ui-sortable' ), '20120721b' );
 		do_action( 'cws_wp_help_load' ); // Use this to enqueue your own styles for things like shortcodes.
 	}
 
