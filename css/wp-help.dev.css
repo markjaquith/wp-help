@@ -170,6 +170,7 @@ input#cws-wp-help-api-url, input#cws-wp-help-slurp-url {
 	-khtml-border-radius: 3px;
 	-webkit-border-radius: 3px;
 	border-radius: 3px;
+	list-style: none;
 	}
 
 #cws-wp-help-listing-wrap {
