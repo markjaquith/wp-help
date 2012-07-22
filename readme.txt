@@ -58,7 +58,7 @@ Not right now. But what you can do, is have a WP Help install that aggregates an
 
 = Why can't I reorder some docs using drag and drop? =
 
-Documents that come in via sync can only have their top level items sorted. The hierarchy within each top level item is locked. Also, if a local help document is the only document in its level, it won't get a drag handle, because there's nothing to reorder. Give it a subling, and you'll be able to order them how you like.
+You cannot internally sort synced documents — just move the whole "chunk" of synced documents around.. Also, if a local help document is the only document in its level, it won't get a drag handle, because there's nothing to reorder. Give it a sibling, and you'll be able to order them how you like.
 
 == Screenshots ==
 
@@ -83,7 +83,7 @@ Upgrade if you want to use WP Help in one of these languages: Bulgarian, German,
 * Feature: local /wp-admin/ links are rewritten when shared through the API so that they're wp-admin-relative and thus work on the destination site.
 * Improvement: more consistent cap checks, so plugins can consistently customize who can do what.
 * Improvement: restore settings form to previous state when "cancel" is clicked.
-* Bug fix: sort order is now synced (at least for non-top-level items).
+* Bug fix: sort order is now synced.
 
 = 1.0 =
 * Feature: sync help documents from another WP Help install.
