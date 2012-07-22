@@ -99,6 +99,9 @@ class CWS_WP_Help_Plugin {
 		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'action_links' ) );
 		add_filter( 'network_admin_plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'action_links') );
 
+		// Temporary debug
+		add_filter( 'the_title', function( $title, $post_id ) { $post = get_post( $post_id ); return $title . ' [' . $post->menu_order . ']'; }, 10, 2 );
+
 		// Register the wp-help post type
 		register_post_type( self::POST_TYPE,
 			array(
@@ -305,6 +308,7 @@ class CWS_WP_Help_Plugin {
 				// These things are implied in the API, but we need to set them before inserting locally
 				$p['post_type'] = self::POST_TYPE;
 				$p['post_status'] = 'publish';
+				$p['menu_order'] += 100000;
 				$copy = $p;
 				if ( isset( $source_id_to_local_id[$p['ID']] ) ) {
 					// Exists. We know the local ID.
@@ -409,9 +413,13 @@ class CWS_WP_Help_Plugin {
 		foreach ( $topics->posts as $k => $post ) {
 			$c =& $topics->posts[$k];
 			unset( $c->guid, $c->post_author, $c->comment_count, $c->post_mime_type, $c->post_status, $c->post_type, $c->pinged, $c->to_ping, $c->filter, $c->ping_status, $c->comment_status, $c->post_password );
-			if ( !$c->post_parent ) {
-				unset( $c->menu_order, $c->post_parent );
-			}
+			if ( !$c->post_parent )
+				unset( $c->post_parent );
+			if ( $c->menu_order < 0 )
+				$c->menu_order = 100000 - $c->menu_order;
+			if ( $c->menu_order > 100000 )
+				$c->menu_order = $c->menu_order - 90000;
+
 			$c->post_content = $this->convert_links( $c->post_content );
 			if ( $c->ID == $default_doc )
 				$c->default = true;
@@ -493,11 +501,15 @@ class CWS_WP_Help_Plugin {
 		if ( current_user_can( $this->get_cap( 'publish_posts' ) ) && isset( $_POST['nonce'] ) && wp_verify_nonce( $_POST['nonce'], 'cws-wp-help-reorder' ) ) {
 			$order = array();
 			foreach( $_POST['order'] as $o ) {
-				$order[] = absint( str_replace( 'page-', '', $o ) );
+				$order[] = str_replace( 'page-', '', $o );
 			}
-			$val = 0;
+			$val = -100000;
 			foreach ( $order as $o ) {
-				$val += 100;
+				if ( 'cws-wp-help-remote-docs-block' === $o ) {
+					$val = 100000;
+					continue;
+				}
+				$val += 10;
 				if ( $p = get_page( $o ) ) {
 					wp_update_post( array( 'ID' => $p->ID, 'menu_order' => $val ) );
 				}

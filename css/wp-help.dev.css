@@ -177,20 +177,20 @@ input#cws-wp-help-api-url, input#cws-wp-help-slurp-url {
 	/* background: pink; */
 	}
 
-#cws-wp-help-listing-wrap ul > li > img.sort-handle {
+#cws-wp-help-listing-wrap ul > li > img.sort-handle, #cws-wp-help-listing-wrap ul > div#cws-wp-help-remote-docs-block > li > img.sort-handle {
 	display: none;
 	}
 
-#cws-wp-help-listing-wrap ul.ui-sortable > li {
+#cws-wp-help-listing-wrap ul.ui-sortable li {
 	position: relative;
 	}
 
-#cws-wp-help-listing-wrap ul.ui-sortable > li.cws-wp-help-local {
+#cws-wp-help-listing-wrap ul.ui-sortable > li.cws-wp-help-local, #cws-wp-help-listing-wrap ul.ui-sortable > div#cws-wp-help-remote-docs-block> li:first-child {
 	list-style: none;
 	}
 
 
-#cws-wp-help-listing-wrap ul.ui-sortable > li.cws-wp-help-local > img.sort-handle {
+#cws-wp-help-listing-wrap ul.ui-sortable > li.cws-wp-help-local > img.sort-handle, #cws-wp-help-listing-wrap ul.ui-sortable > div#cws-wp-help-remote-docs-block> li:first-child > img.sort-handle {
 	display: inline;
 	position: absolute;
 	left: -17px;

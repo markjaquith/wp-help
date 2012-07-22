@@ -20,12 +20,12 @@
 					placeholder: 'cws-wp-help-placeholder',
 					axis: 'y',
 					cursor: 'move',
-					cancel: '.cws-wp-help-is-slurped',
+					xcancel: '.cws-wp-help-is-slurped',
 					cursorAt: { left: 0, top: 0 },
 					distance: 10,
 					delay: 50,
 					handle: '.sort-handle',
-					items: '> li',
+					items: '> li.cws-wp-help-local, > div#cws-wp-help-remote-docs-block',
 					start: function( e, ui ) {
 						$( '.cws-wp-help-placeholder' ).height( $( ui.item ).height() - 2 ); // -2 for the border
 					},
@@ -45,6 +45,10 @@
 					data.h2.edit.input.css( 'top', '-3px' ).css( 'margin-bottom', '1px' );
 					data.h3.edit.input.css( 'margin-top', '2px' ).css( 'margin-bottom', '2.25px' );
 				}
+
+				// Wrap remote docs
+				data.ul.find( '> li.cws-wp-help-is-slurped:first' ).before( '<div id="cws-wp-help-remote-docs-block"></div>' );
+				data.ul.find( '> li.cws-wp-help-is-slurped' ).detach().appendTo( '#cws-wp-help-remote-docs-block' );
 
 				// Sortable
 				data.ulSortable.each( api.sortable );
