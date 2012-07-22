@@ -52,11 +52,22 @@ Documents that came from another WP Help install that is currently connected, ca
 
 Enabling sync will delete any documents that came in via another sync source. **But it will not delete locally-created documents.**
 
+= Can I have multiple sync sources? =
+
+Not right now. But what you can do, is have a WP Help install that aggregates another WP Help install and is then itself used as a source for the combination of the two sites docs, to be delivered to a third site.
+
+= Why can't I reorder some docs using drag and drop? =
+
+Documents that come in via sync can only have their top level items sorted. The hierarchy within each top level item is locked. Also, if a local help document is the only document in its level, it won't get a drag handle, because there's nothing to reorder. Give it a subling, and you'll be able to order them how you like.
+
 == Screenshots ==
 
 1. The Publishing Help screen, which lists and displays available help documents.
 
 == Upgrade Notice ==
+= 1.1 =
+Sexy drag and drop reordering, and order-syncing through the sync API.
+
 = 1.0 =
 MASSIVE UPDATE. Sync help documents from another WP Help install. Rename and relocate the menu item. Dashboard widget. Easier navigation.
 
@@ -69,9 +80,10 @@ Upgrade if you want to use WP Help in one of these languages: Bulgarian, German,
 == Changelog ==
 = 1.1 =
 * Feature: drag and drop reordering of the documents list.
-* Feature: local /wp-admin/ links are rewritten when shared through the API so that they're wp-admin relative and thus work on the destination site.
+* Feature: local /wp-admin/ links are rewritten when shared through the API so that they're wp-admin-relative and thus work on the destination site.
 * Improvement: more consistent cap checks, so plugins can consistently customize who can do what.
 * Improvement: restore settings form to previous state when "cancel" is clicked.
+* Bug fix: sort order is now synced (at least for non-top-level items).
 
 = 1.0 =
 * Feature: sync help documents from another WP Help install.
@@ -90,3 +102,10 @@ Upgrade if you want to use WP Help in one of these languages: Bulgarian, German,
 
 = 0.1 =
 * Initial version
+
+== Roadmap ==
+
+I'm not saying these things are definitely coming, but they're the sort of things that are on my radar, in case you were wondering:
+
+* Multiple sync sources
+* Multiple sync groups (segment top level documents into "categories" and get a unique sync URL for each)

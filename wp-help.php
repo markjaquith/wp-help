@@ -2,7 +2,7 @@
 /*
 Plugin Name: WP Help
 Description: Administrators can create detailed, hierarchical documentation for the site's authors and editors, viewable in the WordPress admin.
-Version: 1.1-beta-1
+Version: 1.1
 License: GPL
 Plugin URI: http://txfx.net/wordpress-plugins/wp-help/
 Author: Mark Jaquith
@@ -85,6 +85,7 @@ class CWS_WP_Help_Plugin {
 		add_action( 'wp_dashboard_setup',           array( $this, 'wp_dashboard_setup'    )        );
 		add_filter( 'page_css_class',               array( $this, 'page_css_class'        ), 10, 5 );
 		add_filter( 'wp_list_pages',                array( $this, 'wp_list_pages'         )        );
+
 		if ( 'dashboard-submenu' != $this->get_option( 'menu_location' ) ) {
 			$this->admin_base = 'admin.php';
 			if ( 'bottom' != $this->get_option( 'menu_location' ) ) {
@@ -95,7 +96,9 @@ class CWS_WP_Help_Plugin {
 			$this->admin_base = 'index.php';
 		}
 		add_filter( 'page_attributes_dropdown_pages_args', array( $this, 'page_attributes_dropdown' ), 10, 2 );
-		
+		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'action_links' ) );
+		add_filter( 'network_admin_plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'action_links') );
+
 		// Register the wp-help post type
 		register_post_type( self::POST_TYPE,
 			array(
@@ -158,6 +161,11 @@ class CWS_WP_Help_Plugin {
 
 	private function get_cap( $cap ) {
 		return get_post_type_object( self::POST_TYPE )->cap->{$cap};
+	}
+
+	public function action_links( $links ) {
+		$links['donate'] = '<a href="http://txfx.net/wordpress-plugins/donate">' . __( 'Donate' ) . '</a>';
+		return $links;
 	}
 
 	public function wp_dashboard_setup() {
