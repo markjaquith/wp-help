@@ -33,7 +33,7 @@
 <?php if ( $document_id ) : ?>
 	<?php $document = new WP_Query( array( 'post_type' => self::POST_TYPE, 'p' => $document_id ) ); ?>
 	<?php if ( $document->have_posts() ) : $document->the_post(); ?>
-		<h2><?php the_title(); ?><?php edit_post_link( 'edit', ' <small>', '</small>' ); ?><?php $this->explain_slurp( $document_id ); ?></h2>
+		<h2><?php the_title(); ?><?php edit_post_link( __( 'edit', 'wp-help' ), ' <small>', '</small>' ); ?><?php $this->explain_slurp( $document_id ); ?></h2>
 		<?php the_content(); ?>
 	<?php else : ?>
 		<p><?php _e( 'The requested help document could not be found.', 'wp-help' ); ?></p>

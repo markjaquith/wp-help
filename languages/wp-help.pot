@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP Help 1.1\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/wp-help\n"
-"POT-Creation-Date: 2012-07-22 07:24:09+00:00\n"
+"POT-Creation-Date: 2012-07-22 17:26:39+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -33,6 +33,10 @@ msgstr ""
 
 #: templates/list-documents.php:18
 msgid "There are no help documents yet."
+msgstr ""
+
+#: templates/list-documents.php:36
+msgid "edit"
 msgstr ""
 
 #: templates/list-documents.php:39
