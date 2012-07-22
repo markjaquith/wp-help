@@ -20,14 +20,18 @@
 					placeholder: 'cws-wp-help-placeholder',
 					axis: 'y',
 					cursor: 'move',
-					xcancel: '.cws-wp-help-is-slurped',
 					cursorAt: { left: 0, top: 0 },
 					distance: 10,
 					delay: 50,
 					handle: '.sort-handle',
 					items: '> li.cws-wp-help-local, > div#cws-wp-help-remote-docs-block',
 					start: function( e, ui ) {
-						$( '.cws-wp-help-placeholder' ).height( $( ui.item ).height() - 2 ); // -2 for the border
+						var item = $( ui.item ), placeholder = $( '.cws-wp-help-placeholder' ), offset;
+						if ( item.attr( 'id' ) === 'cws-wp-help-remote-docs-block' )
+							offset = 4;
+						else
+							offset = -2;
+						placeholder.height( item.height() + offset );
 					},
 					update: function( e, ui ) {
 						$.post( ajaxurl, {
