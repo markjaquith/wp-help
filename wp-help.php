@@ -2,7 +2,7 @@
 /*
 Plugin Name: WP Help
 Description: Administrators can create detailed, hierarchical documentation for the site's authors and editors, viewable in the WordPress admin.
-Version: 1.1
+Version: 1.2-alpha
 License: GPL
 Plugin URI: http://txfx.net/wordpress-plugins/wp-help/
 Author: Mark Jaquith
@@ -251,6 +251,7 @@ class CWS_WP_Help_Plugin {
 		if ( isset( $_GET['post'] ) ) {
 			if ( self::POST_TYPE === get_post_type( $_GET['post'] ) ) {
 				wp_enqueue_script( 'jquery' );
+				add_action( 'admin_head',   array( $this, 'edit_page_css'   ) );
 				add_action( 'admin_footer', array( $this, 'add_manage_link' ) );
 			}
 		}
@@ -259,8 +260,13 @@ class CWS_WP_Help_Plugin {
 	public function load_post_new() {
 		if ( isset( $_GET['post_type'] ) && self::POST_TYPE === $_GET['post_type'] ) {
 			wp_enqueue_script( 'jquery' );
+			add_action( 'admin_head',   array( $this, 'edit_page_css'   ) );
 			add_action( 'admin_footer', array( $this, 'add_manage_link' ) );
 		}
+	}
+
+	public function edit_page_css() {
+		?><style>#pageparentdiv .inside p:nth-of-type(2), #pageparentdiv .inside p:nth-of-type(3) { display: none; }</style><?php
 	}
 
 	public function add_manage_link() {
