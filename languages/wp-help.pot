@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the WP Help package.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Help 1.1\n"
+"Project-Id-Version: WP Help 1.2-alpha\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/wp-help\n"
-"POT-Creation-Date: 2012-07-22 17:26:28+00:00\n"
+"POT-Creation-Date: 2012-07-23 17:02:05+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -22,7 +22,7 @@ msgctxt "Button with limited space"
 msgid "Add New"
 msgstr ""
 
-#: templates/list-documents.php:8 wp-help.php:267
+#: templates/list-documents.php:8 wp-help.php:268
 msgctxt "verb. Button with limited space"
 msgid "Manage"
 msgstr ""
@@ -201,62 +201,66 @@ msgstr ""
 msgid "&mdash; Remote document"
 msgstr ""
 
-#: wp-help.php:472
+#: wp-help.php:273
+msgid "Parent:"
+msgstr ""
+
+#: wp-help.php:481
 msgid "What are you doing? You&#8217;re going to create an infinite loop!"
 msgstr ""
 
-#: wp-help.php:476
+#: wp-help.php:485
 msgid "That is not a WP Help URL. Make sure you copied it correctly."
 msgstr ""
 
-#: wp-help.php:565
+#: wp-help.php:574
 msgid "Set as default help document"
 msgstr ""
 
-#: wp-help.php:587
+#: wp-help.php:596
 msgid "Document updated. <a href=\"%s\">View document</a>"
 msgstr ""
 
-#: wp-help.php:588
+#: wp-help.php:597
 msgid "Custom field updated."
 msgstr ""
 
-#: wp-help.php:589
+#: wp-help.php:598
 msgid "Custom field deleted."
 msgstr ""
 
-#: wp-help.php:590
+#: wp-help.php:599
 msgid "Document updated."
 msgstr ""
 
-#: wp-help.php:591
+#: wp-help.php:600
 msgid "Document restored to revision from %s"
 msgstr ""
 
-#: wp-help.php:592
+#: wp-help.php:601
 msgid "Document published. <a href=\"%s\">View document</a>"
 msgstr ""
 
-#: wp-help.php:593
+#: wp-help.php:602
 msgid "Document saved."
 msgstr ""
 
-#: wp-help.php:594
+#: wp-help.php:603
 msgid ""
 "Document submitted. <a target=\"_blank\" href=\"%s\">Preview document</a>"
 msgstr ""
 
-#: wp-help.php:595
+#: wp-help.php:604
 msgid ""
 "Document scheduled for: <strong>%1$s</strong>. <a target=\"_blank\" href="
 "\"%2$s\">Preview document</a>"
 msgstr ""
 
-#: wp-help.php:595
+#: wp-help.php:604
 msgid "M j, Y @ G:i"
 msgstr ""
 
-#: wp-help.php:596
+#: wp-help.php:605
 msgid ""
 "Document draft updated. <a target=\"_blank\" href=\"%s\">Preview document</a>"
 msgstr ""
