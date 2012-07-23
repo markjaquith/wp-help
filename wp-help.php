@@ -251,8 +251,7 @@ class CWS_WP_Help_Plugin {
 		if ( isset( $_GET['post'] ) ) {
 			if ( self::POST_TYPE === get_post_type( $_GET['post'] ) ) {
 				wp_enqueue_script( 'jquery' );
-				add_action( 'admin_head',   array( $this, 'edit_page_css'   ) );
-				add_action( 'admin_footer', array( $this, 'add_manage_link' ) );
+				add_action( 'admin_footer', array( $this, 'edit_page_js' ) );
 			}
 		}
 	}
@@ -260,17 +259,21 @@ class CWS_WP_Help_Plugin {
 	public function load_post_new() {
 		if ( isset( $_GET['post_type'] ) && self::POST_TYPE === $_GET['post_type'] ) {
 			wp_enqueue_script( 'jquery' );
-			add_action( 'admin_head',   array( $this, 'edit_page_css'   ) );
-			add_action( 'admin_footer', array( $this, 'add_manage_link' ) );
+			add_action( 'admin_footer', array( $this, 'edit_page_js' ) );
 		}
 	}
 
-	public function edit_page_css() {
-		?><style>#pageparentdiv .inside p:nth-of-type(2), #pageparentdiv .inside p:nth-of-type(3) { display: none; }</style><?php
-	}
-
-	public function add_manage_link() {
-		?><script>(function($){var a=$('.wrap:first h2:first a:first');var i=' <a href="edit.php?post_type=<?php echo self::POST_TYPE; ?>" class="add-new-h2"><?php echo esc_js( _x( 'Manage', 'verb. Button with limited space', 'wp-help' ) ); ?></a> ';if(a.length)a.before(i);else $('.wrap:first h2:first').append(i);})(jQuery);</script><?php
+	public function edit_page_js() {
+		?><script>(function($){
+			var a = $('.wrap:first h2:first a:first'), i = ' <a href="edit.php?post_type=<?php echo self::POST_TYPE; ?>" class="add-new-h2"><?php echo esc_js( _x( 'Manage', 'verb. Button with limited space', 'wp-help' ) ); ?></a> ';
+			if ( a.length )
+				a.before(i);
+			else
+				$('.wrap:first h2:first').append(i);
+			$('#parent_id').detach().insertAfter( '.misc-pub-section:last' ).wrap('<div class="misc-pub-section"></div>').before( '<?php echo esc_js( __( 'Parent:', 'wp-help' ) ); ?> ' ).css( 'max-width', '80%' );
+			$('#pageparentdiv').hide();
+			$('#screen-options-wrap #pageparentdiv-hide').parent('label').hide();
+			})(jQuery);</script><?php
 	}
 
 	public function map_meta_cap( $caps, $cap, $user_id, $args ) {
