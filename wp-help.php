@@ -46,6 +46,9 @@ class CWS_WP_Help_Plugin {
 	}
 
 	public function init() {
+		// Translations
+		load_plugin_textdomain( 'wp-help', false, basename( dirname( __FILE__ ) ) . '/languages' );
+
 		// Options
 		$raw_options = get_option( self::OPTION );
 		if ( !is_array( $raw_options ) )
@@ -62,9 +65,6 @@ class CWS_WP_Help_Plugin {
 		// Cron job
 		if ( !wp_next_scheduled( self::CRON_HOOK ) )
 			wp_schedule_event( current_time( 'timestamp' ), 'daily', self::CRON_HOOK );
-
-		// Translations
-		load_plugin_textdomain( 'wp-help', false, basename( dirname( __FILE__ ) ) . '/languages' );
 
 		// Actions and filters
 		add_action( self::CRON_HOOK,                array( $this, 'api_slurp'             )        );
