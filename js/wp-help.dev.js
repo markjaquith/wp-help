@@ -43,7 +43,7 @@
 						api.loading();
 						$.post( ajaxurl, {
 							action: 'cws_wp_help_reorder',
-							nonce: data.ul.data( 'nonce' ),
+							_ajax_nonce: data.ul.data( 'nonce' ),
 							order: $(this).sortable( 'toArray' )
 						},
 						function() {
@@ -180,7 +180,7 @@
 				});
 				$.post( ajaxurl, {
 					action: 'cws_wp_help_settings',
-					nonce: $('#_cws_wp_help_nonce').val(),
+					_ajax_nonce: $('#_cws_wp_help_nonce').val(),
 					h2: data.h2.edit.input.val(),
 					h3: data.h3.edit.input.val(),
 					menu_location: data.menuLocation.val(),

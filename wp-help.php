@@ -469,7 +469,7 @@ class CWS_WP_Help_Plugin {
 	}
 
 	public function ajax_settings() {
-		if ( current_user_can( 'manage_options' ) && isset( $_POST['nonce'] ) && wp_verify_nonce( $_POST['nonce'], 'cws-wp-help-settings' ) ) {
+		if ( current_user_can( 'manage_options' ) && check_ajax_referer( 'cws-wp-help-settings' ) ) {
 			$error = false;
 			$refresh = false;
 			$old_menu_location = $this->options['menu_location'];
@@ -508,7 +508,7 @@ class CWS_WP_Help_Plugin {
 	}
 
 	public function ajax_reorder() {
-		if ( current_user_can( $this->get_cap( 'publish_posts' ) ) && isset( $_POST['nonce'] ) && wp_verify_nonce( $_POST['nonce'], 'cws-wp-help-reorder' ) ) {
+		if ( current_user_can( $this->get_cap( 'publish_posts' ) ) && check_ajax_referer( 'cws-wp-help-reorder' ) ) {
 			$order = array();
 			foreach( $_POST['order'] as $o ) {
 				$order[] = str_replace( 'page-', '', $o );
@@ -610,7 +610,7 @@ class CWS_WP_Help_Plugin {
 	public function enqueue() {
 		$suffix = defined ('SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '.dev' : '';
 		wp_enqueue_style( 'cws-wp-help', plugins_url( "css/wp-help$suffix.css", __FILE__ ), array(), '20120721b' );
-		wp_enqueue_script( 'cws-wp-help', plugins_url( "js/wp-help$suffix.js", __FILE__ ), array( 'jquery', 'jquery-ui-sortable' ), '20120721b' );
+		wp_enqueue_script( 'cws-wp-help', plugins_url( "js/wp-help$suffix.js", __FILE__ ), array( 'jquery', 'jquery-ui-sortable' ), '20120730' );
 		do_action( 'cws_wp_help_load' ); // Use this to enqueue your own styles for things like shortcodes.
 	}
 
