@@ -495,7 +495,7 @@ class CWS_WP_Help_Plugin {
 			);
 			if ( $refresh ) {
 				$this->api_slurp();
-				$result['topics'] = $this->get_help_topics_html();
+				$result['topics'] = $this->get_help_topics_html( true );
 			} elseif ( !empty( $this->options['slurp_url'] ) ) {
 				// It didn't change, but we should trigger an update in the background
 				wp_schedule_single_event( current_time( 'timestamp' ), self::CRON_HOOK );
@@ -630,8 +630,9 @@ class CWS_WP_Help_Plugin {
 			return $link;
 	}
 
-	private function get_help_topics_html() {
-		$this->filter_wp_list_pages = true;
+	private function get_help_topics_html( $with_sort_handles = false ) {
+		if ( $with_sort_handles )
+			$this->filter_wp_list_pages = true;
 		$output = trim( wp_list_pages( array( 'post_type' => self::POST_TYPE, 'hierarchical' => true, 'echo' => false, 'title_li' => '' ) ) );
 		$this->filter_wp_list_pages = false;
 		return $output;

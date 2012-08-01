@@ -1,6 +1,6 @@
 <?php if ( !defined( 'ABSPATH' ) ) die(); ?>
 
-<?php $pages = $this->get_help_topics_html(); ?>
+<?php $pages = $this->get_help_topics_html( true ); ?>
 <div id="cws-wp-help-listing">
 <?php if ( current_user_can( 'publish_pages' ) || current_user_can( 'manage_options' ) ) : ?>
 	<div id="cws-wp-help-actions">
