@@ -248,19 +248,18 @@ class CWS_WP_Help_Plugin {
 	}
 
 	public function load_post() {
-		if ( isset( $_GET['post'] ) ) {
-			if ( self::POST_TYPE === get_post_type( $_GET['post'] ) ) {
-				wp_enqueue_script( 'jquery' );
-				add_action( 'admin_footer', array( $this, 'edit_page_js' ) );
-			}
-		}
+		if ( isset( $_GET['post'] ) && self::POST_TYPE === get_post_type( $_GET['post'] ) )
+			$this->edit_enqueues();
 	}
 
 	public function load_post_new() {
-		if ( isset( $_GET['post_type'] ) && self::POST_TYPE === $_GET['post_type'] ) {
-			wp_enqueue_script( 'jquery' );
-			add_action( 'admin_footer', array( $this, 'edit_page_js' ) );
-		}
+		if ( isset( $_GET['post_type'] ) && self::POST_TYPE === $_GET['post_type'] )
+			$this->edit_enqueues();
+	}
+
+	private function edit_enqueues() {
+		wp_enqueue_script( 'jquery' );
+		add_action( 'admin_footer', array( $this, 'edit_page_js' ) );
 	}
 
 	public function edit_page_js() {
