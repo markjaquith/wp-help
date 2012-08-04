@@ -1,16 +1,82 @@
 (function($) {
 	$(function() {
 // ==========================================================
-		var api = {
+		var api, load;
+
+		(function() {
+			var whens = [],
+				deferred,
+				timeout;
+
+			load = {
+				start: function( sensitivity ) {
+					// Create the timer deferred: the read/write timer state.
+					var timer = $.Deferred();
+
+					// Default to an instant success.
+					sensitivity = sensitivity || 0;
+
+					// Show the spinner.
+					data.loading.show();
+
+					// Start the timer.
+					setTimeout( function() {
+						// When the timer completes, resolve the deferred (success).
+						timer.resolve();
+					}, sensitivity );
+
+					// Return the promise: the read-only timer state.
+					return timer.promise();
+				},
+				stop: function() {
+					if ( deferred )
+						deferred.reject();
+					deferred = null;
+					whens = [];
+
+					data.loading.hide();
+				},
+				/**
+				 * Show the loading spinner until all the promises succeed.
+				 * Optionally show the spinner for a minimum amount of time.
+				 *
+				 * until( [sensitivity], promises* );
+				 * @param  {number} sensitivity The number of milliseconds to show the spinner, at minimum.
+				 * @param  {object} promises*   Any number of jQuery promises.
+				 * @return {object}             A jQuery promise representing the state of all input promises.
+				 */
+				until: function() {
+					deferred = deferred || $.Deferred().always( api.load.stop );
+
+					// Make arguments into a real array.
+					var promises    = Array.prototype.slice.call( arguments ),
+						sensitivity = typeof arguments[0] === 'number' ? promises.shift() : 0,
+						index       = whens.push( false ) - 1;
+
+					// Add the start promise onto the the stack.
+					promises.push( api.load.start( sensitivity ) );
+
+					// When all the promises are complete (including the timer), hide the timer.
+					// $.when returns a promise object.
+
+					$.when.apply( $, promises ).always( function() {
+						whens[ index ] = true;
+						// Are there any pending requests?
+						if ( -1 === $.inArray( false, whens ) )
+							deferred.resolve();
+					});
+
+					return deferred.promise();
+				}
+			};
+		}());
+
+
+		api = {
 			p: function(i) {
 				return $('#cws-wp-help-' + i);
 			},
-			loading: function() {
-				data.loading.show();
-			},
-			loaded: function() {
-				data.loading.hide();
-			},
+			load: load,
 			bindH2Updates: function() {
 				// Refresh this in case we just moved the menu
 				data.menu = $( '#adminmenu a.current' );
@@ -40,15 +106,13 @@
 						placeholder.height( item.height() + offset );
 					},
 					update: function( e, ui ) {
-						api.loading();
-						$.post( ajaxurl, {
+						var request = $.post( ajaxurl, {
 							action: 'cws_wp_help_reorder',
 							_ajax_nonce: data.ul.data( 'nonce' ),
 							order: $(this).sortable( 'toArray' )
-						},
-						function() {
-							api.loaded();
 						});
+
+						api.load.until( 200, request );
 					}
 				});
 				$( this ).find( "> li:not(.cws-wp-help-is-slurped) > ul > li:nth-child(2)" ).parent( 'ul' ).each( api.sortable );
@@ -173,12 +237,11 @@
 				});
 			},
 			saveSettings: function() {
-				api.loading();
 				api.clearError();
 				$([ data.h2, data.h3 ]).each( function() {
 					this.display.text.text( this.edit.input.val() );
 				});
-				$.post( ajaxurl, {
+				var request = $.post( ajaxurl, {
 					action: 'cws_wp_help_settings',
 					_ajax_nonce: $('#_cws_wp_help_nonce').val(),
 					h2: data.h2.edit.input.val(),
@@ -199,8 +262,8 @@
 						data.ul.html( result.topics );
 						api.sortableInit();
 					}
-					api.loaded();
 				});
+				api.load.until( 200, request );
 			},
 			hideSettings: function() {
 				$([ data.h2, data.h3 ]).each( function() {
@@ -262,4 +325,4 @@
 		api.init();
 // ==========================================================
 	});
-})(jQuery);
+}(jQuery));
