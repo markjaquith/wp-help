@@ -79,7 +79,9 @@
 			load: load,
 			bindH2Updates: function() {
 				// Refresh this in case we just moved the menu
-				data.menu = $( '#adminmenu a.current' );
+				data.menu = $( '#adminmenu a.current .wp-menu-name' ); // WordPress 3.5+
+				if ( !data.menu.length ) // WordPress 3.4.x and lower
+					data.menu = $( '#adminmenu a.current' );
 				data.menu.text( data.h2.edit.input.val() );
 				// Send h2 updates to the menu item as we type
 				data.h2.edit.input.bind( 'keyup', function() {
