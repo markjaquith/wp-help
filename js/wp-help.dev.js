@@ -169,7 +169,7 @@
 					api.revealSettings();
 					data.h2.edit.input.focus().select();
 				});
-				
+
 				// Doubleclick the h3
 				data.h3.display.text.dblclick( function() {
 					api.revealSettings();
@@ -196,7 +196,7 @@
 					}
 					var newLocationPreview = String( newLocation ) + '&wp-help-preview-menu-location=' + data.menuLocation.val();
 					var commonScript = String( newLocation ).replace( /\/wp-admin\/.*$/, '/wp-admin/js/common.js' );
-					
+
 					$( '#adminmenu' ).load( newLocationPreview + ' #adminmenu', function() {
 						if ( window.history.replaceState ) {
 							window.history.replaceState( null, null, newLocation );
