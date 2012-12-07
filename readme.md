@@ -65,6 +65,9 @@ You cannot internally sort synced documents — just move the whole "chunk" of s
 1. The Publishing Help screen, which lists and displays available help documents.
 
 ## Upgrade Notice ##
+### 1.2 ###
+Update for better UI and support for WordPress 3.5.
+
 ### 1.1 ###
 Sexy drag and drop reordering, and order-syncing through the sync API.
 
@@ -78,6 +81,11 @@ Upgrade for a French translation.
 Upgrade if you want to use WP Help in one of these languages: Bulgarian, German, Spanish, Mexican Spanish, Macedonian, Dutch, Brazilian Portuguese, or Russian.
 
 ## Changelog ##
+### 1.2 ###
+* New or updated translations for Gujarati, Norwegian, and Brazilian Portuguese.
+* CSS fixes for WordPress 3.5.
+* More robust AJAX saving when save events overlap.
+
 ### 1.1 ###
 * Feature: drag and drop reordering of the documents list.
 * Feature: local /wp-admin/ links are rewritten when shared through the API so that they're wp-admin-relative and thus work on the destination site.
