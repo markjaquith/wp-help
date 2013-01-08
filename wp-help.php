@@ -633,7 +633,8 @@ class CWS_WP_Help_Plugin {
 	private function get_help_topics_html( $with_sort_handles = false ) {
 		if ( $with_sort_handles )
 			$this->filter_wp_list_pages = true;
-		$output = trim( wp_list_pages( array( 'post_type' => self::POST_TYPE, 'hierarchical' => true, 'echo' => false, 'title_li' => '' ) ) );
+		$defaults = array( 'post_type' => self::POST_TYPE, 'hierarchical' => true, 'echo' => false, 'title_li' => '' );
+		$output = trim( wp_list_pages( apply_filters( 'cws_wp_help_list_pages', $defaults ) ) );
 		$this->filter_wp_list_pages = false;
 		return $output;
 	}
