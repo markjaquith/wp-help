@@ -111,8 +111,14 @@ jQuery ($) ->
 		init: ->
 			# Small CSS Tweaks for Firefox
 			if $.browser.mozilla
-				data.h2.edit.input.css("top", "-3px").css "margin-bottom", "1px"
-				data.h3.edit.input.css("margin-top", "2px").css "margin-bottom", "2.25px"
+				data.h2.edit.input.css
+					top: '-3px'
+					left: '-5px'
+					'margin-bottom': '1px'
+				data.h3.edit.input.css
+					'margin-top': '2px'
+					'margin-bottom': '2.25px'
+					left: '-6px'
 
 			# Sortable
 			api.sortableInit()
