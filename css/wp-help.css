@@ -112,7 +112,7 @@ input#cws-wp-help-listing-label {
 	font-size: 1.17em;
 	font-weight: bold;
 	position: relative;
-	left: -6px;
+	left: -5px;
 	top: -5px;
 	border: 1px dashed #dfdfdf;
 	width: 258px;
@@ -131,7 +131,7 @@ input#cws-wp-help-h2-label {
 	line-height: 29px;
 	position: relative;
 	top: -4px;
-	left: -5px;
+	left: -4px;
 	margin: 9px 15px 0 0;
 	border: 1px dashed #dfdfdf;
 	width: 450px;
