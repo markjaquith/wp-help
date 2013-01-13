@@ -83,7 +83,7 @@
 		font-size: 12px;
 		font-family: sans-serif;
 		color: #888;
-		text-shadow: white 0 1px 0;
+		@include text-shadow(white 0 1px 0);
 
 		a {
 			text-decoration: none;
@@ -131,7 +131,7 @@ input#cws-wp-help-h2-label {
 	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", sans-serif;
 	font-size: 23px;
 	color: #464646;
-	text-shadow: white 0 1px 0;
+	@include text-shadow(white 0 1px 0);
 	line-height: 29px;
 	position: relative;
 	top: -4px;
