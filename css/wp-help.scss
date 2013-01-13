@@ -158,11 +158,9 @@ input#cws-wp-help-slurp-url {
 	display: none;
 	margin: 5px 0 15px;
 	background: #FFEBE8;
-	border-color: #CC0000;
+	border: 1px solid #CC0000;
 	padding: 0 0.6em;
 	@include border-radius(3px);
-	border-width: 1px;
-	border-style: solid;
 }
 
 #icon-wp-help {
