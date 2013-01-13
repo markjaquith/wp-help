@@ -35,15 +35,6 @@
       "outputStyle" : 0,
       "fileType" : 32
     },
-    "\/templates\/settings.php" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/templates\/settings.php",
-      "outputAbbreviatedPath" : "No Output Path",
-      "fileType" : 2048
-    },
     "\/screenshot-1.png" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
@@ -54,6 +45,15 @@
       "outputAbbreviatedPath" : "\/screenshot-1.png",
       "initialSize" : 79493,
       "fileType" : 8192
+    },
+    "\/templates\/settings.php" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/templates\/settings.php",
+      "outputAbbreviatedPath" : "No Output Path",
+      "fileType" : 2048
     },
     "\/images\/sort.png" : {
       "ignoreWasSetByUser" : 0,
@@ -66,15 +66,6 @@
       "initialSize" : 230,
       "fileType" : 8192
     },
-    "\/config.rb" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/config.rb",
-      "outputAbbreviatedPath" : "No Output Path",
-      "fileType" : 32768
-    },
     "\/wp-help.php" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
@@ -83,6 +74,15 @@
       "inputAbbreviatedPath" : "\/wp-help.php",
       "outputAbbreviatedPath" : "No Output Path",
       "fileType" : 2048
+    },
+    "\/config.rb" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/config.rb",
+      "outputAbbreviatedPath" : "No Output Path",
+      "fileType" : 32768
     },
     "\/css\/wp-help.css" : {
       "ignoreWasSetByUser" : 0,
@@ -104,17 +104,6 @@
       "initialSize" : 1286,
       "fileType" : 8192
     },
-    "\/js\/wp-help.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/js\/wp-help.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 1,
-      "outputAbbreviatedPath" : "\/js\/wp-help-ck.js",
-      "fileType" : 64
-    },
     "\/images\/icon-32.png" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
@@ -125,6 +114,17 @@
       "outputAbbreviatedPath" : "\/images\/icon-32.png",
       "initialSize" : 1482,
       "fileType" : 8192
+    },
+    "\/js\/wp-help.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/js\/wp-help.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 1,
+      "outputAbbreviatedPath" : "\/js\/wp-help-ck.js",
+      "fileType" : 64
     }
   },
   "manualImportLinks" : [
