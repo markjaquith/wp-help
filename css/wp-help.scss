@@ -1,3 +1,5 @@
+@import "compass/css3";
+
 #cws-wp-help-actions {
 	padding-bottom: 5px;
 
@@ -13,10 +15,7 @@
 		top: -5px;
 		position: relative;
 		border: 1px solid #ccc;
-		-moz-border-radius: 3px;
-		-khtml-border-radius: 3px;
-		-webkit-border-radius: 3px;
-		border-radius: 3px;
+		@include border-radius(3px);
 		background: #fff;
 		box-shadow: #ddd 1px 1px 3px;
 
@@ -40,10 +39,7 @@
 	margin: 10px 10px 10px 0;
 	padding: 10px;
 	border: 1px solid #ddd;
-	-moz-border-radius: 3px;
-	-khtml-border-radius: 3px;
-	-webkit-border-radius: 3px;
-	border-radius: 3px;
+	@include border-radius(3px);
 	background: #f4f4f4;
 	min-height: 400px;
 
@@ -164,10 +160,7 @@ input#cws-wp-help-slurp-url {
 	background: #FFEBE8;
 	border-color: #CC0000;
 	padding: 0 0.6em;
-	-moz-border-radius: 3px;
-	-khtml-border-radius: 3px;
-	-webkit-border-radius: 3px;
-	border-radius: 3px;
+	@include border-radius(3px);
 	border-width: 1px;
 	border-style: solid;
 }
@@ -183,10 +176,7 @@ input#cws-wp-help-slurp-url {
 	left: -17px;
 	position: relative;
 	border: 1px dashed #bbb;
-	-moz-border-radius: 3px;
-	-khtml-border-radius: 3px;
-	-webkit-border-radius: 3px;
-	border-radius: 3px;
+	@include border-radius(3px);
 	list-style: none;
 }
 
