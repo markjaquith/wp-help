@@ -17,7 +17,7 @@
 		border: 1px solid #ccc;
 		@include border-radius(3px);
 		background: #fff;
-		box-shadow: #ddd 1px 1px 3px;
+		@include box-shadow(#ddd 1px 1px 3px);
 
 		&#cws-wp-help-settings-on {
 			float: left;
