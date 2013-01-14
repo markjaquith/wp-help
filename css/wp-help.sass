@@ -70,8 +70,8 @@
 	li
 		font-style: italic
 
-#cws-wp-help-settings
-#cws-wp-help-listing-labels
+#cws-wp-help-settings,
+#cws-wp-help-listing-labels,
 #cws-wp-help-h2-label-wrap
 	display: none
 
@@ -140,20 +140,20 @@ input#cws-wp-help-slurp-url
 	list-style: none
 
 #cws-wp-help-listing-wrap ul
-	> li > img.sort-handle
-	> div#cws-wp-help-remote-docs-block > li > img.sort-handle
+	> li > img.sort-handle,
+	> div#cws-wp-help-remote-docs-block > li > img.sort-handle,
 	&.ui-sortable > li.cws-wp-help-is-slurped > img.sort-handle
 		display: none
 	&.ui-sortable
 		li
 			position: relative
-		> li.cws-wp-help-local > img.sort-handle
+		> li.cws-wp-help-local > img.sort-handle,
 		> div#cws-wp-help-remote-docs-block > li:first-child > img.sort-handle
 			display: inline
 			position: absolute
 			left: -17px
 			vertical-align: middle
-		> li.cws-wp-help-local
+		> li.cws-wp-help-local,
 		> div#cws-wp-help-remote-docs-block > li:first-child
 			list-style: none
 	&.can-sort .sort-handle:hover
