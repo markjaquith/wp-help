@@ -34,6 +34,7 @@ class CWS_WP_Help_Plugin {
 	private $admin_base = '';
 	private $help_topics_html;
 	private $filter_wp_list_pages = false;
+	private $filter_wp_list_pages_sql = false;
 	const default_doc = 'cws_wp_help_default_doc';
 	const OPTION      = 'cws_wp_help';
 	const MENU_SLUG   = 'wp-help-documents';
@@ -85,6 +86,7 @@ class CWS_WP_Help_Plugin {
 		add_action( 'wp_dashboard_setup',           array( $this, 'wp_dashboard_setup'    )        );
 		add_filter( 'page_css_class',               array( $this, 'page_css_class'        ), 10, 5 );
 		add_filter( 'wp_list_pages',                array( $this, 'wp_list_pages'         )        );
+		add_filter( 'query',                        array( $this, 'query'                 )	       );
 
 		if ( 'dashboard-submenu' != $this->get_option( 'menu_location' ) ) {
 			$this->admin_base = 'admin.php';
@@ -111,15 +113,10 @@ class CWS_WP_Help_Plugin {
 				'show_in_menu' => false,
 				'hierarchical' => true,
 				'supports'     => array( 'title', 'editor', 'revisions', 'page-attributes' ),
+				'map_meta_cap' => true,
+				'capability_type' => 'page',
 				'capabilities' => array(
-					'publish_posts'      => 'publish_pages',
-					'edit_posts'         => 'publish_pages',
-					'edit_others_posts'  => 'publish_pages',
-					'delete_posts'       => 'publish_pages',
-					'read_private_posts' => 'publish_pages',
-					'edit_post'          => 'wp_help_meta_cap',
-					'delete_post'        => 'wp_help_meta_cap',
-					'read_post'          => apply_filters( 'cws_wp_help_view_documents_cap', 'edit_posts' ),
+					'read_posts'         => apply_filters( 'cws_wp_help_view_documents_cap', 'edit_posts' ),
 				),
 				'labels' => array (
 					'name'               => __( 'Help Documents',                        'wp-help' ),
@@ -172,7 +169,7 @@ class CWS_WP_Help_Plugin {
 	}
 
 	public function wp_dashboard_setup() {
-		if ( current_user_can( $this->get_cap( 'read_post' ) ) ) {
+		if ( current_user_can( $this->get_cap( 'read_posts' ) ) ) {
 			$this->help_topics_html = $this->get_help_topics_html();
 			if ( $this->help_topics_html )
 				wp_add_dashboard_widget( 'cws-wp-help-dashboard-widget', $this->get_option( 'h2' ), array( $this, 'dashboard_widget' ) );
@@ -222,6 +219,22 @@ class CWS_WP_Help_Plugin {
 		if ( !$this->filter_wp_list_pages )
 			return $html;
 		return preg_replace( '#<li [^>]+>#', '$0<img class="sort-handle" src="' . plugins_url( "images/sort.png", __FILE__ ) . '" />', $html );
+	}
+
+	public function query( $query ) {
+		// var_dump( $query );
+		if (
+			$this->filter_wp_list_pages_sql &&
+			preg_match( "#^SELECT\s+\*\s+FROM\s+" . preg_quote( $wpdb->posts, '#' ) . '#', $query )
+		) {
+			$query = str_replace(
+				"post_type = '" . self::POST_TYPE . "' AND post_status = 'private'",
+				"post_type = '" . self::POST_TYPE . "' AND post_status IN('private','publish')",
+				$query
+			);
+			$this->filter_wp_list_pages_sql = false;
+		}
+		return $query;
 	}
 
 	public function page_attributes_dropdown( $args, $post ) {
@@ -276,12 +289,12 @@ class CWS_WP_Help_Plugin {
 	}
 
 	public function map_meta_cap( $caps, $cap, $user_id, $args ) {
-		if ( $cap === 'wp_help_meta_cap' ) {
+		if ( preg_match( '#^(delete|edit)_(post|page)$#', $cap ) ) {
+			if ( self::POST_TYPE !== get_post_type( $args[0] ) )
+				return $caps;
 			// If this belongs to the currently connected slurp source, disallow editing
 			if ( $this->is_slurped( $args[0] ) )
 				$caps = array( 'do_not_allow' );
-			else
-				$caps = array( $this->get_cap( 'publish_posts' ) );
 		}
 		return $caps;
 	}
@@ -559,9 +572,9 @@ class CWS_WP_Help_Plugin {
 
 	public function admin_menu() {
 		if ( 'dashboard-submenu' != $this->get_option( 'menu_location' ) )
-			$hook = add_menu_page( $this->get_option( 'h2' ), $this->get_option( 'h2' ), $this->get_cap( 'read_post' ), self::MENU_SLUG, array( $this, 'render_listing_page' ), plugin_dir_url( __FILE__ ) . 'images/icon-16.png' );
+			$hook = add_menu_page( $this->get_option( 'h2' ), $this->get_option( 'h2' ), $this->get_cap( 'read_posts' ), self::MENU_SLUG, array( $this, 'render_listing_page' ), plugin_dir_url( __FILE__ ) . 'images/icon-16.png' );
 		else
-			$hook = add_dashboard_page( $this->get_option( 'h2' ), $this->get_option( 'h2' ), $this->get_cap( 'read_post' ), self::MENU_SLUG, array( $this, 'render_listing_page' ) );
+			$hook = add_dashboard_page( $this->get_option( 'h2' ), $this->get_option( 'h2' ), $this->get_cap( 'read_posts' ), self::MENU_SLUG, array( $this, 'render_listing_page' ) );
 		add_action( "load-{$hook}", array( $this, 'enqueue' ) );
 	}
 
@@ -632,9 +645,11 @@ class CWS_WP_Help_Plugin {
 	private function get_help_topics_html( $with_sort_handles = false ) {
 		if ( $with_sort_handles )
 			$this->filter_wp_list_pages = true;
-		$defaults = array( 'post_type' => self::POST_TYPE, 'hierarchical' => true, 'echo' => false, 'title_li' => '' );
+		$this->filter_wp_list_pages_sql = true;
+		$status = ( current_user_can( $this->get_cap( 'read_private_posts' ) ) ) ? 'private' : 'publish';
+		$defaults = array( 'post_type' => self::POST_TYPE, 'post_status' => $status, 'hierarchical' => true, 'echo' => false, 'title_li' => '' );
 		$output = trim( wp_list_pages( apply_filters( 'cws_wp_help_list_pages', $defaults ) ) );
-		$this->filter_wp_list_pages = false;
+		$this->filter_wp_list_pages = $this->filter_wp_list_pages_sql = false;
 		return $output;
 	}
 
