@@ -222,7 +222,7 @@ class CWS_WP_Help_Plugin {
 	}
 
 	public function query( $query ) {
-		// var_dump( $query );
+		global $wpdb;
 		if (
 			$this->filter_wp_list_pages_sql &&
 			preg_match( "#^SELECT\s+\*\s+FROM\s+" . preg_quote( $wpdb->posts, '#' ) . '#', $query )
