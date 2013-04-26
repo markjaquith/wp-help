@@ -578,16 +578,48 @@ class CWS_WP_Help_Plugin {
 		add_action( "load-{$hook}", array( $this, 'enqueue' ) );
 	}
 
+	function get_editable_roles() {
+    	global $wp_roles;
+    	$roles = $wp_roles->get_names();
+    	return $roles;
+	}
+
+
 	public function submitbox_actions() {
 		if ( self::POST_TYPE !== get_post_type() )
 			return;
 		global $post;
 		wp_nonce_field( 'cws-wp-help-save', '_cws_wp_help_nonce', false, true ); ?>
 		<div class="misc-pub-section"><input type="checkbox" name="cws_wp_help_make_default_doc" id="cws_wp_help_make_default_doc" <?php checked( $post->ID == get_option( self::default_doc ) ); ?> /> &nbsp;<label for="cws_wp_help_make_default_doc"><?php _e( 'Set as default help document', 'wp-help' ); ?></label></div>
+		<div class="misc-pub-section">
+			Permission:<br>
+			<form>
+				<?php
+				$data = get_post_meta($post->ID, '_cws_wp_help_permission');
+				$role = get_editable_roles();
+				$key = array_keys($role);
+				foreach ($key as $role_name){
+					if ($role_name != 'administrator'){
+						echo '<input type="checkbox" name="help-'.$role_name.'" id="help-'.$role_name. '"';
+						echo $data[0][$role_name] ? 'checked' : '';
+						echo '> '.$role[$role_name]['name'].'<br>';
+					}
+				}
+		   		?>
+		   </form>
+		</div>
 		<?php
 	}
 
 	public function save_post( $post_id ) {
+		$role = get_editable_roles();
+		$key = array_keys($role);
+		foreach ($key as $role_name){
+			if ($role_name != 'administrator'){
+				$stack[$role_name] = isset($_POST['help-'.$role_name] ) ? true:false;
+			}
+		}
+		update_post_meta( $post_id, '_cws_wp_help_permission', $stack);
 		if ( isset( $_POST['_cws_wp_help_nonce'] ) && wp_verify_nonce( $_POST['_cws_wp_help_nonce'], 'cws-wp-help-save' ) ) {
 			if ( isset( $_POST['cws_wp_help_make_default_doc'] ) ) {
 				// Make it the default_doc
@@ -643,11 +675,26 @@ class CWS_WP_Help_Plugin {
 	}
 
 	private function get_help_topics_html( $with_sort_handles = false ) {
+		global $current_user;
+		$filter_page = '';
 		if ( $with_sort_handles )
 			$this->filter_wp_list_pages = true;
 		$this->filter_wp_list_pages_sql = true;
 		$status = ( current_user_can( $this->get_cap( 'read_private_posts' ) ) ) ? 'private' : 'publish';
-		$defaults = array( 'post_type' => self::POST_TYPE, 'post_status' => $status, 'hierarchical' => true, 'echo' => false, 'title_li' => '' );
+		//filter help post with different permission
+		$help_query = new WP_Query( array( 'post_type' => self::POST_TYPE, 'posts_per_page' => -1, 'post_status' => 'publish' ) );
+		if (current_user_can('manage_options') == false) {
+			if ( $help_query->posts ) {
+				foreach ( $help_query->posts as $p ) {
+					$data = get_post_meta($p->ID, '_cws_wp_help_permission');
+					$current_role = $current_user->roles[0];
+					if (!($data[0][$current_role])){
+						$filter_page .= $p->ID .',';
+					}
+				}
+			}
+		}
+		$defaults = array( 'post_type' => self::POST_TYPE, 'post_status' => $status, 'hierarchical' => true, 'echo' => false, 'title_li' => '', 'exclude' => $filter_page );
 		$output = trim( wp_list_pages( apply_filters( 'cws_wp_help_list_pages', $defaults ) ) );
 		$this->filter_wp_list_pages = $this->filter_wp_list_pages_sql = false;
 		return $output;
