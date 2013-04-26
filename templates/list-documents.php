@@ -33,7 +33,8 @@
 <?php if ( $document_id ) : ?>
 	<?php $document = new WP_Query( array( 'post_type' => self::POST_TYPE, 'p' => $document_id, 'post_status' => array( 'publish', 'private' ) ) ); ?>
 	<?php if ( $document->have_posts() ) : $document->the_post(); ?>
-		<?php if ( current_user_can( 'read_post', $document_id ) ) : ?>
+		<?php global $current_user; $help_permission = get_post_meta($document_id , '_cws_wp_help_permission'); ?>
+		<?php if ( current_user_can( 'read_post', $document_id ) && $help_permission[0][$current_user->roles[0]]) : ?>
 			<h2><?php the_title(); ?><?php edit_post_link( __( 'edit', 'wp-help' ), ' <small>', '</small>' ); ?><?php $this->explain_slurp( $document_id ); ?></h2>
 			<?php the_content(); ?>
 		<?php else: ?>

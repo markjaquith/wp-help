@@ -615,7 +615,6 @@ class CWS_WP_Help_Plugin {
 		foreach ($key as $role_name){
 			$stack[$role_name] = isset($_POST['help-'.$role[$role_name]['name']] ) ? true:false;
 		}
-		$stack['administrator'] = true;
 		update_post_meta( $post_id, '_cws_wp_help_permission', $stack);
 		if ( isset( $_POST['_cws_wp_help_nonce'] ) && wp_verify_nonce( $_POST['_cws_wp_help_nonce'], 'cws-wp-help-save' ) ) {
 			if ( isset( $_POST['cws_wp_help_make_default_doc'] ) ) {
@@ -684,6 +683,7 @@ class CWS_WP_Help_Plugin {
 			foreach ( $help_query->posts as $p ) {
 				$data = get_post_meta($p->ID, '_cws_wp_help_permission');
 				$current_role = $current_user->roles[0];
+				$data[0]['administrator'] = true;
 				if (!($data[0][$current_role])){
 					$filter_page .= $p->ID .',';
 				}
