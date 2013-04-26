@@ -592,16 +592,18 @@ class CWS_WP_Help_Plugin {
 		wp_nonce_field( 'cws-wp-help-save', '_cws_wp_help_nonce', false, true ); ?>
 		<div class="misc-pub-section"><input type="checkbox" name="cws_wp_help_make_default_doc" id="cws_wp_help_make_default_doc" <?php checked( $post->ID == get_option( self::default_doc ) ); ?> /> &nbsp;<label for="cws_wp_help_make_default_doc"><?php _e( 'Set as default help document', 'wp-help' ); ?></label></div>
 		<div class="misc-pub-section">
-			Role:<br>
+			Permission:<br>
 			<form>
 				<?php
 				$data = get_post_meta($post->ID, '_cws_wp_help_permission');
 				$role = get_editable_roles();
 				$key = array_keys($role);
 				foreach ($key as $role_name){
-					echo '<input type="checkbox" name="help-'.$role[$role_name]['name'].'" id="help-'.$role[$role_name]['name']. '"';
-					echo $data[0][$role_name] ? 'checked' : '';
-					echo '> '.$role[$role_name]['name'].'<br>';
+					if ($role_name != 'administrator'){
+						echo '<input type="checkbox" name="help-'.$role[$role_name]['name'].'" id="help-'.$role[$role_name]['name']. '"';
+						echo $data[0][$role_name] ? 'checked' : '';
+						echo '> '.$role[$role_name]['name'].'<br>';
+					}
 				}
 		   		?>
 		   </form>
@@ -613,7 +615,9 @@ class CWS_WP_Help_Plugin {
 		$role = get_editable_roles();
 		$key = array_keys($role);
 		foreach ($key as $role_name){
-			$stack[$role_name] = isset($_POST['help-'.$role[$role_name]['name']] ) ? true:false;
+			if ($role_name != 'administrator'){
+				$stack[$role_name] = isset($_POST['help-'.$role[$role_name]['name']] ) ? true:false;
+			}
 		}
 		update_post_meta( $post_id, '_cws_wp_help_permission', $stack);
 		if ( isset( $_POST['_cws_wp_help_nonce'] ) && wp_verify_nonce( $_POST['_cws_wp_help_nonce'], 'cws-wp-help-save' ) ) {
@@ -679,13 +683,14 @@ class CWS_WP_Help_Plugin {
 		$status = ( current_user_can( $this->get_cap( 'read_private_posts' ) ) ) ? 'private' : 'publish';
 		//filter help post with different permission
 		$help_query = new WP_Query( array( 'post_type' => self::POST_TYPE, 'posts_per_page' => -1, 'post_status' => 'publish' ) );
-		if ( $help_query->posts ) {
-			foreach ( $help_query->posts as $p ) {
-				$data = get_post_meta($p->ID, '_cws_wp_help_permission');
-				$current_role = $current_user->roles[0];
-				$data[0]['administrator'] = true;
-				if (!($data[0][$current_role])){
-					$filter_page .= $p->ID .',';
+		if (current_user_can('manage_options') == false) {
+			if ( $help_query->posts ) {
+				foreach ( $help_query->posts as $p ) {
+					$data = get_post_meta($p->ID, '_cws_wp_help_permission');
+					$current_role = $current_user->roles[0];
+					if (!($data[0][$current_role])){
+						$filter_page .= $p->ID .',';
+					}
 				}
 			}
 		}
