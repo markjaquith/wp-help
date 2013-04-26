@@ -600,7 +600,7 @@ class CWS_WP_Help_Plugin {
 				$key = array_keys($role);
 				foreach ($key as $role_name){
 					if ($role_name != 'administrator'){
-						echo '<input type="checkbox" name="help-'.$role[$role_name]['name'].'" id="help-'.$role[$role_name]['name']. '"';
+						echo '<input type="checkbox" name="help-'.$role_name.'" id="help-'.$role_name. '"';
 						echo $data[0][$role_name] ? 'checked' : '';
 						echo '> '.$role[$role_name]['name'].'<br>';
 					}
@@ -616,7 +616,7 @@ class CWS_WP_Help_Plugin {
 		$key = array_keys($role);
 		foreach ($key as $role_name){
 			if ($role_name != 'administrator'){
-				$stack[$role_name] = isset($_POST['help-'.$role[$role_name]['name']] ) ? true:false;
+				$stack[$role_name] = isset($_POST['help-'.$role_name] ) ? true:false;
 			}
 		}
 		update_post_meta( $post_id, '_cws_wp_help_permission', $stack);
