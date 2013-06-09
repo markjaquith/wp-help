@@ -8,6 +8,7 @@ Plugin URI: http://txfx.net/wordpress-plugins/wp-help/
 Author: Mark Jaquith
 Author URI: http://coveredwebservices.com/
 Text Domain: wp-help
+Domain Path: /languages
 
 ==========================================================================
 
