@@ -29,7 +29,10 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-class CWS_WP_Help_Plugin {
+// Pull in WP Stack plugin library
+include( dirname( __FILE__ ) . '/lib/wp-stack-plugin.php' );
+
+class CWS_WP_Help_Plugin extends WP_Stack_Plugin {
 	public static $instance;
 	private $options;
 	private $admin_base = '';
@@ -44,7 +47,7 @@ class CWS_WP_Help_Plugin {
 
 	public function __construct() {
 		self::$instance = $this;
-		add_action( 'init', array( $this, 'init' ) );
+		$this->hook( 'init' );
 	}
 
 	public function init() {
@@ -68,39 +71,41 @@ class CWS_WP_Help_Plugin {
 		if ( !wp_next_scheduled( self::CRON_HOOK ) )
 			wp_schedule_event( current_time( 'timestamp' ), 'daily', self::CRON_HOOK );
 
-		// Actions and filters
-		add_action( self::CRON_HOOK,                array( $this, 'api_slurp'             )        );
-		add_filter( 'map_meta_cap',                 array( $this, 'map_meta_cap'          ), 10, 4 );
-		add_action( 'admin_menu',                   array( $this, 'admin_menu'            )        );
-		add_action( 'post_submitbox_misc_actions',  array( $this, 'submitbox_actions'     )        );
-		add_action( 'save_post',                    array( $this, 'save_post'             )        );
-		add_filter( 'post_type_link',               array( $this, 'page_link'             ), 10, 2 );
-		add_filter( 'post_updated_messages',        array( $this, 'post_updated_messages' )        );
-		add_action( 'admin_init',                   array( $this, 'ajax_listener'         )        );
-		add_action( 'wp_ajax_cws_wp_help_settings', array( $this, 'ajax_settings'         )        );
-		add_action( 'wp_ajax_cws_wp_help_reorder',  array( $this, 'ajax_reorder'          )        );
-		add_action( 'clean_post_cache',             array( $this, 'clean_post_cache'      ), 10, 2 );
-		add_action( 'delete_post',                  array( $this, 'delete_post'           )        );
-		add_action( 'wp_trash_post',                array( $this, 'delete_post'           )        );
-		add_action( 'load-post.php',                array( $this, 'load_post'             )        );
-		add_action( 'load-post-new.php',            array( $this, 'load_post_new'         )        );
-		add_action( 'wp_dashboard_setup',           array( $this, 'wp_dashboard_setup'    )        );
-		add_filter( 'page_css_class',               array( $this, 'page_css_class'        ), 10, 5 );
-		add_filter( 'wp_list_pages',                array( $this, 'wp_list_pages'         )        );
-		add_filter( 'query',                        array( $this, 'query'                 )	       );
+		// Standard hooks
+		$this->hook( 'map_meta_cap'          );
+		$this->hook( 'admin_menu'            );
+		$this->hook( 'save_post'             );
+		$this->hook( 'post_updated_messages' );
+		$this->hook( 'clean_post_cache'      );
+		$this->hook( 'wp_dashboard_setup'    );
+		$this->hook( 'page_css_class'        );
+		$this->hook( 'wp_list_pages'         );
+		$this->hook( 'query'                 );
+		$this->hook( 'delete_post'           );
+
+		// Custom callbacks
+		$this->hook( 'wp_trash_post',                'delete_post'       );
+		$this->hook( 'load-post.php',                'load_post'         );
+		$this->hook( 'load-post-new.php',            'load_post_new'     );
+		$this->hook( self::CRON_HOOK,                'api_slurp'         );
+		$this->hook( 'post_submitbox_misc_actions',  'submitbox_actions' );
+		$this->hook( 'admin_init',                   'ajax_listener'     );
+		$this->hook( 'post_type_link',               'page_link'         );
+		$this->hook( 'wp_ajax_cws_wp_help_settings', 'ajax_settings'     );
+		$this->hook( 'wp_ajax_cws_wp_help_reorder',  'ajax_reorder'      );
 
 		if ( 'dashboard-submenu' != $this->get_option( 'menu_location' ) ) {
 			$this->admin_base = 'admin.php';
 			if ( 'bottom' != $this->get_option( 'menu_location' ) ) {
 				add_filter( 'custom_menu_order', '__return_true' );
-				add_filter( 'menu_order', array( $this, 'menu_order' ) );
+				$this->hook( 'menu_order' );
 			}
 		} else {
 			$this->admin_base = 'index.php';
 		}
-		add_filter( 'page_attributes_dropdown_pages_args', array( $this, 'page_attributes_dropdown' ), 10, 2 );
-		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'action_links' ) );
-		add_filter( 'network_admin_plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'action_links') );
+		$this->hook( 'page_attributes_dropdown_pages_args', 'page_attributes_dropdown' );
+		$this->hook( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'action_links' );
+		$this->hook( 'network_admin_plugin_action_links_' . plugin_basename( __FILE__ ), 'action_links' );
 
 		// menu_order debug
 		// add_filter( 'the_title', function( $title, $post_id ) { $post = get_post( $post_id ); return $title . ' [' . $post->menu_order . ']'; }, 10, 2 );
@@ -273,7 +278,7 @@ class CWS_WP_Help_Plugin {
 
 	private function edit_enqueues() {
 		wp_enqueue_script( 'jquery' );
-		add_action( 'admin_footer', array( $this, 'edit_page_js' ) );
+		$this->hook( 'admin_footer', 'edit_page_js' );
 	}
 
 	public function edit_page_js() {
@@ -561,7 +566,7 @@ class CWS_WP_Help_Plugin {
 			// Nice! This originated from our post type
 			// Now we make our post type public, and initiate a query filter
 			// There really should be a better way to do this. :-\
-			add_filter( 'pre_get_posts', array( $this, 'only_query_help_docs' ) );
+			$this->hook( 'pre_get_posts', 'only_query_help_docs' );
 			global $wp_post_types;
 			$wp_post_types[self::POST_TYPE]->publicly_queryable = $wp_post_types[self::POST_TYPE]->public = true;
 		}
@@ -576,7 +581,7 @@ class CWS_WP_Help_Plugin {
 			$hook = add_menu_page( $this->get_option( 'h2' ), $this->get_option( 'h2' ), $this->get_cap( 'read_posts' ), self::MENU_SLUG, array( $this, 'render_listing_page' ), plugin_dir_url( __FILE__ ) . 'images/icon-16.png' );
 		else
 			$hook = add_dashboard_page( $this->get_option( 'h2' ), $this->get_option( 'h2' ), $this->get_cap( 'read_posts' ), self::MENU_SLUG, array( $this, 'render_listing_page' ) );
-		add_action( "load-{$hook}", array( $this, 'enqueue' ) );
+		$this->hook( "load-{$hook}", 'enqueue' );
 	}
 
 	public function submitbox_actions() {
@@ -628,7 +633,7 @@ class CWS_WP_Help_Plugin {
 
 	public function maybe_just_menu() {
 		if ( isset( $_GET['wp-help-preview-menu-location'] ) )
-			add_action( 'in_admin_header', array( $this, 'kill_it' ), 0 );
+			$this->hook( 'in_admin_header', 'kill_it', 0 );
 	}
 
 	public function kill_it() {
