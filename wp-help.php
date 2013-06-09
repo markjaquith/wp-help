@@ -588,13 +588,13 @@ class CWS_WP_Help_Plugin extends WP_Stack_Plugin {
 		if ( self::POST_TYPE !== get_post_type() )
 			return;
 		global $post;
-		wp_nonce_field( 'cws-wp-help-save', '_cws_wp_help_nonce', false, true ); ?>
+		wp_nonce_field( 'cws-wp-help-save_' . $post->ID, '_cws_wp_help_nonce', false, true ); ?>
 		<div class="misc-pub-section"><input type="checkbox" name="cws_wp_help_make_default_doc" id="cws_wp_help_make_default_doc" <?php checked( $post->ID == get_option( self::default_doc ) ); ?> /> &nbsp;<label for="cws_wp_help_make_default_doc"><?php _e( 'Set as default help document', 'wp-help' ); ?></label></div>
 		<?php
 	}
 
 	public function save_post( $post_id ) {
-		if ( isset( $_POST['_cws_wp_help_nonce'] ) && wp_verify_nonce( $_POST['_cws_wp_help_nonce'], 'cws-wp-help-save' ) ) {
+		if ( isset( $_POST['_cws_wp_help_nonce'] ) && wp_verify_nonce( $_POST['_cws_wp_help_nonce'], 'cws-wp-help-save_' . $post_id ) ) {
 			if ( isset( $_POST['cws_wp_help_make_default_doc'] ) ) {
 				// Make it the default_doc
 				update_option( self::default_doc, absint( $post_id ) );
