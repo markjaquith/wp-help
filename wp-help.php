@@ -11,7 +11,7 @@ Text Domain: wp-help
 
 ==========================================================================
 
-Copyright 2011-2012  Mark Jaquith
+Copyright 2011-2013  Mark Jaquith
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
