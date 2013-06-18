@@ -1,4 +1,7 @@
 # WP Help #
+
+[![Build Status](https://travis-ci.org/markjaquith/wp-help.png?branch=master)](https://travis-ci.org/markjaquith/wp-help)  
+
 Contributors: markjaquith  
 Donate link: http://txfx.net/wordpress-plugins/donate  
 Tags: help, documentation, client sites, clients, docs  
