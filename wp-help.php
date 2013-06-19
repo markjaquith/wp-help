@@ -174,6 +174,10 @@ class CWS_WP_Help_Plugin extends WP_Stack_Plugin {
 		return $links;
 	}
 
+	public function inline_file( $path ) {
+		return file_get_contents( trailingslashit( plugin_dir_path( __FILE__ ) ) . $path );
+	}
+
 	public function wp_dashboard_setup() {
 		if ( current_user_can( $this->get_cap( 'read_posts' ) ) ) {
 			$this->help_topics_html = $this->get_help_topics_html();
@@ -183,24 +187,7 @@ class CWS_WP_Help_Plugin extends WP_Stack_Plugin {
 	}
 
 	public function dashboard_widget() {
-		?><style>
-		#cws-wp-help-dashboard-listing ul {
-			margin: 5px 5px 5px 15px;
-			list-style: square;
-		}
-
-		#cws-wp-help-dashboard-listing {
-			margin: 10px 5px 10px 20px;
-			list-style: circle;
-		}
-
-		#cws-wp-help-dashboard-listing > ul {
-			list-style: square;
-		}
-		</style><?php
-		echo '<ul id="cws-wp-help-dashboard-listing">';
-		echo $this->help_topics_html;
-		echo '</ul>';
+		include( dirname( __FILE__ ) . '/templates/dashboard-widget.php' );
 	}
 
 	public function delete_post( $post_id ) {
@@ -282,16 +269,7 @@ class CWS_WP_Help_Plugin extends WP_Stack_Plugin {
 	}
 
 	public function edit_page_js() {
-		?><script>(function($){
-			var a = $('.wrap:first h2:first a:first'), i = ' <a href="edit.php?post_type=<?php echo self::POST_TYPE; ?>" class="add-new-h2"><?php echo esc_js( _x( 'Manage', 'verb. Button with limited space', 'wp-help' ) ); ?></a> ';
-			if ( a.length )
-				a.before(i);
-			else
-				$('.wrap:first h2:first').append(i);
-			$('#parent_id').detach().insertAfter( '.misc-pub-section:last' ).wrap('<div class="misc-pub-section"></div>').before( '<?php echo esc_js( __( 'Parent:', 'wp-help' ) ); ?> ' ).css( 'max-width', '80%' );
-			$('#pageparentdiv').hide();
-			$('#screen-options-wrap #pageparentdiv-hide').parent('label').hide();
-			})(jQuery);</script><?php
+		include( dirname( __FILE__ ) . '/templates/edit-page-js.php' );
 	}
 
 	public function map_meta_cap( $caps, $cap, $user_id, $args ) {
@@ -587,10 +565,7 @@ class CWS_WP_Help_Plugin extends WP_Stack_Plugin {
 	public function submitbox_actions() {
 		if ( self::POST_TYPE !== get_post_type() )
 			return;
-		global $post;
-		wp_nonce_field( 'cws-wp-help-save_' . $post->ID, '_cws_wp_help_nonce', false, true ); ?>
-		<div class="misc-pub-section"><input type="checkbox" name="cws_wp_help_make_default_doc" id="cws_wp_help_make_default_doc" <?php checked( $post->ID == get_option( self::default_doc ) ); ?> /> &nbsp;<label for="cws_wp_help_make_default_doc"><?php _e( 'Set as default help document', 'wp-help' ); ?></label></div>
-		<?php
+		include( dirname( __FILE__ ) . '/templates/submitbox-actions.php' );
 	}
 
 	public function save_post( $post_id ) {
