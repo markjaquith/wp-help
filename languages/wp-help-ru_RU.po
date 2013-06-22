@@ -1,179 +1,272 @@
-# Copyright (C) 2010 WP Help
+# Translation of WP Help in Russian
 # This file is distributed under the same license as the WP Help package.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Help 0.2-beta\n"
-"Report-Msgid-Bugs-To: http://wordpress.org/tag/wp-help\n"
-"POT-Creation-Date: 2011-05-19 17:37:03+00:00\n"
+"PO-Revision-Date: 2013-06-22 05:02:13+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2011-05-20 14:10+0300\n"
-"Last-Translator: Dzhamil Garaev <hello@facemann.ru>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: GlotPress/0.1\n"
+"Project-Id-Version: WP Help\n"
 
-#: wp-help.php:35
-msgctxt "post type label"
-msgid "Publishing Help"
-msgstr "Справка"
+#: wp-help.php:273
+msgid "Parent:"
+msgstr ""
 
-#: wp-help.php:52
-msgid "Help Documents"
-msgstr "Документация"
+#: templates/list-documents.php:7
+msgctxt "Button with limited space"
+msgid "Settings"
+msgstr ""
 
-#: wp-help.php:53
-msgid "Help Document"
-msgstr "Страница"
-
-#: wp-help.php:54
-msgctxt "i.e. Add new Help Document"
+#: templates/list-documents.php:8
+msgctxt "Button with limited space"
 msgid "Add New"
-msgstr "Добавить страницу"
+msgstr ""
 
-#: wp-help.php:55
-msgid "Add New Help Document"
-msgstr "Новая страница"
-
-#: wp-help.php:56
-msgctxt "i.e. Edit Help Document"
-msgid "Edit"
-msgstr "Редактировать"
-
-#: wp-help.php:57
-msgid "Edit Help Document"
-msgstr "Редактировать страницу"
-
-#: wp-help.php:58
-msgid "New Help Document"
-msgstr "Новая страница"
-
-#: wp-help.php:59
-msgctxt "i.e. View Help Document"
-msgid "View"
-msgstr "Просмотреть"
-
-#: wp-help.php:60
-msgid "View Help Document"
-msgstr "Просмотреть страницу"
-
-#: wp-help.php:61
-msgid "Search Documents"
-msgstr "Поиск страниц"
-
-#: wp-help.php:62
-msgid "No Help Documents Found"
-msgstr "Страниц не найдено"
-
-#: wp-help.php:63
-msgid "No Help Documents found in Trash"
-msgstr "Страниц в корзине не найдено"
-
-#: wp-help.php:64
-msgid "Parent Help Document"
-msgstr "Родительская страница"
-
-#: wp-help.php:99
-msgctxt "page title"
-msgid "Publishing Help"
-msgstr "Справка"
-
-#: wp-help.php:99
-msgctxt "menu title"
-msgid "Publishing Help"
-msgstr "Справка"
-
-#: wp-help.php:105
-msgctxt "meta box title"
-msgid "WP Help Options"
-msgstr "Настройки"
-
-#: wp-help.php:111
-msgid "Make this the default help document"
-msgstr "Использовать по умолчанию"
-
-#: wp-help.php:133
-msgid "Document updated. <a href=\"%s\">View document</a>"
-msgstr "Страница обновлена. <a href=\"%s\">Посмотреть</a>"
-
-#: wp-help.php:134
-msgid "Custom field updated."
-msgstr "Произвольное поле обновлено."
-
-#: wp-help.php:135
-msgid "Custom field deleted."
-msgstr "Произвольное поле удалено."
-
-#: wp-help.php:136
-msgid "Document updated."
-msgstr "Страница обновлена."
-
-#: wp-help.php:137
-msgid "Document restored to revision from %s"
-msgstr "Страница восстановлена из редакции от %s"
-
-#: wp-help.php:138
-msgid "Document published. <a href=\"%s\">View document</a>"
-msgstr "Страница опубликована. <a href=\"%s\">Посмотреть</a>"
-
-#: wp-help.php:139
-msgid "Document saved."
-msgstr "Страница сохранена."
-
-#: wp-help.php:140
-msgid "Document submitted. <a target=\"_blank\" href=\"%s\">Preview document</a>"
-msgstr "Страница добавлена. <a target=\"_blank\" href=\"%s\">Просмотреть</a>"
-
-#: wp-help.php:141
-msgid "Document scheduled for: <strong>%1$s</strong>. <a target=\"_blank\" href=\"%2$s\">Preview document</a>"
-msgstr "Страница запланирована на <strong>%1$s</strong>. <a target=\"_blank\" href=\"%2$s\">Просмотреть</a>"
-
-#: wp-help.php:141
-msgid "M j, Y @ G:i"
-msgstr "d.m.Y @ g:i"
-
-#: wp-help.php:142
-msgid "Document draft updated. <a target=\"_blank\" href=\"%s\">Preview document</a>"
-msgstr "Черновик страницы обновлён. <a target=\"_blank\" href=\"%s\">Просмотреть</a>"
-
-#: wp-help.php:174
-msgctxt "h2 title"
-msgid "Publishing Help"
-msgstr "Справка"
-
-#: wp-help.php:178
-msgid "Help Topics"
-msgstr "Содержание"
-
-#: wp-help.php:178
+#: templates/list-documents.php:8 wp-help.php:268
 msgctxt "verb. Button with limited space"
 msgid "Manage"
 msgstr "Редактировать"
 
-#: wp-help.php:190
-msgid "The requested help document could not be found"
-msgstr "Запрашиваемся страница не найдена"
+#: templates/list-documents.php:16
+msgid "There are no help documents."
+msgstr ""
 
-#: wp-help.php:196
-msgid "No published help documents found. <a href=\"%s\">Manage Help Documents</a>."
-msgstr "Нет опубликованных страниц в документации. <a href=\"%s\">Редактировать</a>."
+#: templates/list-documents.php:18
+msgid "There are no help documents yet."
+msgstr ""
 
-#: wp-help.php:198
-msgid "No help documents found. Contact the site administrator."
-msgstr "Страницы документации не найдены. Свяжитесь с администратором."
+#: templates/list-documents.php:36
+msgid "edit"
+msgstr ""
 
-#. Plugin Name of the plugin/theme
+#: templates/list-documents.php:39
+msgid "The requested help document could not be found."
+msgstr ""
+
+#: templates/settings.php:7
+msgid "WP Help Settings"
+msgstr ""
+
+#: templates/settings.php:9
+msgid "Headlines"
+msgstr ""
+
+#: templates/settings.php:11
+msgid "The main WP Help headline and document listing headline are directly editable."
+msgstr ""
+
+#: templates/settings.php:13
+msgid "Menu Location"
+msgstr ""
+
+#: templates/settings.php:15
+msgid "Display the help documents menu item:"
+msgstr ""
+
+#: templates/settings.php:17
+msgid "as a Dashboard submenu"
+msgstr ""
+
+#: templates/settings.php:18
+msgid "above the Dashboard menu"
+msgstr ""
+
+#: templates/settings.php:19
+msgid "below the Dashboard menu"
+msgstr ""
+
+#: templates/settings.php:20
+msgid "at the bottom"
+msgstr ""
+
+#: templates/settings.php:23
+msgctxt "noun, h3 heading about synchronization"
+msgid "Sync Source"
+msgstr ""
+
+#: templates/settings.php:25
+msgid "To treat this install as a source, use this secret URL:"
+msgstr ""
+
+#: templates/settings.php:27
+msgid "Sync Pull"
+msgstr ""
+
+#: templates/settings.php:29
+msgid "Pull in help documents from this WP Help secret URL:"
+msgstr ""
+
+#: templates/settings.php:31
+msgid "Note:"
+msgstr ""
+
+#: templates/settings.php:33
+msgid "Sync pull refreshes automatically once a day."
+msgstr ""
+
+#: templates/settings.php:34
+msgid "You can manually refresh by saving the setting again."
+msgstr ""
+
+#: templates/settings.php:35
+msgid "Synced documents cannot be modified locally while syncing is still enabled."
+msgstr ""
+
+#: templates/settings.php:38
+msgid "Save Changes"
+msgstr ""
+
+#: templates/settings.php:38
+msgid "Cancel"
+msgstr ""
+
+#: wp-help.php:108
+msgctxt "post type label"
+msgid "Publishing Help"
+msgstr "Справка"
+
+#: wp-help.php:125
+msgid "Help Documents"
+msgstr "Документация"
+
+#: wp-help.php:126
+msgid "Help Document"
+msgstr "Страница"
+
+#: wp-help.php:127
+msgid "Add New Help Document"
+msgstr "Новая страница"
+
+#: wp-help.php:128
+msgid "Edit Help Document"
+msgstr "Редактировать страницу"
+
+#: wp-help.php:129
+msgid "New Help Document"
+msgstr "Новая страница"
+
+#: wp-help.php:130
+msgid "View Help Document"
+msgstr "Просмотреть страницу"
+
+#: wp-help.php:131
+msgid "Search Documents"
+msgstr "Поиск страниц"
+
+#: wp-help.php:132
+msgid "No Help Documents Found"
+msgstr "Страниц не найдено"
+
+#: wp-help.php:133
+msgid "No Help Documents found in Trash"
+msgstr "Страниц в корзине не найдено"
+
+#: wp-help.php:134
+msgid "Parent Help Document"
+msgstr "Родительская страница"
+
+#: wp-help.php:135
+msgctxt "i.e. Add new Help Document"
+msgid "Add New"
+msgstr "Добавить страницу"
+
+#: wp-help.php:136
+msgctxt "i.e. Edit Help Document"
+msgid "Edit"
+msgstr "Редактировать"
+
+#: wp-help.php:137
+msgctxt "i.e. View Help Document"
+msgid "View"
+msgstr "Просмотреть"
+
+#: wp-help.php:152
+msgctxt "h2 default title"
+msgid "Publishing Help"
+msgstr ""
+
+#: wp-help.php:153
+msgctxt "h3 default title"
+msgid "Help Topics"
+msgstr ""
+
+#: wp-help.php:170
+msgid "Donate"
+msgstr ""
+
+#: wp-help.php:246
+msgid "&mdash; Remote document"
+msgstr ""
+
+#: wp-help.php:481
+msgid "What are you doing? You&#8217;re going to create an infinite loop!"
+msgstr ""
+
+#: wp-help.php:485
+msgid "That is not a WP Help URL. Make sure you copied it correctly."
+msgstr ""
+
+#: wp-help.php:574
+msgid "Set as default help document"
+msgstr ""
+
+#: wp-help.php:596
+msgid "Document updated. <a href=\"%s\">View document</a>"
+msgstr "Страница обновлена. <a href=\"%s\">Посмотреть</a>"
+
+#: wp-help.php:597
+msgid "Custom field updated."
+msgstr "Произвольное поле обновлено."
+
+#: wp-help.php:598
+msgid "Custom field deleted."
+msgstr "Произвольное поле удалено."
+
+#: wp-help.php:599
+msgid "Document updated."
+msgstr "Страница обновлена."
+
+#: wp-help.php:600
+msgid "Document restored to revision from %s"
+msgstr "Страница восстановлена из редакции от %s"
+
+#: wp-help.php:601
+msgid "Document published. <a href=\"%s\">View document</a>"
+msgstr "Страница опубликована. <a href=\"%s\">Посмотреть</a>"
+
+#: wp-help.php:602
+msgid "Document saved."
+msgstr "Страница сохранена."
+
+#: wp-help.php:603
+msgid "Document submitted. <a target=\"_blank\" href=\"%s\">Preview document</a>"
+msgstr "Страница добавлена. <a target=\"_blank\" href=\"%s\">Просмотреть</a>"
+
+#: wp-help.php:604
+msgid "Document scheduled for: <strong>%1$s</strong>. <a target=\"_blank\" href=\"%2$s\">Preview document</a>"
+msgstr "Страница запланирована на <strong>%1$s</strong>. <a target=\"_blank\" href=\"%2$s\">Просмотреть</a>"
+
+#: wp-help.php:604
+msgid "M j, Y @ G:i"
+msgstr "d.m.Y @ g:i"
+
+#: wp-help.php:605
+msgid "Document draft updated. <a target=\"_blank\" href=\"%s\">Preview document</a>"
+msgstr "Черновик страницы обновлён. <a target=\"_blank\" href=\"%s\">Просмотреть</a>"
+
 msgid "WP Help"
 msgstr "WP Help"
 
-#. Description of the plugin/theme
+msgid "http://txfx.net/wordpress-plugins/wp-help/"
+msgstr ""
+
 msgid "Administrators can create detailed, hierarchical documentation for the site's authors and editors, viewable in the WordPress admin."
 msgstr "Администраторы получают возможность создавать детальную, древовидную документацию для авторов и модераторов сайта, доступную для просмотра в админ-панели WordPress'а."
 
-#. Author of the plugin/theme
 msgid "Mark Jaquith"
 msgstr "Dzhamil Garaev"
 
-#. Author URI of the plugin/theme
 msgid "http://coveredwebservices.com/"
 msgstr "http://facemann.ru/"
-

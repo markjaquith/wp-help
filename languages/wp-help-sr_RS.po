@@ -2,18 +2,17 @@
 # This file is distributed under the same license as the WP Help package.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Help\n"
-"Report-Msgid-Bugs-To: http://wordpress.org/tag/wp-help\n"
-"POT-Creation-Date: 2012-12-08 21:08:56+00:00\n"
-"PO-Revision-Date: 2012-12-08 22:17+0100\n"
-"Last-Translator: Milan Dinić <milan@srpski.biz>\n"
-"Language-Team: \n"
+"PO-Revision-Date: 2013-06-22 05:02:13+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 1.5.4\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: GlotPress/0.1\n"
+"Project-Id-Version: WP Help\n"
+
+#: wp-help.php:273
+msgid "Parent:"
+msgstr "Родитељ:"
 
 #: templates/list-documents.php:7
 msgctxt "Button with limited space"
@@ -25,7 +24,7 @@ msgctxt "Button with limited space"
 msgid "Add New"
 msgstr "Додај ново"
 
-#: templates/list-documents.php:8 wp-help.php:267
+#: templates/list-documents.php:8 wp-help.php:268
 msgctxt "verb. Button with limited space"
 msgid "Manage"
 msgstr "Управљај"
@@ -55,11 +54,8 @@ msgid "Headlines"
 msgstr "Наслови"
 
 #: templates/settings.php:11
-msgid ""
-"The main WP Help headline and document listing headline are directly "
-"editable."
-msgstr ""
-"Главни наслов за WP Help и наслов списка документа су директно измењиви."
+msgid "The main WP Help headline and document listing headline are directly editable."
+msgstr "Главни наслов за WP Help и наслов списка документа су директно измењиви."
 
 #: templates/settings.php:13
 msgid "Menu Location"
@@ -92,9 +88,7 @@ msgstr "Извор усклађивања"
 
 #: templates/settings.php:25
 msgid "To treat this install as a source, use this secret URL:"
-msgstr ""
-"Да бисте се односили ка овој инсталацији као извору, користите овај тајни "
-"URL:"
+msgstr "Да бисте се односили ка овој инсталацији као извору, користите овај тајни URL:"
 
 #: templates/settings.php:27
 msgid "Sync Pull"
@@ -117,11 +111,8 @@ msgid "You can manually refresh by saving the setting again."
 msgstr "Можете освежити ручно поновним чувањем подешавања."
 
 #: templates/settings.php:35
-msgid ""
-"Synced documents cannot be modified locally while syncing is still enabled."
-msgstr ""
-"Усклађени документи не могу бити локално измењени док је усклађивање "
-"омогућено."
+msgid "Synced documents cannot be modified locally while syncing is still enabled."
+msgstr "Усклађени документи не могу бити локално измењени док је усклађивање омогућено."
 
 #: templates/settings.php:38
 msgid "Save Changes"
@@ -209,95 +200,73 @@ msgstr "Донирај"
 msgid "&mdash; Remote document"
 msgstr "&mdash; Удаљени документ"
 
-#: wp-help.php:272
-msgid "Parent:"
-msgstr "Родитељ:"
-
-#: wp-help.php:480
+#: wp-help.php:481
 msgid "What are you doing? You&#8217;re going to create an infinite loop!"
 msgstr "Шта радите? Направићете бесконачну петљу!"
 
-#: wp-help.php:484
+#: wp-help.php:485
 msgid "That is not a WP Help URL. Make sure you copied it correctly."
 msgstr "Ово није URL WP Help-а. Будите сигурни да сте исправно умножили."
 
-#: wp-help.php:573
+#: wp-help.php:574
 msgid "Set as default help document"
 msgstr "Постави као подразумевани документ помоћи."
 
-#: wp-help.php:595
+#: wp-help.php:596
 msgid "Document updated. <a href=\"%s\">View document</a>"
 msgstr "Документ је ажуриран. <a href=\"%s\">Види документ</a>"
 
-#: wp-help.php:596
+#: wp-help.php:597
 msgid "Custom field updated."
 msgstr "Прилагођено поље је ажурирано."
 
-#: wp-help.php:597
+#: wp-help.php:598
 msgid "Custom field deleted."
 msgstr "Прилагођено поље је обрисано."
 
-#: wp-help.php:598
+#: wp-help.php:599
 msgid "Document updated."
 msgstr "Документ је ажуриран."
 
-#: wp-help.php:599
+#: wp-help.php:600
 msgid "Document restored to revision from %s"
 msgstr "Документ је врађен на ревизију од %s"
 
-#: wp-help.php:600
+#: wp-help.php:601
 msgid "Document published. <a href=\"%s\">View document</a>"
 msgstr "Документ је објављен. <a href=\"%s\">Види документ</a>"
 
-#: wp-help.php:601
+#: wp-help.php:602
 msgid "Document saved."
 msgstr "Документ је сачуван."
 
-#: wp-help.php:602
-msgid ""
-"Document submitted. <a target=\"_blank\" href=\"%s\">Preview document</a>"
-msgstr ""
-"Документ је предат. <a target=\"_blank\" href=\"%s\">Прегледај документ</a>"
-
 #: wp-help.php:603
-msgid ""
-"Document scheduled for: <strong>%1$s</strong>. <a target=\"_blank\" href="
-"\"%2$s\">Preview document</a>"
-msgstr ""
-"Документ је заказан за: <strong>%1$s</strong>. <a target=\"_blank\" href="
-"\"%2$s\">Прегледај документ</a>"
+msgid "Document submitted. <a target=\"_blank\" href=\"%s\">Preview document</a>"
+msgstr "Документ је предат. <a target=\"_blank\" href=\"%s\">Прегледај документ</a>"
 
-#: wp-help.php:603
+#: wp-help.php:604
+msgid "Document scheduled for: <strong>%1$s</strong>. <a target=\"_blank\" href=\"%2$s\">Preview document</a>"
+msgstr "Документ је заказан за: <strong>%1$s</strong>. <a target=\"_blank\" href=\"%2$s\">Прегледај документ</a>"
+
+#: wp-help.php:604
 msgid "M j, Y @ G:i"
 msgstr "j. F Y. у H:i"
 
-#: wp-help.php:604
-msgid ""
-"Document draft updated. <a target=\"_blank\" href=\"%s\">Preview document</a>"
-msgstr ""
-"Нацрт документа је ажуриран. <a target=\"_blank\" href=\"%s\">Прегледај "
-"документ</a>"
+#: wp-help.php:605
+msgid "Document draft updated. <a target=\"_blank\" href=\"%s\">Preview document</a>"
+msgstr "Нацрт документа је ажуриран. <a target=\"_blank\" href=\"%s\">Прегледај документ</a>"
 
-#. Plugin Name of the plugin/theme
 msgid "WP Help"
 msgstr "WP Help"
 
-#. Plugin URI of the plugin/theme
 msgid "http://txfx.net/wordpress-plugins/wp-help/"
 msgstr "http://txfx.net/wordpress-plugins/wp-help/"
 
-#. Description of the plugin/theme
-msgid ""
-"Administrators can create detailed, hierarchical documentation for the "
-"site's authors and editors, viewable in the WordPress admin."
-msgstr ""
-"Управници могу да направе детаљну хијерархијску документацију за ауторе веб "
-"места и уреднике, која ће бити видљива у управљачком делу Вордпреса."
+msgid "Administrators can create detailed, hierarchical documentation for the site's authors and editors, viewable in the WordPress admin."
+msgstr "Управници могу да направе детаљну хијерархијску документацију за ауторе веб места и уреднике, која ће бити видљива у управљачком делу Вордпреса."
 
-#. Author of the plugin/theme
 msgid "Mark Jaquith"
 msgstr "Марк Џејквид"
 
-#. Author URI of the plugin/theme
 msgid "http://coveredwebservices.com/"
 msgstr "http://coveredwebservices.com/"
