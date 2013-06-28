@@ -596,7 +596,7 @@ class CWS_WP_Help_Plugin {
 			<form>
 				<?php
 				$data = get_post_meta($post->ID, '_cws_wp_help_permission');
-				$role = get_editable_roles();
+				$role = $this->get_editable_roles();
 				$key = array_keys($role);
 				foreach ($key as $role_name){
 					if ($role_name != 'administrator'){
@@ -612,7 +612,7 @@ class CWS_WP_Help_Plugin {
 	}
 
 	public function save_post( $post_id ) {
-		$role = get_editable_roles();
+		$role = $this->get_editable_roles();
 		$key = array_keys($role);
 		foreach ($key as $role_name){
 			if ($role_name != 'administrator'){
