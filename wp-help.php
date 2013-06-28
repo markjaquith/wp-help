@@ -601,8 +601,9 @@ class CWS_WP_Help_Plugin {
 				foreach ($key as $role_name){
 					if ($role_name != 'administrator'){
 						echo '<input type="checkbox" name="help-'.$role_name.'" id="help-'.$role_name. '"';
-						echo $data[0][$role_name] ? 'checked' : '';
-						echo '> '.$role[$role_name]['name'].'<br>';
+						if ( count($data) > 0 )
+							echo $data[0][$role_name] ? 'checked' : '';
+						echo '> '. ucfirst($role_name) .'<br>';
 					}
 				}
 		   		?>
@@ -612,15 +613,15 @@ class CWS_WP_Help_Plugin {
 	}
 
 	public function save_post( $post_id ) {
-		$role = $this->get_editable_roles();
-		$key = array_keys($role);
-		foreach ($key as $role_name){
-			if ($role_name != 'administrator'){
-				$stack[$role_name] = isset($_POST['help-'.$role_name] ) ? true:false;
-			}
-		}
-		update_post_meta( $post_id, '_cws_wp_help_permission', $stack);
 		if ( isset( $_POST['_cws_wp_help_nonce'] ) && wp_verify_nonce( $_POST['_cws_wp_help_nonce'], 'cws-wp-help-save' ) ) {
+			$role = $this->get_editable_roles();
+			$key = array_keys($role);
+			foreach ($key as $role_name){
+				if ($role_name != 'administrator'){
+					$stack[$role_name] = isset($_POST['help-'.$role_name] ) ? true:false;
+				}
+			}
+			update_post_meta( $post_id, '_cws_wp_help_permission', $stack);
 			if ( isset( $_POST['cws_wp_help_make_default_doc'] ) ) {
 				// Make it the default_doc
 				update_option( self::default_doc, absint( $post_id ) );
