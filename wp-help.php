@@ -617,10 +617,14 @@ class CWS_WP_Help_Plugin extends WP_Stack_Plugin {
 		exit();
 	}
 
+	public function admin_page_url() {
+		return admin_url( $this->admin_base . '?page=' . self::MENU_SLUG );
+	}
+
 	public function page_link( $link, $post ) {
 		$post = get_post( $post );
 		if ( self::POST_TYPE == $post->post_type )
-			return admin_url( $this->admin_base . '?page=' . self::MENU_SLUG . '&document=' . absint( $post->ID ) );
+			return $this->admin_page_url() . '&document=' . absint( $post->ID );
 		else
 			return $link;
 	}
