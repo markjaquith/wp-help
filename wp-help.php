@@ -198,7 +198,7 @@ class CWS_WP_Help_Plugin extends WP_Stack_Plugin {
 		}
 	}
 
-	public function page_css_class( $classes, $page, $depth, $args, $current_page ) {
+	public function page_css_class( $classes, $page, $depth, $args, $current_page = NULL ) {
 		if ( !$this->filter_wp_list_pages )
 			return $classes;
 		if ( $this->is_slurped( $page->ID ) )
