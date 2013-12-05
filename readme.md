@@ -88,6 +88,7 @@ Upgrade if you want to use WP Help in one of these languages: Bulgarian, German,
 * Make the `wp_list_pages()` call filterable.
 * Added Serbian, Turkish, and Japanese translations.
 * Use a Dashicon for WordPress 3.8+.
+* RTL CSS styles.
 
 ### 1.2 ###
 * New or updated translations for Gujarati, Norwegian, and Brazilian Portuguese.
