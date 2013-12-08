@@ -1,0 +1,302 @@
+# Translation of WP Help in Bulgarian
+# This file is distributed under the same license as the WP Help package.
+msgid ""
+msgstr ""
+"Project-Id-Version: WP Help\n"
+"POT-Creation-Date: 2013-12-08 23:54+0200\n"
+"PO-Revision-Date: 2013-12-09 00:03+0200\n"
+"Last-Translator: \n"
+"Language-Team: Timo Leiniö <timo@wpopas.fi>\n"
+"Language: fi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Poedit 1.5.7\n"
+"X-Poedit-KeywordsList: __;_e;_x;_x:1,2c;_ex:1,2c\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: wp-help.php:116
+msgctxt "post type label"
+msgid "Publishing Help"
+msgstr "Julkaisuohjeita"
+
+#: wp-help.php:128
+msgid "Help Documents"
+msgstr "Ohjesisällöt"
+
+#: wp-help.php:129
+msgid "Help Document"
+msgstr "Ohjesisältö"
+
+#: wp-help.php:130
+msgid "Add New Help Document"
+msgstr "Lisää uusi ohjesisältö"
+
+#: wp-help.php:131
+msgid "Edit Help Document"
+msgstr "Muokkaa ohjesisältöä"
+
+#: wp-help.php:132
+msgid "New Help Document"
+msgstr "Uusi ohjesisältö"
+
+#: wp-help.php:133
+msgid "View Help Document"
+msgstr "Näytä ohjesisältö"
+
+#: wp-help.php:134
+msgid "Search Documents"
+msgstr "Hae sisältöä"
+
+#: wp-help.php:135
+msgid "No Help Documents Found"
+msgstr "Ohjesisältöä ei löytynyt"
+
+#: wp-help.php:136
+msgid "No Help Documents found in Trash"
+msgstr "Ohjesisältöä ei löytynyt roskakorista"
+
+#: wp-help.php:137
+msgid "Parent Help Document"
+msgstr "Yläohje"
+
+#: wp-help.php:138
+msgctxt "i.e. Add new Help Document"
+msgid "Add New"
+msgstr "Lisää uusi"
+
+#: wp-help.php:139
+msgctxt "i.e. Edit Help Document"
+msgid "Edit"
+msgstr "Muokkaa"
+
+#: wp-help.php:140
+msgctxt "i.e. View Help Document"
+msgid "View"
+msgstr "Näytä"
+
+#: wp-help.php:155
+msgctxt "h2 default title"
+msgid "Publishing Help"
+msgstr "Julkaisuohjeita"
+
+#: wp-help.php:156
+msgctxt "h3 default title"
+msgid "Help Topics"
+msgstr "Ohjeaiheet"
+
+#: wp-help.php:173
+msgid "Donate"
+msgstr "Lahjoita"
+
+#: wp-help.php:252
+msgid "&mdash; Remote document"
+msgstr "&mdash; Etäsisältö"
+
+#: wp-help.php:477
+msgid "What are you doing? You&#8217;re going to create an infinite loop!"
+msgstr "Mitä teet? Olet luomassa loputonta silmukkaa!"
+
+#: wp-help.php:481
+msgid "That is not a WP Help URL. Make sure you copied it correctly."
+msgstr "Osoite ei ole oikea. Varmista, että kopioit sen oikein."
+
+#: wp-help.php:591
+#, php-format
+msgid "Document updated. <a href=\"%s\">View document</a>"
+msgstr "Sisältö päivitetty. <a href=\"%s\">Katso</a>"
+
+#: wp-help.php:592
+msgid "Custom field updated."
+msgstr "Avainkenttä päivitetty."
+
+#: wp-help.php:593
+msgid "Custom field deleted."
+msgstr "Avainkenttä poistettu."
+
+#: wp-help.php:594
+msgid "Document updated."
+msgstr "Sisältö päivitetty."
+
+#: wp-help.php:595
+#, php-format
+msgid "Document restored to revision from %s"
+msgstr "Sisältö palautettu versiosta %s"
+
+#: wp-help.php:596
+#, php-format
+msgid "Document published. <a href=\"%s\">View document</a>"
+msgstr "Sisältö julkaistu. <a href=\"%s\">Katso</a>"
+
+#: wp-help.php:597
+msgid "Document saved."
+msgstr "Sisältö tallennettu."
+
+#: wp-help.php:598
+#, php-format
+msgid ""
+"Document submitted. <a target=\"_blank\" href=\"%s\">Preview document</a>"
+msgstr "Sisältö lähetetty. <a target=\"_blank\" href=\"%s\">Esikatsele</a>"
+
+#: wp-help.php:599
+#, php-format
+msgid ""
+"Document scheduled for: <strong>%1$s</strong>. <a target=\"_blank\" href="
+"\"%2$s\">Preview document</a>"
+msgstr ""
+"Sisältö ajastettu: <strong>%1$s</strong>. <a target=\"_blank\" href=\"%2$s"
+"\">Esikatsele</a>"
+
+#: wp-help.php:599
+msgid "M j, Y @ G:i"
+msgstr "M j, Y @ G:i"
+
+#: wp-help.php:600
+#, php-format
+msgid ""
+"Document draft updated. <a target=\"_blank\" href=\"%s\">Preview document</a>"
+msgstr "Luonnos tallennettu. <a target=\"_blank\" href=\"%s\">Esikatsele</a>"
+
+#: templates/edit-page-js.php:5 templates/list-documents.php:8
+msgctxt "verb. Button with limited space"
+msgid "Manage"
+msgstr "Hallinnoi"
+
+#: templates/edit-page-js.php:10
+msgid "Parent:"
+msgstr "Yläohje:"
+
+#: templates/list-documents.php:7
+msgctxt "Button with limited space"
+msgid "Settings"
+msgstr "Asetukset"
+
+#: templates/list-documents.php:8
+msgctxt "Button with limited space"
+msgid "Add New"
+msgstr "Lisää uusi"
+
+#: templates/list-documents.php:16
+msgid "There are no help documents."
+msgstr "Sisältöä ei ole."
+
+#: templates/list-documents.php:18
+msgid "There are no help documents yet."
+msgstr "Sisältöä ei vielä ole."
+
+#: templates/list-documents.php:37
+msgid "edit"
+msgstr "muokkaa"
+
+#: templates/list-documents.php:40
+msgid "You are not allowed to view this document."
+msgstr "Sinulla ei ole oikeutta nähdä tätä sisältöä."
+
+#: templates/list-documents.php:43
+msgid "The requested help document could not be found."
+msgstr "Pyydettyä sisältöä ei löydetty."
+
+#: templates/settings.php:7
+msgid "WP Help Settings"
+msgstr "WP Help -asetukset"
+
+#: templates/settings.php:9
+msgid "Headlines"
+msgstr "Otsakkeet"
+
+#: templates/settings.php:11
+msgid ""
+"The main WP Help headline and document listing headline are directly "
+"editable."
+msgstr "Lisäosan otsake ja sisällön otsakkeet ovat suoraan muokattavissa."
+
+#: templates/settings.php:13
+msgid "Menu Location"
+msgstr "Valikon sijainti"
+
+#: templates/settings.php:15
+msgid "Display the help documents menu item:"
+msgstr "Näytä valikko:"
+
+#: templates/settings.php:17
+msgid "as a Dashboard submenu"
+msgstr "Ohjausnäkymän alaosiona"
+
+#: templates/settings.php:18
+msgid "above the Dashboard menu"
+msgstr "Ohjausnäkymän yläpuolella"
+
+#: templates/settings.php:19
+msgid "below the Dashboard menu"
+msgstr "Ohjausnäkymän alapuolella"
+
+#: templates/settings.php:20
+msgid "at the bottom"
+msgstr "Alimpana"
+
+#: templates/settings.php:23
+msgctxt "noun, h3 heading about synchronization"
+msgid "Sync Source"
+msgstr "Synkkauksen lähde"
+
+#: templates/settings.php:25
+msgid "To treat this install as a source, use this secret URL:"
+msgstr "Käytä tätä osoitetta, jos tämä asennus on sisällön lähde:"
+
+#: templates/settings.php:27
+msgid "Sync Pull"
+msgstr "Osoite, josta sisältö synkataan"
+
+#: templates/settings.php:29
+msgid "Pull in help documents from this WP Help secret URL:"
+msgstr "Synkkaa sisältö tästä salaisesta osoitteesta:"
+
+#: templates/settings.php:31
+msgid "Note:"
+msgstr "Huomaa, että:"
+
+#: templates/settings.php:33
+msgid "Sync pull refreshes automatically once a day."
+msgstr "Sisältö synkataan automaattisesti kerran päivässä."
+
+#: templates/settings.php:34
+msgid "You can manually refresh by saving the setting again."
+msgstr "Sisällön voi synkata käsin tallentamalla asetukset."
+
+#: templates/settings.php:35
+msgid ""
+"Synced documents cannot be modified locally while syncing is still enabled."
+msgstr ""
+"Synkattua sisältöä ei voi muokata paikallisesti niin kauan kun synkkaus on "
+"päällä."
+
+#: templates/settings.php:38
+msgid "Save Changes"
+msgstr "Tallenna muutokset"
+
+#: templates/settings.php:38
+msgid "Cancel"
+msgstr "Peruuta"
+
+#: templates/submitbox-actions.php:8
+msgid "Set as default help document"
+msgstr "Aseta oletusohjeeksi"
+
+#~ msgid "WP Help"
+#~ msgstr "WP Help"
+
+#~ msgid ""
+#~ "Administrators can create detailed, hierarchical documentation for the "
+#~ "site's authors and editors, viewable in the WordPress admin."
+#~ msgstr ""
+#~ "Администраторите могат да създават подробна, структурирана документация "
+#~ "за авторите и редакторите на сайта; достъпна през административния панел "
+#~ "на WordPress"
+
+#~ msgid "Mark Jaquith"
+#~ msgstr "Mark Jaquith - Марк Джейкуит"
+
+#~ msgid "http://coveredwebservices.com/"
+#~ msgstr "http://coveredwebservices.com/"
