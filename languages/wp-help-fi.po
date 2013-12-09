@@ -1,10 +1,10 @@
-# Translation of WP Help in Bulgarian
+# Translation of WP Help in Finnish
 # This file is distributed under the same license as the WP Help package.
 msgid ""
 msgstr ""
 "Project-Id-Version: WP Help\n"
 "POT-Creation-Date: 2013-12-09 00:07+0200\n"
-"PO-Revision-Date: 2013-12-09 00:12+0200\n"
+"PO-Revision-Date: 2013-12-09 16:26+0200\n"
 "Last-Translator: \n"
 "Language-Team: Timo Leiniö <timo@wpopas.fi>\n"
 "Language: fi\n"
