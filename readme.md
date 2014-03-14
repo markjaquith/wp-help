@@ -87,6 +87,9 @@ Upgrade for a French translation.
 Upgrade if you want to use WP Help in one of these languages: Bulgarian, German, Spanish, Mexican Spanish, Macedonian, Dutch, Brazilian Portuguese, or Russian.
 
 ## Changelog ##
+### 1.4 ###
+* Added a Hebrew translation.
+
 ### 1.3 ###
 * Make the `wp_list_pages()` call filterable.
 * Added Serbian, Turkish, and Japanese translations.
