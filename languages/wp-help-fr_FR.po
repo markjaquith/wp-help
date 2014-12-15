@@ -2,27 +2,31 @@
 # This file is distributed under the same license as the WP Help package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2013-06-22 05:02:12+0000\n"
+"PO-Revision-Date: 2014-12-16 00:22+0100\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: GlotPress/0.1\n"
+"X-Generator: Poedit 1.7.1\n"
 "Project-Id-Version: WP Help\n"
+"POT-Creation-Date: \n"
+"Last-Translator: Frédéric Serva <fred.serva@gmail.com>\n"
+"Language-Team: \n"
+"Language: fr_FR\n"
 
 #: wp-help.php:273
 msgid "Parent:"
-msgstr ""
+msgstr "Parent:"
 
 #: templates/list-documents.php:7
 msgctxt "Button with limited space"
 msgid "Settings"
-msgstr ""
+msgstr "Paramètres"
 
 #: templates/list-documents.php:8
 msgctxt "Button with limited space"
 msgid "Add New"
-msgstr ""
+msgstr "Nouveau"
 
 #: templates/list-documents.php:8 wp-help.php:268
 msgctxt "verb. Button with limited space"
@@ -31,96 +35,96 @@ msgstr "Gérer"
 
 #: templates/list-documents.php:16
 msgid "There are no help documents."
-msgstr ""
+msgstr "Il n'existe aucun document d'aide."
 
 #: templates/list-documents.php:18
 msgid "There are no help documents yet."
-msgstr ""
+msgstr "Il n'existe pas encore de document d'aide"
 
 #: templates/list-documents.php:36
 msgid "edit"
-msgstr ""
+msgstr "éditer"
 
 #: templates/list-documents.php:39
 msgid "The requested help document could not be found."
-msgstr ""
+msgstr "Le document d'aide demandé est introuvable"
 
 #: templates/settings.php:7
 msgid "WP Help Settings"
-msgstr ""
+msgstr "Paramètres WP Help"
 
 #: templates/settings.php:9
 msgid "Headlines"
-msgstr ""
+msgstr "Entêtes"
 
 #: templates/settings.php:11
 msgid "The main WP Help headline and document listing headline are directly editable."
-msgstr ""
+msgstr "L'entête principale de WP Help et la liste de documents sont directement modifiables."
 
 #: templates/settings.php:13
 msgid "Menu Location"
-msgstr ""
+msgstr "Emplacement du menu"
 
 #: templates/settings.php:15
 msgid "Display the help documents menu item:"
-msgstr ""
+msgstr "﻿Afficher l'élément de menu Documents d'aide :"
 
 #: templates/settings.php:17
 msgid "as a Dashboard submenu"
-msgstr ""
+msgstr "comme un sous-menu du Tableau de bord"
 
 #: templates/settings.php:18
 msgid "above the Dashboard menu"
-msgstr ""
+msgstr "au-dessus du menu Tableau de bord"
 
 #: templates/settings.php:19
 msgid "below the Dashboard menu"
-msgstr ""
+msgstr "sous le menu Tableau de bord"
 
 #: templates/settings.php:20
 msgid "at the bottom"
-msgstr ""
+msgstr "tout en bas"
 
 #: templates/settings.php:23
 msgctxt "noun, h3 heading about synchronization"
 msgid "Sync Source"
-msgstr ""
+msgstr "﻿Source de synchronisation"
 
 #: templates/settings.php:25
 msgid "To treat this install as a source, use this secret URL:"
-msgstr ""
+msgstr "Pour utiliser cette installation comme source, utilisez cette URL secrète :"
 
 #: templates/settings.php:27
 msgid "Sync Pull"
-msgstr ""
+msgstr "Synchronisation distante"
 
 #: templates/settings.php:29
 msgid "Pull in help documents from this WP Help secret URL:"
-msgstr ""
+msgstr "Mettre à jour les documents d'aide depuis cette URL secrète de WP Help :"
 
 #: templates/settings.php:31
 msgid "Note:"
-msgstr ""
+msgstr "Note :"
 
 #: templates/settings.php:33
 msgid "Sync pull refreshes automatically once a day."
-msgstr ""
+msgstr "La synchronisation distante s'effectue automatiquement une fois par jour."
 
 #: templates/settings.php:34
 msgid "You can manually refresh by saving the setting again."
-msgstr ""
+msgstr "Vous pouvez actualiser manuellement en enregistrant à nouveau les paramètres."
 
 #: templates/settings.php:35
 msgid "Synced documents cannot be modified locally while syncing is still enabled."
-msgstr ""
+msgstr "Les documents synchronisés ne peuvent être modifiés localement lorsque la synchronisation est activée."
 
 #: templates/settings.php:38
 msgid "Save Changes"
-msgstr ""
+msgstr "Enregistrer les modifications"
 
 #: templates/settings.php:38
 msgid "Cancel"
-msgstr ""
+msgstr "Annuler"
 
 #: wp-help.php:108
 msgctxt "post type label"
@@ -185,32 +189,32 @@ msgstr "Voir"
 #: wp-help.php:152
 msgctxt "h2 default title"
 msgid "Publishing Help"
-msgstr ""
+msgstr "Aide à la publication"
 
 #: wp-help.php:153
 msgctxt "h3 default title"
 msgid "Help Topics"
-msgstr ""
+msgstr "Sujets d'aide"
 
 #: wp-help.php:170
 msgid "Donate"
-msgstr ""
+msgstr "Faire un don"
 
 #: wp-help.php:246
 msgid "&mdash; Remote document"
-msgstr ""
+msgstr "﻿&mdash; Document distant"
 
 #: wp-help.php:481
 msgid "What are you doing? You&#8217;re going to create an infinite loop!"
-msgstr ""
+msgstr "Qu'essayez-vous de faire ? Vous allez créer une boucle sans fin !"
 
 #: wp-help.php:485
 msgid "That is not a WP Help URL. Make sure you copied it correctly."
-msgstr ""
+msgstr "Ce n'est pas une URL WP Help. Assurez-vous de l'avoir correctement copiée."
 
 #: wp-help.php:574
 msgid "Set as default help document"
-msgstr ""
+msgstr "﻿Définir comme document d'aide par défaut"
 
 #: wp-help.php:596
 msgid "Document updated. <a href=\"%s\">View document</a>"
@@ -260,7 +264,7 @@ msgid "WP Help"
 msgstr "WP Help"
 
 msgid "http://txfx.net/wordpress-plugins/wp-help/"
-msgstr ""
+msgstr "http://txfx.net/wordpress-plugins/wp-help/"
 
 msgid "Administrators can create detailed, hierarchical documentation for the site's authors and editors, viewable in the WordPress admin."
 msgstr "Les administrateurs peuvent créer une documentation hiérarchique et détaillée pour les auteurs et éditeurs du site, visible dans l’interface d’administration de Wordpress."
