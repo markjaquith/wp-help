@@ -88,7 +88,7 @@ Upgrade if you want to use WP Help in one of these languages: Bulgarian, German,
 
 ## Changelog ##
 ### 1.4.1 ###
-* Complete French translation
+* More complete French translation.
 
 ### 1.4 ###
 * Added a Hebrew translation.
