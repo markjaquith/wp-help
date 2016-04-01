@@ -10,7 +10,7 @@
 	</div>
 <?php endif; ?>
 <div id="cws-wp-help-listing-labels"><input type="text" id="cws-wp-help-listing-label" value="<?php echo esc_attr( $this->get_option( 'h3' ) ); ?>" /></div>
-<h3><?php echo esc_html( $this->get_option( 'h3' ) ); ?></h3>
+<h2><?php echo esc_html( $this->get_option( 'h3' ) ); ?></h2>
 <?php if ( !trim( $pages ) ) : ?>
 	<?php if ( current_user_can( 'manage_options' ) ) : ?>
 		<p id="cws-wp-help-nodocs"><?php _e( 'There are no help documents.', 'wp-help' ); ?></p>
