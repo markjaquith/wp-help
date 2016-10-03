@@ -26,12 +26,12 @@
 </div>
 
 <?php if ( current_user_can( 'manage_options' ) ) : ?>
-	<?php include( dirname( __FILE__ ) . '/settings.php' ); ?>
+	<?php $this->include_file( 'templates/settings.php' ); ?>
 <?php endif; ?>
 
 <div id="cws-wp-help-document">
 <?php if ( $document_id ) : ?>
-	<?php $document = new WP_Query( array( 'post_type' => self::POST_TYPE, 'p' => $document_id, 'post_status' => array( 'publish', 'private' ) ) ); ?>
+	<?php $document = new WP_Query( array( 'post_type' => $this::POST_TYPE, 'p' => $document_id, 'post_status' => array( 'publish', 'private' ) ) ); ?>
 	<?php if ( $document->have_posts() ) : $document->the_post(); ?>
 		<?php if ( current_user_can( 'read_post', $document_id ) ) : ?>
 			<h2><?php the_title(); ?><?php edit_post_link( __( 'edit', 'wp-help' ), ' <small>', '</small>' ); ?><?php $this->explain_slurp( $document_id ); ?></h2>

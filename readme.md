@@ -1,12 +1,12 @@
 # WP Help #
 
-[![Build Status](https://travis-ci.org/markjaquith/wp-help.png?branch=master)](https://travis-ci.org/markjaquith/wp-help)  
+[![Build Status](https://travis-ci.org/markjaquith/wp-help.svg?branch=master)](https://travis-ci.org/markjaquith/wp-help)  
 
 Contributors: markjaquith  
 Donate link: http://txfx.net/wordpress-plugins/donate  
 Tags: help, documentation, client sites, clients, docs  
-Requires at least: 4.1  
-Tested up to: 4.2.2  
+Requires at least: 4.4  
+Tested up to: 4.6  
 Stable tag: 1.4.1  
 
 Site operators can create detailed, hierarchical documentation for the site's authors, editors, and contributors, viewable in the WordPress admin.
@@ -87,6 +87,9 @@ Upgrade for a French translation.
 Upgrade if you want to use WP Help in one of these languages: Bulgarian, German, Spanish, Mexican Spanish, Macedonian, Dutch, Brazilian Portuguese, or Russian.
 
 ## Changelog ##
+### 1.5.0 ###
+* Updated to Mark's 2016 plugin framework for easier maintenance.
+
 ### 1.4.1 ###
 * More complete French translation.
 

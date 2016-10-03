@@ -14,7 +14,7 @@ require $_tests_dir . '/includes/bootstrap.php';
 
 class CWS_WP_Help_TestCase extends WP_UnitTestCase {
 	function plugin() {
-		return CWS_WP_Help_Plugin::$instance;
+		return CWS_WP_Help_Plugin::get_instance();
 	}
 
 	function set_post( $key, $value ) {

@@ -2,7 +2,7 @@
 
 <script>
 (function($){
-	var a = $('.wrap:first h2:first a:first'), i = ' <a href="edit.php?post_type=<?php echo self::POST_TYPE; ?>" class="add-new-h2"><?php echo esc_js( _x( 'Manage', 'verb. Button with limited space', 'wp-help' ) ); ?></a> ';
+	var a = $('.wrap:first h2:first a:first'), i = ' <a href="edit.php?post_type=<?php echo $this::POST_TYPE; ?>" class="add-new-h2"><?php echo esc_js( _x( 'Manage', 'verb. Button with limited space', 'wp-help' ) ); ?></a> ';
 	if ( a.length )
 		a.before(i);
 	else
