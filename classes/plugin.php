@@ -3,11 +3,11 @@ defined( 'WPINC' ) or die;
 
 class CWS_WP_Help_Plugin extends WP_Stack_Plugin2 {
 	protected static $instance;
-	private $options;
-	private $admin_base = '';
-	private $help_topics_html;
-	private $filter_wp_list_pages = false;
-	private $filter_wp_list_pages_sql = false;
+	protected $options;
+	protected $admin_base = '';
+	protected $help_topics_html;
+	protected $filter_wp_list_pages = false;
+	protected $filter_wp_list_pages_sql = false;
 	const default_doc = 'cws_wp_help_default_doc';
 	const OPTION      = 'cws_wp_help';
 	const MENU_SLUG   = 'wp-help-documents';
