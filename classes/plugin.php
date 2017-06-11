@@ -88,9 +88,16 @@ class CWS_WP_Help_Plugin extends WP_Stack_Plugin2 {
 				'hierarchical' => true,
 				'supports'     => array( 'title', 'editor', 'revisions', 'page-attributes' ),
 				'map_meta_cap' => true,
-				'capability_type' => 'page',
 				'capabilities' => array(
-					'read_posts'         => apply_filters( 'cws_wp_help_view_documents_cap', 'edit_posts' ),
+					// Normally requires 'edit_posts'
+					'read_posts'         => $this->view_cap( 'read_posts'         ),
+
+					// Normally requires 'edit_pages'
+					'read_private_posts' => $this->edit_cap( 'read_private_posts' ),
+					'edit_posts'         => $this->edit_cap( 'edit_posts'         ),
+					'publish_posts'      => $this->edit_cap( 'publish_posts'      ),
+					'edit_others_posts'  => $this->edit_cap( 'edit_others_posts'  ),
+					'create_posts'       => $this->edit_cap( 'create_posts'       ),
 				),
 				'labels' => array (
 					'name'               => __( 'Help Documents',                        'wp-help' ),
@@ -116,6 +123,14 @@ class CWS_WP_Help_Plugin extends WP_Stack_Plugin2 {
 
 		// Debug:
 		// $this->api_slurp();
+	}
+
+	protected function view_cap( $original_cap ) {
+		return apply_filters( 'cws_wp_help_view_documents_cap', 'edit_posts', $original_cap );
+	}
+
+	protected function edit_cap( $original_cap ) {
+		return apply_filters( 'cws_wp_help_edit_documents_cap', 'edit_pages', $original_cap );
 	}
 
 	protected function get_option_defaults() {

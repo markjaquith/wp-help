@@ -87,6 +87,9 @@ Upgrade for a French translation.
 Upgrade if you want to use WP Help in one of these languages: Bulgarian, German, Spanish, Mexican Spanish, Macedonian, Dutch, Brazilian Portuguese, or Russian.
 
 ## Changelog ##
+### 1.5.2 ###
+* Make permissions more filterable.
+
 ### 1.5.1 ###
 * Fix a PHP error on the dashboard.
 
