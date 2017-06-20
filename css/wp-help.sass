@@ -83,7 +83,7 @@
 #cws-wp-help-document
 	h2 small
 		font-size:   12px
-		font-family: sans-serif
+		font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif
 		color:       #888
 		+text-shadow(white 0 1px 0)
 		a
@@ -108,65 +108,42 @@
 	margin-bottom: -10px
 
 input#cws-wp-help-listing-label
-	font-family: 'Open Sans', sans-serif
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif
 	font-weight: 600
 	font-size:   1.3em
 	position:    relative
+	color:       #23282d
 	left:        -7px
-	top:         -8px
-	margin-bottom: -4px
+	top:         -6px
+	margin-bottom: -1px
 	border:      1px dashed #dfdfdf
 	width:       258px
 	background:  #ffffee
 	body.rtl &
 		left: auto
 		right: -7px
-	body.branch-3-6 &,
-	body.branch-3-7 &
-		margin-bottom: 0
-		font-family: sans-serif
-		font-size:   1.17em
-		font-weight: bold
-		left:        -5px
-		top:         -5px
-	// BOTH
-	body.rtl.branch-3-6 &,
-	body.rtl.branch-3-7 &
-		left: auto
-		right: -5px
 
 #cws-wp-help-h2-label-wrap
-	margin-bottom: -4px
+	margin-bottom: 4px
 
 input#cws-wp-help-h2-label
-	font-family: 'Open Sans', sans-serif
-	font-size:   23px
-	color:       #464646
-	line-height: 29px
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif
+	font-size:   1.3em
+	font-weight: 600
+	color:       #23282d
+	line-height: 1.4em
 	position:    relative
 	top:         -6px
 	left:        -6px
-	margin:      9px 15px -3px 0
+	margin:      7px 15px 0 0
 	border:      1px dashed #dfdfdf
 	width:       450px
 	background:  #ffffee
-	+text-shadow(white 0 1px 0)
+	//+text-shadow(white 0 1px 0)
 	body.rtl &
 		left: auto
 		right: -6px
-		margin: 9px 0 -3px 15px
-	body.branch-3-6 &,
-	body.branch-3-7 &
-		font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", sans-serif
-		top: -4px
-		left: -4px
-		margin: 9px 15px 0 0
-	// BOTH
-	body.rtl.branch-3-6 &,
-	body.rtl.branch-3-7 &
-		left: auto
-		right: -4px
-		margin: 9px 0 0 15px
+		margin: 7px 0 0 15px
 
 input#cws-wp-help-api-url,
 input#cws-wp-help-slurp-url

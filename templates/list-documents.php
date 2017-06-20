@@ -2,10 +2,16 @@
 
 <?php $pages = $this->get_help_topics_html( true ); ?>
 <div id="cws-wp-help-listing">
-<?php if ( current_user_can( 'publish_pages' ) || current_user_can( 'manage_options' ) ) : ?>
+<?php if ( current_user_can( $this->get_cap( 'edit_posts' ) ) || current_user_can( $this->get_cap( 'create_posts' ) ) || current_user_can( 'manage_options' ) ) : ?>
 	<div id="cws-wp-help-actions">
 	<?php if ( current_user_can( 'manage_options' ) ) : ?><a href="#" id="cws-wp-help-settings-on"><?php _ex( 'Settings', 'Button with limited space', 'wp-help' ); ?></a><?php endif; ?>
-	<?php if ( current_user_can( 'publish_pages' ) ) : ?><a href="<?php echo admin_url( 'post-new.php?post_type=wp-help' ); ?>" id="cws-wp-help-add-new"><?php _ex( 'Add New', 'Button with limited space', 'wp-help' ); ?></a><a href="<?php echo admin_url( 'edit.php?post_type=wp-help' ); ?>" id="cws-wp-help-manage"><?php _ex( 'Manage', 'verb. Button with limited space', 'wp-help' ); ?></a><?php endif; ?>
+	<?php if ( current_user_can( $this->get_cap( 'create_posts' ) ) ) : ?>
+		<a href="<?php echo admin_url( 'post-new.php?post_type=wp-help' ); ?>" id="cws-wp-help-add-new"><?php _ex( 'Add New', 'Button with limited space', 'wp-help' ); ?></a>
+	<?php endif; ?>
+
+	<?php if ( current_user_can( $this->get_cap( 'edit_posts' ) ) ) : ?>
+		<a href="<?php echo admin_url( 'edit.php?post_type=wp-help' ); ?>" id="cws-wp-help-manage"><?php _ex( 'Manage', 'verb. Button with limited space', 'wp-help' ); ?></a>
+	<?php endif; ?>
 	<div class="clear"></div>
 	</div>
 <?php endif; ?>
@@ -19,7 +25,7 @@
 	<?php endif; ?>
 <?php endif; ?>
 <div id="cws-wp-help-listing-wrap">
-<ul<?php if ( current_user_can( $this->get_cap( 'publish_posts' ) ) ) { echo " class='can-sort' data-nonce='" . wp_create_nonce( 'cws-wp-help-reorder' ) . "'"; } ?>>
+<ul<?php if ( current_user_can( $this->get_cap( 'edit_others_posts' ) ) ) { echo " class='can-sort' data-nonce='" . wp_create_nonce( 'cws-wp-help-reorder' ) . "'"; } ?>>
 <?php echo $pages; ?>
 </ul>
 </div>
