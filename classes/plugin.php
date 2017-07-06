@@ -586,8 +586,8 @@ class CWS_WP_Help_Plugin extends WP_Stack_Plugin2 {
 	}
 
 	public function enqueue() {
-		wp_enqueue_style( 'cws-wp-help', $this->get_url() . "css/wp-help.css", array(), '20120721b' );
-		wp_enqueue_script( 'cws-wp-help', $this->get_url() . "js/wp-help.min.js", array( 'jquery', 'jquery-ui-sortable' ), '20130111' );
+		wp_enqueue_style( 'cws-wp-help', $this->get_url() . "css/wp-help.css", array(), '20170706' );
+		wp_enqueue_script( 'cws-wp-help', $this->get_url() . "js/wp-help.min.js", array( 'jquery', 'jquery-ui-sortable' ), '20170706' );
 		do_action( 'cws_wp_help_load' ); // Use this to enqueue your own styles for things like shortcodes.
 	}
 
@@ -633,7 +633,7 @@ class CWS_WP_Help_Plugin extends WP_Stack_Plugin2 {
 			</style>
 		<?php endif; ?>
 <div class="wrap">
-	<?php screen_icon(self::POST_TYPE); ?><div id="cws-wp-help-h2-label-wrap"><input type="text" id="cws-wp-help-h2-label" value="<?php echo esc_attr( $this->get_option( 'h2' ) ); ?>" /></div><span id="cws-wp-help-loading" class="spinner"></span><h2><?php echo esc_html( $this->get_option( 'h2' ) ); ?></h2>
+	<div id="cws-wp-help-h2-label-wrap"><input type="text" id="cws-wp-help-h2-label" value="<?php echo esc_attr( $this->get_option( 'h2' ) ); ?>" /></div><span id="cws-wp-help-loading" class="spinner"></span><h1><?php echo esc_html( $this->get_option( 'h2' ) ); ?></h1>
 	<?php $this->include_file( 'templates/list-documents.php', array( 'document_id' => $document_id ) ); ?>
 </div>
 <?php

@@ -246,8 +246,8 @@ jQuery ($) ->
 				input: api.p "h2-label"
 				wrap: api.p "h2-label-wrap"
 			display:
-				text: $ ".wrap h2:first"
-				wrap: $ ".wrap h2:first"
+				text: $ ".wrap h1:first"
+				wrap: $ ".wrap h1:first"
 		h3:
 			edit:
 				input: api.p "listing-label"

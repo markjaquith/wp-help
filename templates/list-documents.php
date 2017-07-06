@@ -40,7 +40,7 @@
 	<?php $document = new WP_Query( array( 'post_type' => $this::POST_TYPE, 'p' => $document_id, 'post_status' => array( 'publish', 'private' ) ) ); ?>
 	<?php if ( $document->have_posts() ) : $document->the_post(); ?>
 		<?php if ( current_user_can( 'read_post', $document_id ) ) : ?>
-			<h2><?php the_title(); ?><?php edit_post_link( __( 'edit', 'wp-help' ), ' <small>', '</small>' ); ?><?php $this->explain_slurp( $document_id ); ?></h2>
+			<h1><?php the_title(); ?><?php edit_post_link( __( 'edit', 'wp-help' ), ' <small>', '</small>' ); ?><?php $this->explain_slurp( $document_id ); ?></h1>
 			<?php the_content(); ?>
 		<?php else: ?>
 			<p><?php _e( 'You are not allowed to view this document.', 'wp-help' ); ?></p>
