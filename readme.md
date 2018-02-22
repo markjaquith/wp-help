@@ -6,8 +6,8 @@ Contributors: markjaquith
 Donate link: http://txfx.net/wordpress-plugins/donate  
 Tags: help, documentation, client sites, clients, docs  
 Requires at least: 4.4  
-Tested up to: 4.6  
-Stable tag: 1.5.1  
+Tested up to: 4.9.4  
+Stable tag: 1.5.4  
 
 Site operators can create detailed, hierarchical documentation for the site's authors, editors, and contributors, viewable in the WordPress admin.
 
@@ -68,6 +68,7 @@ You cannot internally sort synced documents — just move the whole "chunk" of s
 1. The Publishing Help screen, which lists and displays available help documents.
 
 ## Upgrade Notice ##
+
 ### 1.3 ###
 Update for WordPress 3.8 support.
 
@@ -87,6 +88,9 @@ Upgrade for a French translation.
 Upgrade if you want to use WP Help in one of these languages: Bulgarian, German, Spanish, Mexican Spanish, Macedonian, Dutch, Brazilian Portuguese, or Russian.
 
 ## Changelog ##
+### 1.5.4 ###
+* Bump supported WordPress version.
+
 ### 1.5.3 ###
 * Make add/manage buttons use proper permissions.
 * Update styles.

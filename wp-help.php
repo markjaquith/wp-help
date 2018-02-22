@@ -2,7 +2,7 @@
 /*
 Plugin Name: WP Help
 Description: Administrators can create detailed, hierarchical documentation for the site's authors and editors, viewable in the WordPress admin.
-Version: 1.5.3
+Version: 1.5.4
 License: GPL
 Plugin URI: http://txfx.net/wordpress-plugins/wp-help/
 Author: Mark Jaquith
