@@ -1,0 +1,16 @@
+{
+	"name"       : "markjaquith/wp-help",
+	"description": "Site operators can create detailed, hierarchical documentation for the site's authors, editors, and contributors, viewable in the WordPress admin",
+	"homepage"   : "https://wordpress.org/plugins/wp-help/",
+	"type"       : "wordpress-plugin",
+	"license"    : "GPL-2.0+",
+	"authors"    : [
+		{
+			"name"    : "Mark Jaquith",
+			"homepage": "http://coveredwebservices.com/"
+		}
+	],
+	"require": {
+          "composer/installers": "~1.0"
+  }
+}
