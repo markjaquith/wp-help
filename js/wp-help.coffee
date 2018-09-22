@@ -110,15 +110,16 @@ jQuery ($) ->
 
 		init: ->
 			# Small CSS Tweaks for Firefox
-			if $.browser.mozilla
-				data.h2.edit.input.css
-					top: '-3px'
-					left: '-5px'
-					'margin-bottom': '1px'
-				data.h3.edit.input.css
-					'margin-top': '2px'
-					'margin-bottom': '2.25px'
-					left: '-6px'
+			# body = $ 'body'
+			# if $.browser.mozilla
+			# 	data.h2.edit.input.css
+			# 		top: '-5px'
+			# 		left: '-7px'
+			# 		'margin-bottom': '-3px'
+			# 	data.h3.edit.input.css
+			# 		'margin-top': '1px'
+			# 		'margin-bottom': '-5px'
+			# 		left: '-8px'
 
 			# Sortable
 			api.sortableInit()
@@ -245,8 +246,8 @@ jQuery ($) ->
 				input: api.p "h2-label"
 				wrap: api.p "h2-label-wrap"
 			display:
-				text: $ ".wrap h2:first"
-				wrap: $ ".wrap h2:first"
+				text: $ ".wrap h1:first"
+				wrap: $ ".wrap h1:first"
 		h3:
 			edit:
 				input: api.p "listing-label"

@@ -1,13 +1,13 @@
 # WP Help #
 
-[![Build Status](https://travis-ci.org/markjaquith/wp-help.png?branch=master)](https://travis-ci.org/markjaquith/wp-help)  
+[![Build Status](https://travis-ci.org/markjaquith/wp-help.svg?branch=master)](https://travis-ci.org/markjaquith/wp-help)  
 
 Contributors: markjaquith  
 Donate link: http://txfx.net/wordpress-plugins/donate  
 Tags: help, documentation, client sites, clients, docs  
-Requires at least: 3.4  
-Tested up to: 3.5.1  
-Stable tag: 1.2  
+Requires at least: 4.4  
+Tested up to: 4.9.4  
+Stable tag: 1.5.4  
 
 Site operators can create detailed, hierarchical documentation for the site's authors, editors, and contributors, viewable in the WordPress admin.
 
@@ -68,6 +68,10 @@ You cannot internally sort synced documents — just move the whole "chunk" of s
 1. The Publishing Help screen, which lists and displays available help documents.
 
 ## Upgrade Notice ##
+
+### 1.3 ###
+Update for WordPress 3.8 support.
+
 ### 1.2 ###
 Update for better UI and support for WordPress 3.5.
 
@@ -84,9 +88,35 @@ Upgrade for a French translation.
 Upgrade if you want to use WP Help in one of these languages: Bulgarian, German, Spanish, Mexican Spanish, Macedonian, Dutch, Brazilian Portuguese, or Russian.
 
 ## Changelog ##
+
+### 1.5.4 ###
+* Bump supported WordPress version.
+
+### 1.5.3 ###
+* Make add/manage buttons use proper permissions.
+* Update styles.
+* Bump minimum WordPress version.
+
+### 1.5.2 ###
+* Make permissions more filterable.
+
+### 1.5.1 ###
+* Fix a PHP error on the dashboard.
+
+### 1.5.0 ###
+* Updated to Mark's 2016 plugin framework for easier maintenance.
+
+### 1.4.1 ###
+* More complete French translation.
+
+### 1.4 ###
+* Added a Hebrew translation.
+
 ### 1.3 ###
 * Make the `wp_list_pages()` call filterable.
-* Added Serbian and Turkish translations.
+* Added Serbian, Turkish, and Japanese translations.
+* Use a Dashicon for WordPress 3.8+.
+* RTL CSS styles.
 
 ### 1.2 ###
 * New or updated translations for Gujarati, Norwegian, and Brazilian Portuguese.
