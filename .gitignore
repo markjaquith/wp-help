@@ -2,7 +2,3 @@
 .sass-cache
 /node_modules
 /release
-/js/*.js
-/js/*.map
-!/js/*.min.js
-!/js/*.min.js.map
