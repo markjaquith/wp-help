@@ -206,3 +206,103 @@ input#cws-wp-help-slurp-url
 	body.rtl &
 		right: auto
 		left: 0
+
+
+/**
+ * Documentation Typography Styles
+ *
+ * Heavily inspired by Gutenberg styling
+ */
+.toplevel_page_wp-help-documents
+	background-color: #fff
+
+#cws-wp-help-document
+	max-width: 680px
+	font-size: 18px
+	line-height: 1.65
+	color: #191e23
+
+	h1,h2,h3,h4,h5,h6
+		line-height: 1.4
+		font-weight: 700
+
+	h1
+		font-size: 2em
+
+	> h1:first-child > small // the edit link
+		font-size: 16px
+
+	h2
+		font-size: 1.5em
+		margin-bottom: .5em
+
+	h3
+		font-size: 1.25em
+		margin-bottom: .5em
+
+	h4 
+		font-size: 1.125em
+		line-height: 1.5
+		margin-bottom: .5em
+
+	p, blockquote, ul, ol, pre
+		margin-top: 1.5em
+		margin-bottom: 1.5em
+
+	p
+		margin: 1.5em 0
+		font-size: inherit
+		line-height: inherit
+
+	blockquote
+		padding: 1.1em
+		margin-left: 0
+		margin-right: 0
+		background: #eee
+		background: rgba(0,0,0,.077)
+		line-height: 1.5
+
+		> :first-child
+			margin-top: 0
+
+		> :last-child
+			margin-bottom: 0
+
+	hr
+		margin: 2.5em 5em
+		border-top-color: #bbb
+
+	code,kbd
+		background-color: rgba(0,0,0,.1)
+		font-size: 1em
+
+	pre
+		line-height: 1.45
+
+	img, .wp-caption
+		max-width: 100%
+		height: auto
+
+	.alignleft
+		margin-right: 1.5em
+
+	.alignright
+		margin-left: 1.5em
+
+	.wp-caption-text
+		margin-top: 0
+		margin-bottom: 1em
+		font-size: .8333em
+		font-style: italic
+
+	table
+		border-collapse: collapse
+		font-size: .8333em
+
+		td,th
+			padding: .75em
+			border: 1px solid #ddd
+
+		th
+			text-align: left
+			background-color: #ddd
