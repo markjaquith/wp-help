@@ -2,12 +2,13 @@
   "name": "wp-help",
   "title": "WP Help",
   "description": "A WordPress plugin",
-  "version": "1.5.4",
+  "version": "1.6.0-beta1",
   "homepage": "",
   "author": {
     "name": "Mark Jaquith",
     "email": "mark@jaquith.me"
   },
+  "firstCopyright": "2011",
   "license": "GPL-2.0+",
   "prettier": {
     "singleQuote": true,

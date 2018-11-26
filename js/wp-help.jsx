@@ -6,13 +6,10 @@
  */
 jQuery($ => {
 	let whens = [];
-	let deferred = undefined;
+	let deferred;
 	let load = {
-		start(sensitivity) {
+		start(sensitivity = 0) {
 			// Create the timer deferred: the read/write timer state.
-			if (sensitivity === null) {
-				sensitivity = 0;
-			}
 			const timer = $.Deferred();
 
 			// Show the spinner.
@@ -33,20 +30,16 @@ jQuery($ => {
 			data.loading.hide();
 		},
 
-		/*
-    Show the loading spinner until all the promises succeed.
-    Optionally show the spinner for a minimum amount of time.
+		/**
+		 * Show the loading spinner until all the promises succeed.
+		 * Optionally show the spinner for a minimum amount of time.
 
-    until( [sensitivity], promises* );
-    @param  {number} sensitivity The number of milliseconds to show the spinner, at minimum.
-    @param  {object} promises*   Any number of jQuery promises.
-    @return {object}             A jQuery promise representing the state of all input promises.
-    */
-		until(sensitivity, ...promises) {
-			if (sensitivity == null) {
-				sensitivity = 0;
-			}
-
+		 * until( [sensitivity], promises* );
+		 * @param  {number} sensitivity The number of milliseconds to show the spinner, at minimum.
+		 * @param  {object} promises*   Any number of jQuery promises.
+		 * @return {object}             A jQuery promise representing the state of all input promises.
+		*/
+		until(sensitivity = 0, ...promises) {
 			deferred = deferred || $.Deferred().always(api.load.stop);
 			const index = whens.push(false) - 1;
 
@@ -68,24 +61,19 @@ jQuery($ => {
 		},
 	};
 
-	var api = {
-		p(i) {
-			return $(`#cws-wp-help-${i}`);
+	const api = {
+		p(selectorSuffix) {
+			return $(`#cws-wp-help-${selectorSuffix}`);
 		},
 
 		load: load,
 		bindH2Updates() {
 			// Refresh this in case we just moved the menu
-			data.menu = $('#adminmenu a.current .wp-menu-name'); // WordPress 3.5+
-			// WordPress 3.4.x and lower
-			if (!data.menu.length) {
-				data.menu = $('#adminmenu a.current');
-			}
-			data.menu.text(data.h2.edit.input.val());
+			data.menu().text(data.h2.edit.input.val());
 
 			// Send h2 updates to the menu item as we type
 			data.h2.edit.input.bind('keyup', function() {
-				return data.menu.text($(this).val());
+				data.menu().text($(this).val());
 			});
 		},
 
@@ -126,7 +114,7 @@ jQuery($ => {
 				},
 			});
 
-			return $(this)
+			$(this)
 				.find('> li:not(.cws-wp-help-is-slurped) > ul > li:nth-child(2)')
 				.parent('ul')
 				.each(api.sortable);
@@ -148,53 +136,52 @@ jQuery($ => {
 		},
 
 		init() {
-			// Sortable
+			// Sortable.
 			api.sortableInit();
 
-			// Add IDs to the list
+			// Add IDs to the list.
 			data.ul.find('li.page_item').each(function() {
-				$(this).attr(
+				const $this = $(this);
+				$this.attr(
 					'id',
-					`page-${
-						$(this)
-							.attr('class')
-							.match(/page-item-([0-9]+)/)[1]
-					}`
+					`page-${$this.attr('class').match(/page-item-([0-9]+)/)[1]}`
 				);
 			});
 
 			// Clicking the source API URI.
-			data.apiURL.click(() => this.select());
+			data.apiURL.click(function() {
+				this.select();
+			});
 
 			// Clicking the "Save Changes" button.
-			data.saveButton.click(() => api.saveSettings());
+			data.saveButton.click(api.saveSettings);
 
-			// Clicking the "Cancel" button (settings)
+			// Clicking the "Cancel" button (settings).
 			data.cancelLink.click(function(e) {
 				e.preventDefault();
 				api.restoreSettings();
 				api.hideSettings();
 			});
 
-			// Clicking the "Settings" button
+			// Clicking the "Settings" button.
 			data.settingsButton.click(function(e) {
 				e.preventDefault();
 				api.revealSettings(true);
-			}); // true = autofocus on the h2 with no highlighting
+			});
 
-			// Doubleclick the h2
+			// Doubleclicking the h2.
 			data.h2.display.text.dblclick(function() {
 				api.revealSettings();
 				data.h2.edit.input.focus().select();
 			});
 
-			// Doubleclick the h3
+			// Doubleclicking the h3.
 			data.h3.display.text.dblclick(function() {
 				api.revealSettings();
 				data.h3.edit.input.focus().select();
 			});
 
-			// Monitor for "return" presses in our text inputs
+			// Monitor for "return" presses in our text inputs.
 			data.returnMonitor.bind('keydown', function(e) {
 				if (13 === e.which) {
 					$(this).blur();
@@ -204,7 +191,7 @@ jQuery($ => {
 
 			api.bindH2Updates();
 
-			// Preview menu placement "live"
+			// Preview menu placement "live".
 			data.menuLocation.change(function() {
 				let newLocation = String(window.location);
 				if (data.menuLocation.val().indexOf('submenu') === -1) {
@@ -212,64 +199,54 @@ jQuery($ => {
 				} else {
 					newLocation = newLocation.replace('/admin.php', '/index.php');
 				}
-				const newLocationPreview =
-					`${String(newLocation)}&wp-help-preview-menu-location=` +
-					data.menuLocation.val();
+				const newLocationPreview = `${String(
+					newLocation
+				)}&wp-help-preview-menu-location=${data.menuLocation.val()}`;
 				const commonScript = String(newLocation).replace(
 					/\/wp-admin\/.*$/,
 					'/wp-admin/js/common.js'
 				);
 				$('#adminmenu').load(newLocationPreview + ' #adminmenu', function() {
-					if (window.history.replaceState) {
+					window.history.replaceState &&
 						window.history.replaceState(null, null, newLocation);
-					}
-					$.getScript(commonScript); // Makes the menu work again
-					api.bindH2Updates();
+					$.getScript(commonScript); // Makes the menu work again.
+					api.bindH2Updates(); // Makes live H2 previewing work again.
 				});
 			});
-		}, // Makes live H2 previewing work again
+		},
 
 		fadeOutIn(first, second) {
-			return first.fadeOut(150, () => second.fadeIn(150));
+			first.fadeOut(150, () => second.fadeIn(150));
 		},
 
 		hideShow(hide, show) {
 			hide.hide();
-			return show.show();
+			show.show();
 		},
 
 		revealSettings(autofocus) {
-			for (let item of [data.h2, data.h3]) {
-				api.hideShow(item.display.wrap, item.edit.wrap);
-			}
-
+			[data.h2, data.h3].forEach(item =>
+				api.hideShow(item.display.wrap, item.edit.wrap)
+			);
 			data.actions.fadeTo(200, 0.3);
 			data.ul.fadeTo(200, 0.3);
 			api.fadeOutIn(data.doc, data.settings);
-			if (autofocus) {
-				return data.h2.edit.input.focus().select();
-				/*
-        ((h2) ->
-          h2.focus().select()
-        ) data.h2.edit.input
-        */
-			}
+			autofocus && data.h2.edit.input.focus().select();
 		},
 
 		restoreSettings() {
-			return $('input, select', data.settings).each(function() {
-				const i = $(this);
-				if (i.data('original-value')) {
-					return i.val(i.data('original-value')).change();
-				}
+			$('input, select', data.settings).each(function() {
+				const $this = $(this);
+				$this.data('original-value') &&
+					$this.val($this.data('original-value')).change();
 			});
 		},
 
 		saveSettings() {
 			api.clearError();
-			$([data.h2, data.h3]).each(function() {
-				return this.display.text.text(this.edit.input.val());
-			});
+			[data.h2, data.h3].forEach(item =>
+				item.display.text.text(item.edit.input.val())
+			);
 
 			const request = $.post(ajaxurl, {
 				action: 'cws_wp_help_settings',
@@ -279,65 +256,57 @@ jQuery($ => {
 				menu_location: data.menuLocation.val(),
 				slurp_url: data.slurp.val(),
 			});
+
 			request.success(function(result) {
 				result = $.parseJSON(result);
 				data.slurp.val(result.slurp_url);
+
 				if (result.error) {
 					api.error(result.error);
 					data.slurp.focus();
 				} else {
 					api.hideSettings();
 				}
+
 				if (result.topics) {
 					api.p('nodocs').remove();
 					data.ul.html(result.topics);
-					return api.sortableInit();
+					api.sortableInit();
 				}
 			});
+
 			return api.load.until(200, request);
 		},
 
 		hideSettings() {
-			for (let item of [data.h2, data.h3]) {
-				api.hideShow(item.edit.wrap, item.display.wrap);
-			}
-			data.actions.fadeTo(200, 1);
-			data.ul.fadeTo(200, 1);
-			return api.fadeOutIn(data.settings, data.doc);
+			[data.h2, data.h3].forEach(item =>
+				api.hideShow(item.edit.wrap, item.display.wrap)
+			);
+			[data.actions, data.ul].forEach(item => item.fadeTo(200, 1));
+			api.fadeOutIn(data.settings, data.doc);
 		},
 
 		clearError() {
-			return data.slurpError.html('').hide();
+			data.slurpError.html('').hide();
 		},
 
 		error(msg) {
-			return data.slurpError.html(`<p>${msg}</p>`).fadeIn(150);
+			data.slurpError.html(`<p>${msg}</p>`).fadeIn(150);
 		},
 	};
 
-	var data = {
+	const data = {
 		menu() {
-			return $('#adminmenu a.current');
+			// Dynamic because of our live menu preview.
+			return $('#adminmenu a.current .wp-menu-name');
 		},
 		h2: {
-			edit: {
-				input: api.p('h2-label'),
-				wrap: api.p('h2-label-wrap'),
-			},
-			display: {
-				text: $('.wrap h1:first'),
-				wrap: $('.wrap h1:first'),
-			},
+			edit: { input: api.p('h2-label'), wrap: api.p('h2-label-wrap') },
+			display: { text: $('.wrap h1:first'), wrap: $('.wrap h1:first') },
 		},
 		h3: {
-			edit: {
-				input: api.p('listing-label'),
-				wrap: api.p('listing-labels'),
-			},
-			display: {
-				text: api.p('listing h3'),
-				wrap: api.p('listing h3'),
-			},
+			edit: { input: api.p('listing-label'), wrap: api.p('listing-labels') },
+			display: { text: api.p('listing h3'), wrap: api.p('listing h3') },
 		},
 		settingsButton: api.p('settings-on'),
 		doc: api.p('document'),
@@ -356,6 +325,6 @@ jQuery($ => {
 		returnMonitor: $('.wrap input[type="text"]'),
 	};
 
-	// Bootstrap everything
+	// Bootstrap everything.
 	return api.init();
 });

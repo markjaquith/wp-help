@@ -63,7 +63,6 @@ module.exports = grunt => {
 				},
 				options: {
 					browserifyOptions: {
-						standalone: 'ScoutDocs',
 						debug: true,
 					},
 					transform: browserifyTransforms,
@@ -181,9 +180,9 @@ module.exports = grunt => {
 						to: 'Version:$1<%= pkg.version %>',
 					},
 					{
-						from: /Copyright \(c\) 2017-20[0-9]{2} .*$/m,
+						from: /Copyright \(c\) 20[0-9]{2}-20[0-9]{2} .*$/m,
 						to:
-							'Copyright (c) 2017-' +
+							'Copyright (c) <%= pkg.firstCopyright %>-' +
 							new Date().getFullYear() +
 							' <%= pkg.author.name %> (email: <%= pkg.author.email %>)',
 					},
@@ -204,12 +203,12 @@ module.exports = grunt => {
 				],
 			},
 			readme: {
-				src: ['readme.txt'],
+				src: ['readme.md'],
 				overwrite: true,
 				replacements: [
 					{
-						from: /Stable Tag:(\s*?)[a-zA-Z0-9.-]+$/m,
-						to: 'Stable Tag:$1<%= pkg.version %>',
+						from: /Stable tag:(\s*?)[a-zA-Z0-9.-]+\s*?$/im,
+						to: 'Stable tag:$1<%= pkg.version %>  ',
 					},
 				],
 			},
