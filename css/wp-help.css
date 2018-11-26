@@ -1,3 +1,7 @@
+input#cws-wp-help-h2-label, input#cws-wp-help-listing-label, #cws-wp-help-document h2 small {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+}
+
 #cws-wp-help-actions {
   padding-bottom: 5px;
 }
@@ -60,8 +64,11 @@ body.rtl #cws-wp-help-listing {
   text-decoration: none;
 }
 #cws-wp-help-listing h3 {
+  line-height: 21px;
   margin: 0;
-  padding: 0;
+  padding: 3px 5px;
+  position: relative;
+  left: -6px;
 }
 #cws-wp-help-listing ul {
   margin: 5px 5px 5px 15px;
@@ -103,7 +110,6 @@ body.rtl #cws-wp-help-settings ul {
 
 #cws-wp-help-document h2 small {
   font-size: 12px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   color: #888;
   text-shadow: 0 1px 0 white;
 }
@@ -130,49 +136,51 @@ body.rtl #cws-wp-help-settings-cancel {
 }
 
 #cws-wp-help-listing-labels {
-  margin-bottom: -10px;
+  position: relative;
+  left: -6px;
+  line-height: 19px;
+  padding: 1px 0;
+}
+body.rtl #cws-wp-help-listing-labels {
+  left: auto;
+  right: -6px;
 }
 
 input#cws-wp-help-listing-label {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  line-height: 19px;
+  background: blue;
   font-weight: 600;
   font-size: 1.3em;
-  position: relative;
+  margin: 0;
   color: #23282d;
-  left: -7px;
-  top: -6px;
-  margin-bottom: -1px;
-  border: 1px dashed #dfdfdf;
+  outline: 1px dashed #dfdfdf;
+  padding: 3px 5px;
+  border: none;
   width: 258px;
   background: #ffffee;
 }
-body.rtl input#cws-wp-help-listing-label {
-  left: auto;
-  right: -7px;
-}
 
 #cws-wp-help-h2-label-wrap {
-  margin-bottom: 4px;
+  position: relative;
+  left: -5px;
+  padding: 6px 0 1px;
+}
+body.rtl #cws-wp-help-h2-label-wrap {
+  left: auto;
+  right: -5px;
 }
 
 input#cws-wp-help-h2-label {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  line-height: 29px;
   font-size: 23px;
   font-weight: 400;
   color: #23282d;
-  line-height: 29px;
-  position: relative;
-  top: -2px;
-  left: -6px;
-  margin: 7px 15px -6px 0;
-  border: 1px dashed #dfdfdf;
+  outline: 1px dashed #dfdfdf;
+  margin: 0;
+  padding: 3px 5px;
+  border: none;
   width: 450px;
   background: #ffffee;
-}
-body.rtl input#cws-wp-help-h2-label {
-  left: auto;
-  right: -6px;
-  margin: 7px 0 0 15px;
 }
 
 input#cws-wp-help-api-url,

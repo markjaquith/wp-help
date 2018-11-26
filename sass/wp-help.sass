@@ -1,20 +1,26 @@
+$system-fonts: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif
+$label-color: #23282d
+
+%system-fonts
+	font-family: $system-fonts
+
 #cws-wp-help-actions
 	padding-bottom: 5px
 	a
 		text-decoration: none
-		float:           right
-		font-size:       13px
-		max-height:      16px
-		font-weight:     normal
-		padding:         4px 8px
-		margin-left:     5px
-		right:           -5px
-		top:             -5px
-		position:        relative
-		border:          1px solid #ccc
-		background:      #f7f7f7
-		font-weight:     bold
-		border-radius:   2px
+		float: right
+		font-size: 13px
+		max-height: 16px
+		font-weight: normal
+		padding: 4px 8px
+		margin-left: 5px
+		right: -5px
+		top: -5px
+		position: relative
+		border: 1px solid #ccc
+		background: #f7f7f7
+		font-weight: bold
+		border-radius: 2px
 		body.rtl &
 			float: left
 			margin-left: 0
@@ -22,8 +28,8 @@
 			right: auto
 			left: -5px
 		&#cws-wp-help-settings-on
-			float:       left
-			left:        -5px
+			float: left
+			left: -5px
 			margin-left: 0
 			body.rtl &
 				float: right
@@ -36,12 +42,12 @@
 			color: #fff
 
 #cws-wp-help-listing
-	width:      250px
-	float:      left
-	clear:      both
-	margin:     10px 10px 10px 0
-	padding:    10px
-	border:     1px solid #ccc
+	width: 250px
+	float: left
+	clear: both
+	margin: 10px 10px 10px 0
+	padding: 10px
+	border: 1px solid #ccc
 	background: #fafafa
 	min-height: 400px
 	border-radius: 3px
@@ -51,10 +57,13 @@
 	ul li a
 		text-decoration: none
 	h3
-		margin:  0
-		padding: 0
+		line-height: 21px
+		margin: 0
+		padding: 3px 5px
+		position: relative
+		left: -6px
 	ul
-		margin:     5px 5px 5px 15px
+		margin: 5px 5px 5px 15px
 		list-style: circle
 		body.rtl &
 			margin: 5px 15px 5px 5px
@@ -67,23 +76,23 @@
 
 #cws-wp-help-document,
 #cws-wp-help-settings
-	max-width:    600px
+	max-width: 600px
 	padding-left: 300px
 	body.rtl &
 		padding-left: 0
 		padding-right: 300px
 	ul
 		padding-left: 25px
-		list-style:   square
+		list-style: square
 		body.rtl &
 			padding-left: 0
 			padding-right: 25px
 
 #cws-wp-help-document
 	h2 small
-		font-size:   12px
-		font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif
-		color:       #888
+		@extend %system-fonts
+		font-size: 12px
+		color: #888
 		text-shadow: 0 1px 0 white
 		a
 			text-decoration: none
@@ -104,68 +113,72 @@
 		margin-right: 10px
 
 #cws-wp-help-listing-labels
-	margin-bottom: -10px
-
-input#cws-wp-help-listing-label
-	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif
-	font-weight: 600
-	font-size:   1.3em
-	position:    relative
-	color:       #23282d
-	left:        -7px
-	top:         -6px
-	margin-bottom: -1px
-	border:      1px dashed #dfdfdf
-	width:       258px
-	background:  #ffffee
-	body.rtl &
-		left: auto
-		right: -7px
-
-#cws-wp-help-h2-label-wrap
-	margin-bottom: 4px
-
-input#cws-wp-help-h2-label
-	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif
-	font-size:   23px
-	font-weight: 400
-	color:       #23282d
-	line-height: 29px
-	position:    relative
-	top:         -2px
-	left:        -6px
-	margin:      7px 15px -6px 0
-	border:      1px dashed #dfdfdf
-	width:       450px
-	background:  #ffffee
+	position: relative
+	left: -6px
+	line-height: 19px
+	padding: 1px 0
 	body.rtl &
 		left: auto
 		right: -6px
-		margin: 7px 0 0 15px
+
+input#cws-wp-help-listing-label
+	@extend %system-fonts
+	line-height: 19px
+	background: blue
+	font-weight: 600
+	font-size: 1.3em
+	margin: 0
+	color: $label-color
+	outline: 1px dashed #dfdfdf
+	padding: 3px 5px
+	border: none
+	width: 258px
+	background: #ffffee
+
+#cws-wp-help-h2-label-wrap
+	position: relative
+	left: -5px
+	padding: 6px 0 1px
+	body.rtl &
+		left: auto
+		right: -5px
+
+input#cws-wp-help-h2-label
+	@extend %system-fonts
+	line-height: 29px
+	font-size: 23px
+	font-weight: 400
+	color: $label-color
+	outline: 1px dashed #dfdfdf
+	margin: 0
+	padding: 3px 5px
+	border: none
+	width: 450px
+	background: #ffffee
 
 input#cws-wp-help-api-url,
 input#cws-wp-help-slurp-url
 	width: 100%
 
 #cws-wp-help-slurp-error
-	display:    none
-	margin:     5px 0 15px
+	display: none
+	margin: 5px 0 15px
 	background: #FFEBE8
-	border:     1px solid #CC0000
-	padding:    0 0.6em
+	border: 1px solid #CC0000
+	padding: 0 0.6em
 	border-radius: 3px
 
 #icon-wp-help
 	background: transparent image-url('icon-32.png') no-repeat
 
 .cws-wp-help-placeholder
-	background:   #dadada
-	height:       40px
+	background: #dadada
+	height: 40px
 	padding-left: 17px
-	left:         -17px
-	position:     relative
-	list-style:   none
-	border:       1px dashed #bbb
+	left: -17px
+	position: relative
+	list-style: none
+	border: 1px dashed #bbb
 	border-radius: 3px
 	body.rtl &
 		left: auto
@@ -183,9 +196,9 @@ input#cws-wp-help-slurp-url
 			position: relative
 		> li.cws-wp-help-local > img.sort-handle,
 		> div#cws-wp-help-remote-docs-block > li:first-child > img.sort-handle
-			display:        inline
-			position:       absolute
-			left:           -17px
+			display: inline
+			position: absolute
+			left: -17px
 			vertical-align: middle
 			body.rtl &
 				left: auto
@@ -233,7 +246,7 @@ input#cws-wp-help-slurp-url
 		font-size: 1.25em
 		margin-bottom: .5em
 
-	h4 
+	h4
 		font-size: 1.125em
 		line-height: 1.5
 		margin-bottom: .5em
