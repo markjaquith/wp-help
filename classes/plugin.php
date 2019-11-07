@@ -586,8 +586,8 @@ class CWS_WP_Help_Plugin extends WP_Stack_Plugin2 {
 	}
 
 	public function enqueue() {
-		wp_enqueue_style( 'cws-wp-help', $this->get_url() . "css/wp-help.css", array(), '20170706' );
-		wp_enqueue_script( 'cws-wp-help', $this->get_url() . "js/wp-help.min.js", array( 'jquery', 'jquery-ui-sortable' ), '20170706' );
+		wp_enqueue_style( 'cws-wp-help', $this->get_url() . "dist/wp-help.css", array(), '20170706' );
+		wp_enqueue_script( 'cws-wp-help', $this->get_url() . "dist/index.js", array( 'jquery', 'jquery-ui-sortable' ), '20170706' );
 		do_action( 'cws_wp_help_load' ); // Use this to enqueue your own styles for things like shortcodes.
 	}
 

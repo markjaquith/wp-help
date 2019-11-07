@@ -1,3 +1,5 @@
+const webpackConfig = require('./webpack.config.js');
+
 module.exports = grunt => {
 	const ignores = [
 		'!assets/**',
@@ -13,32 +15,6 @@ module.exports = grunt => {
 		'!phpunit.xml',
 	];
 
-	const browserifyTransforms = [
-		[
-			'envify',
-			{
-				global: true,
-			},
-		],
-		[
-			'babelify',
-			{
-				presets: ['env'],
-				plugins: [
-					'add-module-exports',
-					'transform-class-properties',
-					'transform-object-rest-spread',
-				],
-			},
-		],
-		[
-			'extensify',
-			{
-				extensions: ['jsx'],
-			},
-		],
-	];
-
 	// Project configuration
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
@@ -52,74 +28,16 @@ module.exports = grunt => {
 			},
 		},
 
-		browserify: {
+		webpack: {
 			options: {
-				paths: ['../node_modules'],
-				watch: true,
+				stats: !process.env.NODE_ENV || process.env.NODE_ENV === 'development',
 			},
-			dev: {
-				files: {
-					'js/wp-help.min.js': 'js/wp-help.jsx',
-				},
-				options: {
-					browserifyOptions: {
-						debug: true,
-					},
-					transform: browserifyTransforms,
-				},
-			},
-			prod: {
-				files: {
-					'js/wp-help.min.js': 'js/wp-help.jsx',
-				},
-				options: {
-					browserifyOptions: {
-						debug: false,
-					},
-					transform: [
-						...browserifyTransforms,
-						[
-							'uglifyify',
-							{
-								global: true,
-							},
-						],
-					],
-				},
-			},
-		},
-
-		sass: {
-			default: {
-				options: {
-					style: 'expanded',
-				},
-				files: {
-					'css/wp-help.css': 'sass/wp-help.sass',
-					'css/dashboard.css': 'sass/dashboard.sass',
-				},
-			},
-		},
-
-		postcss: {
-			dev: {
-				src: 'css/*.css',
-				options: {
-					map: true,
-					processors: [require('autoprefixer')],
-				},
-			},
-			prod: {
-				src: 'css/*.css',
-				options: {
-					map: true,
-					processors: [require('autoprefixer'), require('cssnano')],
-				},
-			},
+			prod: Object.assign({}, webpackConfig, { mode: 'production' }),
+			dev: Object.assign({}, webpackConfig, { mode: 'development' }),
 		},
 
 		phpunit: {
-			default: {}
+			default: {},
 		},
 
 		watch: {
@@ -128,13 +46,6 @@ module.exports = grunt => {
 				tasks: ['phpunit'],
 				options: {
 					debounceDelay: 5000,
-				},
-			},
-			sass: {
-				files: ['sass/**/*.sass', ...ignores],
-				tasks: ['sass', 'postcss:dev'],
-				options: {
-					debounceDelay: 500,
 				},
 			},
 			package: {
@@ -168,7 +79,6 @@ module.exports = grunt => {
 				dest: 'release/svn/',
 			},
 		},
-
 
 		replace: {
 			header: {
@@ -217,22 +127,22 @@ module.exports = grunt => {
 				dest: 'release/svn/readme.txt',
 				replacements: [
 					{
-						from: /^# (.*?)( #+)?$/mg,
-						to: '=== $1 ==='
+						from: /^# (.*?)( #+)?$/gm,
+						to: '=== $1 ===',
 					},
 					{
-						from: /^## (.*?)( #+)?$/mg,
-						to: '== $1 =='
+						from: /^## (.*?)( #+)?$/gm,
+						to: '== $1 ==',
 					},
 					{
-						from: /^### (.*?)( #+)?$/mg,
-						to: '= $1 ='
+						from: /^### (.*?)( #+)?$/gm,
+						to: '= $1 =',
 					},
 					{
-						from: /^Stable tag:\s*?[a-zA-Z0-9.-]+(\s*?)$/mi,
-						to: 'Stable tag: <%= pkg.version %>$1'
-					}
-				]
+						from: /^Stable tag:\s*?[a-zA-Z0-9.-]+(\s*?)$/im,
+						to: 'Stable tag: <%= pkg.version %>$1',
+					},
+				],
 			},
 		},
 
@@ -286,9 +196,7 @@ module.exports = grunt => {
 		'env:dev',
 		'replace',
 		'prettier',
-		'browserify:dev',
-		'sass',
-		'postcss:dev',
+		'webpack:dev',
 	]);
 
 	grunt.registerTask('dev', [
@@ -299,9 +207,7 @@ module.exports = grunt => {
 	grunt.registerTask('default:prod', [
 		'env:prod',
 		'replace',
-		'browserify:prod',
-		'sass',
-		'postcss:prod',
+		'webpack:prod',
 	]);
 
 	grunt.registerTask('build', [
