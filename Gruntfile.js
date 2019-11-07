@@ -4,6 +4,7 @@ module.exports = grunt => {
 	const ignores = [
 		'!assets/**',
 		'!node_modules/**',
+		'!vendor/**',
 		'!release/**',
 		'!.git/**',
 		'!.sass-cache/**',

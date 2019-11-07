@@ -6,8 +6,8 @@ Contributors: markjaquith
 Donate link: http://txfx.net/wordpress-plugins/donate
 Tags: help, documentation, client sites, clients, docs
 Requires at least: 4.4
-Tested up to: 4.9.4
-Stable tag: 1.6.0-beta2  
+Tested up to: 5.3
+Stable tag: 1.6.1  
 
 Site operators can create detailed, hierarchical documentation for the site's authors, editors, and contributors, viewable in the WordPress admin.
 
@@ -92,6 +92,7 @@ Upgrade if you want to use WP Help in one of these languages: Bulgarian, German,
 ### 1.6.0 ###
 * CSS improvements (props @mrwweb).
 * Switch from CoffeeScript to ES6 and Babel.
+* Responsive styles.
 
 ### 1.5.4 ###
 * Bump supported WordPress version.
