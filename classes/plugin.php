@@ -85,6 +85,7 @@ class CWS_WP_Help_Plugin extends WP_Stack_Plugin2 {
 				'public'       => false,
 				'show_ui'      => true,
 				'show_in_menu' => false,
+				'show_in_rest' => true,
 				'hierarchical' => true,
 				'supports'     => array( 'title', 'editor', 'revisions', 'page-attributes' ),
 				'map_meta_cap' => true,
