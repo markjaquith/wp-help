@@ -48,6 +48,10 @@ module.exports = grunt => {
 					debounceDelay: 5000,
 				},
 			},
+			css: {
+				files: ['src/**'],
+				tasks: ['webpack:dev'],
+			},
 			package: {
 				files: ['package.json'],
 				tasks: ['replace'],
