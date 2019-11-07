@@ -79,6 +79,19 @@ class CWS_WP_Help_Plugin extends WP_Stack_Plugin2 {
 		// add_filter( 'the_title', function( $title, $post_id ) { $post = get_post( $post_id ); return $title . ' [' . $post->menu_order . ']'; }, 10, 2 );
 
 		// Register the wp-help post type
+		if ( current_user_can( $this->view_cap( 'read_posts' ) ) ) {
+			$this->register_post_type();
+		}
+
+		// Check for API requests
+		if ( isset( $_REQUEST['wp-help-key'] ) && $this->get_option( 'key' ) === $_REQUEST['wp-help-key'] )
+			$this->api_request();
+
+		// Debug:
+		// $this->api_slurp();
+	}
+
+	protected function register_post_type() {
 		register_post_type( self::POST_TYPE,
 			array(
 				'label'        => _x( 'Publishing Help', 'post type label', 'wp-help' ),
@@ -117,13 +130,6 @@ class CWS_WP_Help_Plugin extends WP_Stack_Plugin2 {
 				)
 			)
 		);
-
-		// Check for API requests
-		if ( isset( $_REQUEST['wp-help-key'] ) && $this->get_option( 'key' ) === $_REQUEST['wp-help-key'] )
-			$this->api_request();
-
-		// Debug:
-		// $this->api_slurp();
 	}
 
 	protected function view_cap( $original_cap ) {
