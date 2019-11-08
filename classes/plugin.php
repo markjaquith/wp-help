@@ -15,6 +15,7 @@ class CWS_WP_Help_Plugin {
 	const MENU_SLUG   = 'wp-help-documents';
 	const CRON_HOOK   = 'cws_wp_help_update';
 	const POST_TYPE   = 'wp-help';
+	const CSS_JS_VERSION = '1.7.0-beta1';
 
 	protected function __construct() {
 		$this->hook( 'init' );
@@ -52,6 +53,7 @@ class CWS_WP_Help_Plugin {
 		$this->hook( 'wp_list_pages'         );
 		$this->hook( 'query'                 );
 		$this->hook( 'delete_post'           );
+		$this->hook( 'enqueue_block_editor_assets' );
 
 		// Custom callbacks
 		$this->hook( 'wp_trash_post',                'delete_post'       );
@@ -91,6 +93,18 @@ class CWS_WP_Help_Plugin {
 
 		// Debug:
 		// $this->api_slurp();
+	}
+
+	/**
+	 * Enqueues block editor scripts.
+	 *
+	 * @return void
+	 */
+	public function enqueue_block_editor_assets() {
+		// Gutenberg.
+		if ( self::is_block_editor() && self::POST_TYPE === get_post_type() ) {
+			wp_enqueue_script( 'cws-wp-block-editor', $this->get_url() . 'dist/block-editor.js', array( 'wp-edit-post', 'wp-element', 'wp-plugins' ), self::CSS_JS_VERSION, true );
+		}
 	}
 
 	protected function register_post_type() {
@@ -595,8 +609,8 @@ class CWS_WP_Help_Plugin {
 	}
 
 	public function enqueue() {
-		wp_enqueue_style( 'cws-wp-help', $this->get_url() . "dist/wp-help.css", array(), '20170706' );
-		wp_enqueue_script( 'cws-wp-help', $this->get_url() . "dist/index.js", array( 'jquery', 'jquery-ui-sortable' ), '20170706' );
+		wp_enqueue_style( 'cws-wp-help', $this->get_url() . "dist/wp-help.css", array(), self::CSS_JS_VERSION );
+		wp_enqueue_script( 'cws-wp-help', $this->get_url() . "dist/index.js", array( 'jquery', 'jquery-ui-sortable' ), self::CSS_JS_VERSION );
 		do_action( 'cws_wp_help_load' ); // Use this to enqueue your own styles for things like shortcodes.
 	}
 

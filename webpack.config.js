@@ -59,6 +59,7 @@ module.exports = {
 	context: path.resolve(__dirname),
 	entry: {
 		index: ['./src/index.js', './src/sass/wp-help.sass', './src/sass/dashboard.sass'],
+		'block-editor': './src/block-editor.js',
 	},
 	output: {
 		path: path.resolve(__dirname, 'dist'),
