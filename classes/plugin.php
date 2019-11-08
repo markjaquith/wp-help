@@ -8,7 +8,7 @@ class CWS_WP_Help_Plugin extends WP_Stack_Plugin2 {
 	protected $help_topics_html;
 	protected $filter_wp_list_pages = false;
 	protected $filter_wp_list_pages_sql = false;
-	const default_doc = 'cws_wp_help_default_doc';
+	const DEFAULT_DOC = 'cws_wp_help_default_doc';
 	const OPTION      = 'cws_wp_help';
 	const MENU_SLUG   = 'wp-help-documents';
 	const CRON_HOOK   = 'cws_wp_help_update';
@@ -183,8 +183,8 @@ class CWS_WP_Help_Plugin extends WP_Stack_Plugin2 {
 	public function delete_post( $post_id ) {
 		if ( self::POST_TYPE === get_post_type( $post_id ) ) {
 			// If the default doc was deleted, kill the option
-			if ( absint( get_option( self::default_doc ) ) === absint( $post_id ) )
-				update_option( self::default_doc, 0 );
+			if ( absint( get_option( self::DEFAULT_DOC ) ) === absint( $post_id ) )
+				update_option( self::DEFAULT_DOC, 0 );
 		}
 	}
 
@@ -324,7 +324,7 @@ class CWS_WP_Help_Plugin extends WP_Stack_Plugin2 {
 			// Set the default document
 			foreach ( $posts as $p ) {
 				if ( isset( $p->default ) && isset( $source_id_to_local_id[ $p->ID ] ) ) {
-					update_option( self::default_doc, $source_id_to_local_id[ $p->ID ] );
+					update_option( self::DEFAULT_DOC, $source_id_to_local_id[ $p->ID ] );
 					break;
 				}
 			}
@@ -404,7 +404,7 @@ class CWS_WP_Help_Plugin extends WP_Stack_Plugin2 {
 
 	protected function get_topics_for_api() {
 		$topics = new WP_Query( array( 'post_type' => self::POST_TYPE, 'posts_per_page' => -1, 'post_status' => 'publish', 'orderby' => 'parent menu_order', 'order' => 'ASC' ) );
-		$default_doc = get_option( self::default_doc );
+		$default_doc = get_option( self::DEFAULT_DOC );
 		$menu_order = array();
 		foreach ( $topics->posts as $k => $post ) {
 			$c =& $topics->posts[$k];
@@ -563,11 +563,11 @@ class CWS_WP_Help_Plugin extends WP_Stack_Plugin2 {
 	public function save_post( $post_id ) {
 		if ( isset( $_POST['_cws_wp_help_nonce'] ) && wp_verify_nonce( $_POST['_cws_wp_help_nonce'], 'cws-wp-help-save_' . $post_id ) ) {
 			if ( isset( $_POST['cws_wp_help_make_default_doc'] ) ) {
-				// Make it the default_doc
-				update_option( self::default_doc, absint( $post_id ) );
-			} elseif ( $post_id == get_option( self::default_doc ) ) {
+				// Make it the default doc.
+				update_option( self::DEFAULT_DOC, absint( $post_id ) );
+			} elseif ( $post_id == get_option( self::DEFAULT_DOC ) ) {
 				// Unset
-				update_option( self::default_doc, 0 );
+				update_option( self::DEFAULT_DOC, 0 );
 			}
 		}
 		return $post_id;
@@ -631,7 +631,7 @@ class CWS_WP_Help_Plugin extends WP_Stack_Plugin2 {
 	}
 
 	public function render_listing_page() {
-		$document_id = absint( isset( $_GET['document'] ) ? $_GET['document'] : get_option( self::default_doc ) );
+		$document_id = absint( isset( $_GET['document'] ) ? $_GET['document'] : get_option( self::DEFAULT_DOC ) );
 		if ( $document_id ) : ?>
 			<style>
 			#cws-wp-help-listing .page-item-<?php echo $document_id; ?> > a {
