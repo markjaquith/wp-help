@@ -1,7 +1,9 @@
 <?php
 defined( 'WPINC' ) or die;
 
-class CWS_WP_Help_Plugin extends WP_Stack_Plugin2 {
+class CWS_WP_Help_Plugin {
+	use WP_Help_Plugin_Structure;
+
 	protected static $instance;
 	protected $options;
 	protected $admin_base = '';
