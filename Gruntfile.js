@@ -6,6 +6,7 @@ const ignores = [
 	'!vendor/**',
 	'!release/**',
 	'!.git/**',
+	'!.vs-code/settings.json',
 	'!.sass-cache/**',
 	'!.gitignore',
 	'!.gitmodules',
@@ -53,7 +54,11 @@ module.exports = grunt => {
 		},
 
 		phpunit: {
-			default: {},
+			default: {
+				options: {
+					bin: 'vendor/bin/phpunit',
+				},
+			},
 		},
 
 		watch: {

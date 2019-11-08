@@ -31,6 +31,16 @@ trait WP_Help_Plugin_Structure {
 	}
 
 	/**
+	 * Whether the block editor is being shown.
+	 *
+	 * @return bool
+	 */
+	public static function is_block_editor() {
+		$current_screen = get_current_screen();
+		return method_exists( $current_screen, 'is_block_editor' ) && $current_screen->is_block_editor();
+	}
+
+	/**
 	 * Add a WordPress hook (action/filter)
 	 *
 	 * @param  mixed $hook,... first parameter is the name of the hook. If second or third parameters are included, they will be used as a priority (if an integer) or as a class method callback name (if a string)
@@ -62,7 +72,7 @@ trait WP_Help_Plugin_Structure {
 	 */
 	protected function include_file( $file, $data = array() ) {
 		extract( $data, EXTR_SKIP );
-		include( $this->get_path() . $file );
+		return include( $this->get_path() . $file );
 	}
 
 	/**
