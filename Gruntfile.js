@@ -1,21 +1,36 @@
 const webpackConfig = require('./webpack.config.js');
 
-module.exports = grunt => {
-	const ignores = [
-		'!assets/**',
-		'!node_modules/**',
-		'!vendor/**',
-		'!release/**',
-		'!.git/**',
-		'!.sass-cache/**',
-		'!.gitignore',
-		'!.gitmodules',
-		'!tests/**',
-		'!bin/**',
-		'!.travis.yml',
-		'!phpunit.xml',
+const ignores = [
+	'!assets/**',
+	'!node_modules/**',
+	'!vendor/**',
+	'!release/**',
+	'!.git/**',
+	'!.sass-cache/**',
+	'!.gitignore',
+	'!.gitmodules',
+	'!tests/**',
+	'!bin/**',
+	'!.travis.yml',
+	'!phpunit.xml',
+];
+
+function cleanUpReleaseFiles() {
+	const files = [
+		'readme.md',
+		'package.json',
+		'webpack.config.js',
+		'package-lock.json',
+		'composer.json',
+		'composer.lock',
+		'babel.config.js',
+		'Gruntfile.js',
 	];
 
+	return files.map(file => `release/svn/${file}`);
+}
+
+module.exports = grunt => {
 	// Project configuration
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
@@ -65,7 +80,7 @@ module.exports = grunt => {
 				'release/latest/',
 				'release/svn/',
 			],
-			svn_readme_md: ['release/svn/readme.md'],
+			svn: cleanUpReleaseFiles(),
 		},
 
 		copy: {
@@ -217,10 +232,10 @@ module.exports = grunt => {
 
 	grunt.registerTask('build', [
 		'default:prod',
-		'clean',
-		'copy:release',
-		'copy:latest',
-		'copy:svn',
+		'clean:release',
+		'copy',
+		'replace',
+		'clean:svn',
 	]);
 
 	grunt.registerTask('release', ['build', 'wp_deploy']);
