@@ -35,8 +35,8 @@ include( dirname( __FILE__ ) . '/lib/requirements-check.php' );
 
 $cws_wp_help_requirements_check = new CWS_WP_Help_Requirements_Check( array(
 	'title' => 'WP Help',
-	'php'   => '5.3',
-	'wp'    => '4.7',
+	'php'   => '5.6',
+	'wp'    => '4.9',
 	'file'  => __FILE__,
 ));
 

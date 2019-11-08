@@ -2,8 +2,8 @@
 
 class CWS_WP_Help_Requirements_Check {
 	private $title = '';
-	private $php = '5.2.4';
-	private $wp = '3.8';
+	private $php = '5.6';
+	private $wp = '4.8';
 	private $file;
 
 	public function __construct( $args ) {
@@ -29,7 +29,7 @@ class CWS_WP_Help_Requirements_Check {
 	}
 
 	private function php_passes() {
-		if ( $this->php_at_least( $this->php ) ) {
+		if ( $this->__php_at_least( $this->php ) ) {
 			return true;
 		} else {
 			add_action( 'admin_notices', array( $this, 'php_version_notice' ) );
@@ -37,7 +37,7 @@ class CWS_WP_Help_Requirements_Check {
 		}
 	}
 
-	private static function php_at_least( $min_version ) {
+	private static function __php_at_least( $min_version ) {
 		return version_compare( phpversion(), $min_version, '>=' );
 	}
 
@@ -48,7 +48,7 @@ class CWS_WP_Help_Requirements_Check {
 	}
 
 	private function wp_passes() {
-		if ( $this->wp_at_least( $this->wp ) ) {
+		if ( $this->__wp_at_least( $this->wp ) ) {
 			return true;
 		} else {
 			add_action( 'admin_notices', array( $this, 'wp_version_notice' ) );
@@ -56,7 +56,7 @@ class CWS_WP_Help_Requirements_Check {
 		}
 	}
 
-	private static function wp_at_least( $min_version ) {
+	private static function __wp_at_least( $min_version ) {
 		return version_compare( get_bloginfo( 'version' ), $min_version, '>=' );
 	}
 
