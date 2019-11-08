@@ -20,7 +20,7 @@ function cleanUpReleaseFiles() {
 		'readme.md',
 		'package.json',
 		'webpack.config.js',
-		'package-lock.json',
+		'yarn.lock',
 		'composer.json',
 		'composer.lock',
 		'babel.config.js',
