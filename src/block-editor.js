@@ -5,39 +5,30 @@ const { Fragment, Component } = wp.element;
 const { PluginPostStatusInfo } = wp.editPost;
 const { registerPlugin } = wp.plugins;
 
+const DEFAULT_DOCUMENT = '_cws_wp_help_default_doc';
+
 class WpHelp extends Component {
 	constructor(props) {
 		super(props);
-		console.log(props);
+		this.state = {
+			checked: props.isDefault || false,
+		};
 	}
 
-	state = {
-		checked: false,
-	};
+	checked = () => !! this.state.checked;
 
-	checked() {
-		return this.state.checked;
-	}
-
-	toggleDefaultDoc = () => {
-		this.setState(state => ({
-			checked: !state.checked,
-		}));
-	};
-
-	updateDefaultDoc(enabled) {
-		const { meta, onUpdateDefaultDoc } = this.props;
-		onUpdateDefaultDoc(meta, enabled);
+	toggleDefaultDoc = checked => {
+		this.setState({checked});
+		this.props.setDefaultDocument(checked);
 	}
 
 	render() {
-		const {checked} = this.state;
 		return (
 			<Fragment>
 				<PluginPostStatusInfo>
 					<CheckboxControl
 						label="Default Help Document"
-						checked={checked}
+						checked={this.checked()}
 						onChange={this.toggleDefaultDoc}
 					/>
 				</PluginPostStatusInfo>
@@ -47,19 +38,14 @@ class WpHelp extends Component {
 }
 
 const ConnectedWpHelp = compose([
-	// withSelect(select => ({
-	// 	meta: select('core/editor').getEditedPostAttribute('meta'),
-	// })),
-	// withDispatch(dispatch => ({
-	// 	onUpdateLink: (meta, link) => {
-	// 		dispatch('core/editor').editPost({ meta: { ...meta, _links_to: link } });
-	// 	},
-	// 	onUpdateDefaultDoc: (meta, enabled) => {
-	// 		dispatch('core/editor').editPost({
-	// 			meta: { ...meta, _links_to_target: enabled ? '_blank' : '' },
-	// 		});
-	// 	},
-	// })),
+	withSelect(select => ({
+		isDefault: (select('core/editor').getEditedPostAttribute('meta') || [])[DEFAULT_DOCUMENT] || false,
+	})),
+	withDispatch(dispatch => ({
+		setDefaultDocument: isDefault => {
+			dispatch('core/editor').editPost({ meta: {[DEFAULT_DOCUMENT]: isDefault, foo: 'bar' } });
+		},
+	})),
 	withInstanceId,
 ])(WpHelp);
 

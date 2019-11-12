@@ -11,6 +11,7 @@ class CWS_WP_Help_Plugin {
 	protected $filter_wp_list_pages = false;
 	protected $filter_wp_list_pages_sql = false;
 	const DEFAULT_DOC = 'cws_wp_help_default_doc';
+	const DEFAULT_DOCUMENT_META_KEY = '_cws_wp_help_default_doc';
 	const OPTION      = 'cws_wp_help';
 	const MENU_SLUG   = 'wp-help-documents';
 	const CRON_HOOK   = 'cws_wp_help_update';
@@ -54,6 +55,8 @@ class CWS_WP_Help_Plugin {
 		$this->hook( 'query'                 );
 		$this->hook( 'delete_post'           );
 		$this->hook( 'enqueue_block_editor_assets' );
+		// $this->hook( 'update_post_metadata' );
+		// $this->hook( 'get_post_metadata' );
 
 		// Custom callbacks
 		$this->hook( 'wp_trash_post',                'delete_post'       );
@@ -65,6 +68,9 @@ class CWS_WP_Help_Plugin {
 		$this->hook( 'post_type_link',               'page_link'         );
 		$this->hook( 'wp_ajax_cws_wp_help_settings', 'ajax_settings'     );
 		$this->hook( 'wp_ajax_cws_wp_help_reorder',  'ajax_reorder'      );
+
+		// Register post meta.
+		$this->register_meta();
 
 		if ( 'dashboard-submenu' != $this->get_option( 'menu_location' ) ) {
 			$this->admin_base = 'admin.php';
@@ -116,7 +122,7 @@ class CWS_WP_Help_Plugin {
 				'show_in_menu' => false,
 				'show_in_rest' => true,
 				'hierarchical' => true,
-				'supports'     => array( 'title', 'editor', 'revisions', 'page-attributes' ),
+				'supports'     => array( 'title', 'editor', 'revisions', 'custom-fields', 'page-attributes' ),
 				'map_meta_cap' => true,
 				'capabilities' => array(
 					// Normally requires 'edit_posts'
@@ -184,6 +190,45 @@ class CWS_WP_Help_Plugin {
 		return file_get_contents( trailingslashit( $this->get_path() ) . $path );
 	}
 
+	public function update_post_metadata( $return, $object_id, $meta_key, $meta_value, $prev_value ) {
+		if ( self::DEFAULT_DOCUMENT_META_KEY === $meta_key ) {
+			if ( $this->is_default_doc( $object_id ) && ! $meta_value ) {
+				$this->unset_default_doc();
+				return true;
+			} elseif ( $meta_value ) {
+				$this->set_default_doc( $object_id );
+				return true;
+			}
+		}
+
+		return $return;
+	}
+
+	public function get_post_metadata( $value, $object_id, $meta_key, $single ) {
+		if ( self::DEFAULT_DOCUMENT_META_KEY === $meta_key ) {
+			$value = $this->is_default_doc( $object_id );
+		}
+
+		return $value;
+	}
+
+	public function register_meta() {
+		return register_post_meta(
+			self::POST_TYPE,
+			self::DEFAULT_DOCUMENT_META_KEY,
+			array(
+				'type' => 'boolean',
+				'single' => true,
+				'show_in_rest' => true,
+				'auth_callback' => array( $this, 'auth_callback' ),
+			)
+		);
+	}
+
+	public function auth_callback( $allowed, $meta_key, $post_id, $user_id, $cap, $caps ) {
+		return user_can( $user_id, 'edit_post', $post_id );
+	}
+
 	public function wp_dashboard_setup() {
 		if ( current_user_can( $this->get_cap( 'read_posts' ) ) ) {
 			$this->help_topics_html = $this->get_help_topics_html();
@@ -197,10 +242,9 @@ class CWS_WP_Help_Plugin {
 	}
 
 	public function delete_post( $post_id ) {
-		if ( self::POST_TYPE === get_post_type( $post_id ) ) {
-			// If the default doc was deleted, kill the option
-			if ( absint( get_option( self::DEFAULT_DOC ) ) === absint( $post_id ) )
-				update_option( self::DEFAULT_DOC, 0 );
+		// If the default doc was deleted, unset it as default.
+		if ( self::POST_TYPE === get_post_type( $post_id ) && $this->is_default_doc( $post_id ) ) {
+			$this->unset_default_doc();
 		}
 	}
 
@@ -579,14 +623,31 @@ class CWS_WP_Help_Plugin {
 	public function save_post( $post_id ) {
 		if ( isset( $_POST['_cws_wp_help_nonce'] ) && wp_verify_nonce( $_POST['_cws_wp_help_nonce'], 'cws-wp-help-save_' . $post_id ) ) {
 			if ( isset( $_POST['cws_wp_help_make_default_doc'] ) ) {
-				// Make it the default doc.
-				update_option( self::DEFAULT_DOC, absint( $post_id ) );
-			} elseif ( $post_id == get_option( self::DEFAULT_DOC ) ) {
-				// Unset
-				update_option( self::DEFAULT_DOC, 0 );
+				$this->set_default_doc( $post_id );
+			} elseif ( $this->is_default_doc( $post_id ) ) {
+				$this->unset_default_doc();
 			}
 		}
 		return $post_id;
+	}
+
+	public function get_default_doc() {
+		return absint( get_option( self::DEFAULT_DOC, 0 ) );
+	}
+
+	public function is_default_doc( $post = null ) {
+		$post = get_post( $post );
+		return $post->ID === $this->get_default_doc();
+	}
+
+	public function set_default_doc( $post ) {
+		$post = get_post( $post );
+		$id = absint( $post ? $post->ID : 0 );
+		return update_option( self::DEFAULT_DOC, $id );
+	}
+
+	public function unset_default_doc() {
+		return update_option( self::DEFAULT_DOC, 0 );
 	}
 
 	public function post_updated_messages( $messages ) {
@@ -647,7 +708,11 @@ class CWS_WP_Help_Plugin {
 	}
 
 	public function render_listing_page() {
-		$document_id = absint( isset( $_GET['document'] ) ? $_GET['document'] : get_option( self::DEFAULT_DOC ) );
+		$document_id = $this->get_default_doc();
+		if ( isset( $_GET['document'] ) ) {
+			$document_id = absint( $_GET['document'] );
+		}
+
 		if ( $document_id ) : ?>
 			<style>
 			#cws-wp-help-listing .page-item-<?php echo $document_id; ?> > a {

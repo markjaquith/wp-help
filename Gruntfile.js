@@ -53,7 +53,11 @@ module.exports = grunt => {
 		},
 
 		phpunit: {
-			default: {},
+			default: {
+				options: {
+					bin: 'vendor/bin/phpunit',
+				},
+			},
 		},
 
 		watch: {
