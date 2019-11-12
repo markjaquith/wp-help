@@ -54,9 +54,8 @@ class CWS_WP_Help_Plugin {
 		$this->hook( 'wp_list_pages'         );
 		$this->hook( 'query'                 );
 		$this->hook( 'delete_post'           );
-		// $this->hook( 'update_post_metadata' );
-		// $this->hook( 'get_post_metadata' );
 		$this->hook( 'current_screen'        );
+		$this->hook( 'rest_api_init'         );
 
 		// Custom callbacks
 		$this->hook( 'wp_trash_post',                'delete_post'       );
@@ -68,10 +67,7 @@ class CWS_WP_Help_Plugin {
 		$this->hook( 'post_type_link',               'page_link'         );
 		$this->hook( 'wp_ajax_cws_wp_help_settings', 'ajax_settings'     );
 		$this->hook( 'wp_ajax_cws_wp_help_reorder',  'ajax_reorder'      );
-		$this->hook( 'enqueue_block_editor_assets', 20 );
-
-		// Register post meta.
-		$this->register_meta();
+		$this->hook( 'enqueue_block_editor_assets',                   20 );
 
 		if ( 'dashboard-submenu' != $this->get_option( 'menu_location' ) ) {
 			$this->admin_base = 'admin.php';
@@ -102,6 +98,25 @@ class CWS_WP_Help_Plugin {
 		// $this->api_slurp();
 	}
 
+	public function rest_api_init() {
+		register_rest_field(
+			self::POST_TYPE,
+			'is_default_doc',
+			array(
+				'get_callback' => function ( $doc ) {
+					return $this->is_default_doc( $doc->id );
+				},
+				'update_callback' => function ( $value, WP_Post $doc ) {
+					if ( $this->is_default_doc( $doc ) && ! $value ) {
+						$this->unset_default_doc();
+					} elseif ( $value ) {
+						$this->set_default_doc( $doc );
+					}
+				},
+			)
+		);
+	}
+
 	/**
 	 * Enqueues block editor scripts.
 	 *
@@ -110,7 +125,8 @@ class CWS_WP_Help_Plugin {
 	public function enqueue_block_editor_assets() {
 		// Gutenberg.
 		if ( self::is_block_editor() && self::POST_TYPE === get_post_type() ) {
-			wp_enqueue_script( 'cws-wp-block-editor', $this->get_url() . 'dist/block-editor.js', array( 'wp-edit-post', 'wp-element', 'wp-plugins' ), self::CSS_JS_VERSION, true );
+			$asset = $this->include_file( '/dist/block-editor.asset.php' );
+			wp_enqueue_script( 'cws-wp-block-editor', $this->get_url() . 'dist/block-editor.js', $asset['dependencies'], $asset['version'], true );
 			wp_dequeue_style( 'twentytwenty-block-editor-styles' );
 		}
 	}
@@ -136,7 +152,7 @@ class CWS_WP_Help_Plugin {
 				'show_in_menu' => false,
 				'show_in_rest' => true,
 				'hierarchical' => true,
-				'supports'     => array( 'title', 'editor', 'revisions', 'custom-fields', 'page-attributes' ),
+				'supports'     => array( 'title', 'editor', 'revisions', 'page-attributes' ),
 				'map_meta_cap' => true,
 				'capabilities' => array(
 					// Normally requires 'edit_posts'
@@ -202,45 +218,6 @@ class CWS_WP_Help_Plugin {
 
 	public function inline_file( $path ) {
 		return file_get_contents( trailingslashit( $this->get_path() ) . $path );
-	}
-
-	public function update_post_metadata( $return, $object_id, $meta_key, $meta_value, $prev_value ) {
-		if ( self::DEFAULT_DOCUMENT_META_KEY === $meta_key ) {
-			if ( $this->is_default_doc( $object_id ) && ! $meta_value ) {
-				$this->unset_default_doc();
-				return true;
-			} elseif ( $meta_value ) {
-				$this->set_default_doc( $object_id );
-				return true;
-			}
-		}
-
-		return $return;
-	}
-
-	public function get_post_metadata( $value, $object_id, $meta_key, $single ) {
-		if ( self::DEFAULT_DOCUMENT_META_KEY === $meta_key ) {
-			$value = $this->is_default_doc( $object_id );
-		}
-
-		return $value;
-	}
-
-	public function register_meta() {
-		return register_post_meta(
-			self::POST_TYPE,
-			self::DEFAULT_DOCUMENT_META_KEY,
-			array(
-				'type' => 'boolean',
-				'single' => true,
-				'show_in_rest' => true,
-				'auth_callback' => array( $this, 'auth_callback' ),
-			)
-		);
-	}
-
-	public function auth_callback( $allowed, $meta_key, $post_id, $user_id, $cap, $caps ) {
-		return user_can( $user_id, 'edit_post', $post_id );
 	}
 
 	public function wp_dashboard_setup() {
@@ -685,7 +662,8 @@ class CWS_WP_Help_Plugin {
 
 	public function enqueue() {
 		wp_enqueue_style( 'cws-wp-help', $this->get_url() . "dist/wp-help.css", array(), self::CSS_JS_VERSION );
-		wp_enqueue_script( 'cws-wp-help', $this->get_url() . "dist/index.js", array( 'jquery', 'jquery-ui-sortable' ), self::CSS_JS_VERSION );
+		$asset = $this->include_file( '/dist/index.asset.php' );
+		wp_enqueue_script( 'cws-wp-help', $this->get_url() . "dist/index.js", array_merge( [ 'jquery', 'jquery-ui-sortable' ], $asset_dependencies ), $asset['version'] );
 		do_action( 'cws_wp_help_load' ); // Use this to enqueue your own styles for things like shortcodes.
 	}
 

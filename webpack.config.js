@@ -1,5 +1,6 @@
 const path = require('path');
 const autoprefixer = require('autoprefixer');
+const DependencyExtraction = require('@wordpress/dependency-extraction-webpack-plugin');
 
 const postCssLoader = {
 	loader: 'postcss-loader',
@@ -58,7 +59,11 @@ const sassRules = {
 module.exports = {
 	context: path.resolve(__dirname),
 	entry: {
-		index: ['./src/index.js', './src/sass/wp-help.sass', './src/sass/dashboard.sass'],
+		index: [
+			'./src/index.js',
+			'./src/sass/wp-help.sass',
+			'./src/sass/dashboard.sass',
+		],
 		'block-editor': './src/block-editor.js',
 	},
 	output: {
@@ -66,14 +71,14 @@ module.exports = {
 		publicPath: '/dist/',
 	},
 	module: {
-		rules: [
-			jsRules,
-			imageRules,
-			cssRules,
-			sassRules,
-		],
+		rules: [jsRules, imageRules, cssRules, sassRules],
 	},
 	resolve: {
 		extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
 	},
+	plugins: [
+		new DependencyExtraction({
+			injectPolyfill: true,
+		}),
+	],
 };

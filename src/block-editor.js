@@ -1,54 +1,33 @@
-const { PanelRow, CheckboxControl } = wp.components;
-const { withInstanceId, compose } = wp.compose;
-const { withSelect, withDispatch } = wp.data;
-const { Fragment, Component } = wp.element;
-const { PluginPostStatusInfo } = wp.editPost;
-const { registerPlugin } = wp.plugins;
+import { CheckboxControl } from '@wordpress/components';
+import { compose } from '@wordpress/compose';
+import { withSelect, withDispatch } from '@wordpress/data';
+import { PluginPostStatusInfo } from '@wordpress/edit-post';
+import { registerPlugin } from '@wordpress/plugins';
 
-const DEFAULT_DOCUMENT = '_cws_wp_help_default_doc';
+const DEFAULT_DOCUMENT = 'is_default_doc';
 
-class WpHelp extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			checked: props.isDefault || false,
-		};
-	}
+const select = withSelect(select => ({
+	isDefault: select('core/editor').getEditedPostAttribute(DEFAULT_DOCUMENT) || false,
+}));
 
-	checked = () => !! this.state.checked;
+const dispatch = withDispatch(dispatch => ({
+	setDefaultDocument: isDefault => {
+		dispatch('core/editor').editPost({[DEFAULT_DOCUMENT]: isDefault});
+	},
+}));
 
-	toggleDefaultDoc = checked => {
-		this.setState({checked});
-		this.props.setDefaultDocument(checked);
-	}
-
-	render() {
-		return (
-			<Fragment>
-				<PluginPostStatusInfo>
-					<CheckboxControl
-						label="Default Help Document"
-						checked={this.checked()}
-						onChange={this.toggleDefaultDoc}
-					/>
-				</PluginPostStatusInfo>
-			</Fragment>
-		);
-	}
+function WpHelp ({ isDefault, setDefaultDocument }) {
+	return (
+		<PluginPostStatusInfo>
+			<CheckboxControl
+				label="Default Help Document"
+				checked={isDefault}
+				onChange={setDefaultDocument}
+			/>
+		</PluginPostStatusInfo>
+	);
 }
 
-const ConnectedWpHelp = compose([
-	withSelect(select => ({
-		isDefault: (select('core/editor').getEditedPostAttribute('meta') || [])[DEFAULT_DOCUMENT] || false,
-	})),
-	withDispatch(dispatch => ({
-		setDefaultDocument: isDefault => {
-			dispatch('core/editor').editPost({ meta: {[DEFAULT_DOCUMENT]: isDefault, foo: 'bar' } });
-		},
-	})),
-	withInstanceId,
-])(WpHelp);
-
 registerPlugin('wp-help', {
-	render: ConnectedWpHelp,
+	render: compose([select, dispatch])(WpHelp),
 });

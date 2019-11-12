@@ -72,7 +72,7 @@ trait WP_Help_Plugin_Structure {
 	 */
 	protected function include_file( $file, $data = array() ) {
 		extract( $data, EXTR_SKIP );
-		include( $this->get_path() . $file );
+		return include( $this->get_path() . $file );
 	}
 
 	/**
