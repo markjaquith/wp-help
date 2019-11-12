@@ -6,6 +6,7 @@ const ignores = [
 	'!vendor/**',
 	'!release/**',
 	'!.git/**',
+	'!.vs-code/settings.json',
 	'!.sass-cache/**',
 	'!.gitignore',
 	'!.gitmodules',
