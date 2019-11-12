@@ -54,9 +54,9 @@ class CWS_WP_Help_Plugin {
 		$this->hook( 'wp_list_pages'         );
 		$this->hook( 'query'                 );
 		$this->hook( 'delete_post'           );
-		$this->hook( 'enqueue_block_editor_assets' );
 		// $this->hook( 'update_post_metadata' );
 		// $this->hook( 'get_post_metadata' );
+		$this->hook( 'current_screen'        );
 
 		// Custom callbacks
 		$this->hook( 'wp_trash_post',                'delete_post'       );
@@ -68,6 +68,7 @@ class CWS_WP_Help_Plugin {
 		$this->hook( 'post_type_link',               'page_link'         );
 		$this->hook( 'wp_ajax_cws_wp_help_settings', 'ajax_settings'     );
 		$this->hook( 'wp_ajax_cws_wp_help_reorder',  'ajax_reorder'      );
+		$this->hook( 'enqueue_block_editor_assets', 20 );
 
 		// Register post meta.
 		$this->register_meta();
@@ -110,6 +111,19 @@ class CWS_WP_Help_Plugin {
 		// Gutenberg.
 		if ( self::is_block_editor() && self::POST_TYPE === get_post_type() ) {
 			wp_enqueue_script( 'cws-wp-block-editor', $this->get_url() . 'dist/block-editor.js', array( 'wp-edit-post', 'wp-element', 'wp-plugins' ), self::CSS_JS_VERSION, true );
+			wp_dequeue_style( 'twentytwenty-block-editor-styles' );
+		}
+	}
+
+	/**
+	 * Removes editor styles when our CPT edit screen is loaded.
+	 *
+	 * @param WP_Screen $screen The current screen
+	 * @return void
+	 */
+	public function current_screen( $screen ) {
+		if ( $screen->base === 'post' && $screen->post_type === self::POST_TYPE ) {
+			remove_editor_styles();
 		}
 	}
 
