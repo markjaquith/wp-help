@@ -6,7 +6,7 @@ const ignores = [
 	'!vendor/**',
 	'!release/**',
 	'!.git/**',
-	'!.vs-code/settings.json',
+	'!.vscode/**',
 	'!.sass-cache/**',
 	'!.gitignore',
 	'!.gitmodules',
@@ -14,6 +14,9 @@ const ignores = [
 	'!bin/**',
 	'!.travis.yml',
 	'!phpunit.xml',
+	'!composer.json',
+	'!composer.lock',
+	'!cypress/**',
 ];
 
 function cleanUpReleaseFiles() {
@@ -69,7 +72,7 @@ module.exports = grunt => {
 					debounceDelay: 5000,
 				},
 			},
-			css: {
+			webpack: {
 				files: ['src/**'],
 				tasks: ['webpack:dev'],
 			},
@@ -142,8 +145,8 @@ module.exports = grunt => {
 				overwrite: true,
 				replacements: [
 					{
-						from: /Stable tag:(\s*?)[a-zA-Z0-9.-]+\s*?$/im,
-						to: 'Stable tag:$1<%= pkg.version %>  ',
+						from: /^Stable tag:\s*?[a-zA-Z0-9.-]+(\s*?)$/im,
+						to: 'Stable tag: <%= pkg.version %>$1',
 					},
 				],
 			},
@@ -164,23 +167,14 @@ module.exports = grunt => {
 						to: '= $1 =',
 					},
 					{
-						from: /^Stable tag:\s*?[a-zA-Z0-9.-]+(\s*?)$/im,
-						to: 'Stable tag: <%= pkg.version %>$1',
+						from: /^.*travis-ci.org.*$/im,
+						to: '',
+					},
+					{
+						from: /\n{3,}/gm,
+						to: '\n\n',
 					},
 				],
-			},
-		},
-
-		compress: {
-			default: {
-				options: {
-					mode: 'zip',
-					archive: './release/<%= pkg.name %>.<%= pkg.version %>.zip',
-				},
-				expand: true,
-				cwd: 'release/<%= pkg.version %>/',
-				src: ['**/*'],
-				dest: '<%= pkg.name %>/',
 			},
 		},
 
@@ -197,15 +191,15 @@ module.exports = grunt => {
 				trailingComma: 'es5',
 			},
 			default: {
-				src: ['js/**/*.jsx'],
+				src: ['src/**/*.js', 'Gruntfile.js', 'cypress/integration/**.js'],
 			},
 		},
 
 		wp_deploy: {
-			deploy: {
+			default: {
 				options: {
 					plugin_slug: '<%= pkg.name %>',
-					svn_user: '<%= pkg.name %>',
+					svn_user: 'markjaquith',
 					build_dir: 'release/svn',
 					assets_dir: 'assets',
 				},
@@ -224,16 +218,14 @@ module.exports = grunt => {
 		'webpack:dev',
 	]);
 
-	grunt.registerTask('dev', [
-		'default',
-		'watch',
-	]);
-
 	grunt.registerTask('default:prod', [
 		'env:prod',
 		'replace',
+		'copy:clipboard',
 		'webpack:prod',
 	]);
+
+	grunt.registerTask('dev', ['default', 'watch']);
 
 	grunt.registerTask('build', [
 		'default:prod',
