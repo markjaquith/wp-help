@@ -96,6 +96,10 @@ module.exports = grunt => {
 		},
 
 		copy: {
+			clipboard: {
+				src: ['node_modules/clipboard/dist/clipboard.min.js'],
+				dest: 'dist/',
+			},
 			release: {
 				src: ['**', ...ignores],
 				dest: 'release/<%= pkg.version %>/',
