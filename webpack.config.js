@@ -15,7 +15,6 @@ const sassLoader = {
 		sourceMap: true,
 		implementation: require('sass'),
 		sassOptions: {
-			includePaths: [path.resolve(__dirname, 'sass/')],
 			indentedSyntax: true,
 		},
 	},
