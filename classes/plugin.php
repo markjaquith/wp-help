@@ -16,7 +16,7 @@ class CWS_WP_Help_Plugin {
 	const MENU_SLUG   = 'wp-help-documents';
 	const CRON_HOOK   = 'cws_wp_help_update';
 	const POST_TYPE   = 'wp-help';
-	const CSS_JS_VERSION = '1.7.0-beta1';
+	const CSS_JS_VERSION = '1.7.0';
 
 	protected function __construct() {
 		$this->hook( 'init' );
