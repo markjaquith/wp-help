@@ -104,7 +104,7 @@ class CWS_WP_Help_Plugin {
 			'is_default_doc',
 			array(
 				'get_callback' => function ( $doc ) {
-					return $this->is_default_doc( $doc->id );
+					return $this->is_default_doc( $doc['id'] );
 				},
 				'update_callback' => function ( $value, WP_Post $doc ) {
 					if ( $this->is_default_doc( $doc ) && ! $value ) {
