@@ -23,9 +23,6 @@ class CWS_WP_Help_Plugin {
 	}
 
 	public function init() {
-		// Translations
-		$this->load_textdomain( 'wp-help', '/languages' );
-
 		// Options
 		$raw_options = get_option( self::OPTION );
 		if ( !is_array( $raw_options ) )
