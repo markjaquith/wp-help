@@ -7,12 +7,10 @@ License: GPL
 Plugin URI: http://txfx.net/wordpress-plugins/wp-help/
 Author: Mark Jaquith
 Author URI: http://coveredwebservices.com/
-Text Domain: wp-help
-Domain Path: /languages
 */
 
 /**
- * Copyright (c) 2011-2019 Mark Jaquith (email: mark@jaquith.me)
+ * Copyright (c) 2011-2020 Mark Jaquith (email: mark@jaquith.me)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License, version 2 or, at
