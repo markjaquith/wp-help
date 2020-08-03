@@ -661,6 +661,19 @@ class CWS_WP_Help_Plugin {
 		wp_enqueue_style( 'cws-wp-help', $this->get_url() . "dist/wp-help.css", array(), self::CSS_JS_VERSION );
 		$asset = $this->include_file( '/dist/index.asset.php' );
 		wp_enqueue_script( 'cws-wp-help', $this->get_url() . "dist/index.js", array_merge( [ 'jquery', 'jquery-ui-sortable' ], $asset['dependencies'] ), $asset['version'] );
+
+		if ( function_exists( 'has_blocks' ) ) {
+			$document_id = $this->get_default_doc();
+			if ( isset( $_GET['document'] ) ) {
+				$document_id = absint( $_GET['document'] );
+			}
+
+			if ( has_blocks( $document_id ) ) {
+				wp_enqueue_style( 'wp-block-library' );
+				wp_enqueue_style( 'wp-block-library-theme' );
+			}
+		}
+
 		do_action( 'cws_wp_help_load' ); // Use this to enqueue your own styles for things like shortcodes.
 	}
 
