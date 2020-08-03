@@ -20,6 +20,7 @@ const ignores = [
 	'!cypress.*',
 	'!phpcs.xml',
 	'!phpunit.xml.dist',
+	'!yarn-error.log',
 ];
 
 function cleanUpReleaseFiles() {
