@@ -3,6 +3,7 @@ import { compose } from '@wordpress/compose';
 import { withSelect, withDispatch } from '@wordpress/data';
 import { PluginPostStatusInfo } from '@wordpress/edit-post';
 import { registerPlugin } from '@wordpress/plugins';
+import { __ } from '@wordpress/i18n';
 
 const DEFAULT_DOCUMENT = 'is_default_doc';
 
@@ -21,7 +22,7 @@ function WpHelp({ isDefault, setDefaultDocument }) {
 	return (
 		<PluginPostStatusInfo>
 			<CheckboxControl
-				label="Default Help Document"
+				label={__('Default Help Document', 'wp-help')}
 				checked={isDefault}
 				onChange={setDefaultDocument}
 			/>

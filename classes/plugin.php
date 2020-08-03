@@ -127,6 +127,7 @@ class CWS_WP_Help_Plugin {
 		if ( self::is_block_editor() && self::POST_TYPE === get_post_type() ) {
 			$asset = $this->include_file( '/dist/block-editor.asset.php' );
 			wp_enqueue_script( 'cws-wp-block-editor', $this->get_url() . 'dist/block-editor.js', $asset['dependencies'], $asset['version'], true );
+			wp_set_script_translations( 'cws-wp-block-editor', 'wp-help' );
 			wp_dequeue_style( 'twentytwenty-block-editor-styles' );
 		}
 	}
