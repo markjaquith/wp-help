@@ -125,6 +125,11 @@ class CWS_WP_Help_Plugin {
 			wp_enqueue_script( 'cws-wp-block-editor', $this->get_url() . 'dist/block-editor.js', $asset['dependencies'], $asset['version'], true );
 			wp_set_script_translations( 'cws-wp-block-editor', 'wp-help' );
 			wp_dequeue_style( 'twentytwenty-block-editor-styles' );
+
+			/**
+			 * Fires after assets have been enqueued for the editing interface.
+			 */
+			do_action( 'cws_wp_help_editor_assets' );
 		}
 	}
 
