@@ -24,9 +24,10 @@ class CWS_WP_Help_Plugin {
 	public function init() {
 		// Options
 		$raw_options = get_option( self::OPTION );
-		if ( !is_array( $raw_options ) )
+		if ( ! is_array( $raw_options ) ) {
 			$raw_options = array();
-		if ( !isset( $raw_options['key'] ) ) {
+		}
+		if ( ! isset( $raw_options['key'] ) ) {
 			// Normally, we shouldn't set defaults, but the key is a
 			// generate-once deal, so we do that now if it does not exist.
 			$raw_options['key'] = md5( wp_generate_password( 128, true, true ) );
@@ -36,34 +37,35 @@ class CWS_WP_Help_Plugin {
 		$this->options = $this->get_options();
 
 		// Cron job
-		if ( !wp_next_scheduled( self::CRON_HOOK ) )
+		if ( ! wp_next_scheduled( self::CRON_HOOK ) ) {
 			wp_schedule_event( current_time( 'timestamp' ), 'daily', self::CRON_HOOK );
+		}
 
 		// Standard hooks
-		$this->hook( 'map_meta_cap'          );
-		$this->hook( 'admin_menu'            );
-		$this->hook( 'save_post'             );
+		$this->hook( 'map_meta_cap' );
+		$this->hook( 'admin_menu' );
+		$this->hook( 'save_post' );
 		$this->hook( 'post_updated_messages' );
-		$this->hook( 'clean_post_cache'      );
-		$this->hook( 'wp_dashboard_setup'    );
-		$this->hook( 'page_css_class'        );
-		$this->hook( 'wp_list_pages'         );
-		$this->hook( 'query'                 );
-		$this->hook( 'delete_post'           );
-		$this->hook( 'current_screen'        );
-		$this->hook( 'rest_api_init'         );
+		$this->hook( 'clean_post_cache' );
+		$this->hook( 'wp_dashboard_setup' );
+		$this->hook( 'page_css_class' );
+		$this->hook( 'wp_list_pages' );
+		$this->hook( 'query' );
+		$this->hook( 'delete_post' );
+		$this->hook( 'current_screen' );
+		$this->hook( 'rest_api_init' );
 
 		// Custom callbacks
-		$this->hook( 'wp_trash_post',                'delete_post'       );
-		$this->hook( 'load-post.php',                'load_post'         );
-		$this->hook( 'load-post-new.php',            'load_post_new'     );
-		$this->hook( self::CRON_HOOK,                'api_slurp'         );
-		$this->hook( 'post_submitbox_misc_actions',  'submitbox_actions' );
-		$this->hook( 'admin_init',                   'ajax_listener'     );
-		$this->hook( 'post_type_link',               'page_link'         );
-		$this->hook( 'wp_ajax_cws_wp_help_settings', 'ajax_settings'     );
-		$this->hook( 'wp_ajax_cws_wp_help_reorder',  'ajax_reorder'      );
-		$this->hook( 'enqueue_block_editor_assets',                   20 );
+		$this->hook( 'wp_trash_post', 'delete_post' );
+		$this->hook( 'load-post.php', 'load_post' );
+		$this->hook( 'load-post-new.php', 'load_post_new' );
+		$this->hook( self::CRON_HOOK, 'api_slurp' );
+		$this->hook( 'post_submitbox_misc_actions', 'submitbox_actions' );
+		$this->hook( 'admin_init', 'ajax_listener' );
+		$this->hook( 'post_type_link', 'page_link' );
+		$this->hook( 'wp_ajax_cws_wp_help_settings', 'ajax_settings' );
+		$this->hook( 'wp_ajax_cws_wp_help_reorder', 'ajax_reorder' );
+		$this->hook( 'enqueue_block_editor_assets', 20 );
 
 		if ( 'dashboard-submenu' != $this->get_option( 'menu_location' ) ) {
 			$this->admin_base = 'admin.php';
@@ -87,8 +89,9 @@ class CWS_WP_Help_Plugin {
 		}
 
 		// Check for API requests
-		if ( isset( $_REQUEST['wp-help-key'] ) && $this->get_option( 'key' ) === $_REQUEST['wp-help-key'] )
+		if ( isset( $_REQUEST['wp-help-key'] ) && $this->get_option( 'key' ) === $_REQUEST['wp-help-key'] ) {
 			$this->api_request();
+		}
 
 		// Debug:
 		// $this->api_slurp();
@@ -153,37 +156,37 @@ class CWS_WP_Help_Plugin {
 				'map_meta_cap' => true,
 				'capabilities' => array(
 					// Normally requires 'edit_posts'
-					'read_posts'         => $this->view_cap( 'read_posts'         ),
+					'read_posts'         => $this->view_cap( 'read_posts' ),
 
 					// Normally requires 'edit_pages'
 					'read_private_posts' => $this->edit_cap( 'read_private_posts' ),
-					'edit_posts'         => $this->edit_cap( 'edit_posts'         ),
-					'publish_posts'      => $this->edit_cap( 'publish_posts'      ),
-					'edit_others_posts'  => $this->edit_cap( 'edit_others_posts'  ),
-					'create_posts'       => $this->edit_cap( 'create_posts'       ),
+					'edit_posts'         => $this->edit_cap( 'edit_posts' ),
+					'publish_posts'      => $this->edit_cap( 'publish_posts' ),
+					'edit_others_posts'  => $this->edit_cap( 'edit_others_posts' ),
+					'create_posts'       => $this->edit_cap( 'create_posts' ),
 				),
-				'labels' => array (
-					'name'                     => __( 'Help Documents',                        'wp-help' ),
-					'singular_name'            => __( 'Help Document',                         'wp-help' ),
-					'add_new_item'             => __( 'Add New Help Document',                 'wp-help' ),
-					'edit_item'                => __( 'Edit Help Document',                    'wp-help' ),
-					'new_item'                 => __( 'New Help Document',                     'wp-help' ),
-					'view_item'                => __( 'View Help Document',                    'wp-help' ),
-					'search_items'             => __( 'Search Documents',                      'wp-help' ),
-					'not_found'                => __( 'No Help Documents Found',               'wp-help' ),
-					'not_found_in_trash'       => __( 'No Help Documents found in Trash',      'wp-help' ),
-					'parent'                   => __( 'Parent Help Document',                  'wp-help' ),
+				'labels' => array(
+					'name'                     => __( 'Help Documents', 'wp-help' ),
+					'singular_name'            => __( 'Help Document', 'wp-help' ),
+					'add_new_item'             => __( 'Add New Help Document', 'wp-help' ),
+					'edit_item'                => __( 'Edit Help Document', 'wp-help' ),
+					'new_item'                 => __( 'New Help Document', 'wp-help' ),
+					'view_item'                => __( 'View Help Document', 'wp-help' ),
+					'search_items'             => __( 'Search Documents', 'wp-help' ),
+					'not_found'                => __( 'No Help Documents Found', 'wp-help' ),
+					'not_found_in_trash'       => __( 'No Help Documents found in Trash', 'wp-help' ),
+					'parent'                   => __( 'Parent Help Document', 'wp-help' ),
 					'add_new'                  => _x( 'Add New', 'i.e. Add new Help Document', 'wp-help' ),
-					'edit'                     => _x( 'Edit',    'i.e. Edit Help Document',    'wp-help' ),
-					'view'                     => _x( 'View',    'i.e. View Help Document',    'wp-help' ),
-					'filter_items_list'        => __( 'Filter documents list',                 'wp-help' ),
-					'items_list_navigation'    => __( 'Documents list navigation',             'wp-help' ),
-					'items_list'               => __( 'Documents list',                        'wp-help' ),
-					'item_published'           => __( 'Document published.',                   'wp-help' ),
-					'item_published_privately' => __( 'Document published privately.',         'wp-help' ),
-					'item_reverted_to_draft'   => __( 'Document reverted to draft.',           'wp-help' ),
-					'item_scheduled'           => __( 'Document scheduled.',                   'wp-help' ),
-					'item_updated'             => __( 'Document updated.',                     'wp-help' ),
+					'edit'                     => _x( 'Edit', 'i.e. Edit Help Document', 'wp-help' ),
+					'view'                     => _x( 'View', 'i.e. View Help Document', 'wp-help' ),
+					'filter_items_list'        => __( 'Filter documents list', 'wp-help' ),
+					'items_list_navigation'    => __( 'Documents list navigation', 'wp-help' ),
+					'items_list'               => __( 'Documents list', 'wp-help' ),
+					'item_published'           => __( 'Document published.', 'wp-help' ),
+					'item_published_privately' => __( 'Document published privately.', 'wp-help' ),
+					'item_reverted_to_draft'   => __( 'Document reverted to draft.', 'wp-help' ),
+					'item_scheduled'           => __( 'Document scheduled.', 'wp-help' ),
+					'item_updated'             => __( 'Document updated.', 'wp-help' ),
 				),
 			)
 		);
@@ -199,16 +202,17 @@ class CWS_WP_Help_Plugin {
 
 	protected function get_option_defaults() {
 		return apply_filters( 'cws_wp_help_option_defaults', array(
-				'h2'            => _x( 'Publishing Help', 'h2 default title', 'wp-help' ),
-				'h3'            => _x( 'Help Topics', 'h3 default title', 'wp-help' ),
-				'menu_location' => 'below-dashboard',
+			'h2'            => _x( 'Publishing Help', 'h2 default title', 'wp-help' ),
+			'h3'            => _x( 'Help Topics', 'h3 default title', 'wp-help' ),
+			'menu_location' => 'below-dashboard',
 		) );
 	}
 
 	protected function get_options() {
 		$raw_options = get_option( self::OPTION );
-		if ( !is_array( $raw_options ) )
+		if ( ! is_array( $raw_options ) ) {
 			$raw_options = array();
+		}
 		return array_merge( $this->get_option_defaults(), $raw_options );
 	}
 
@@ -228,8 +232,9 @@ class CWS_WP_Help_Plugin {
 	public function wp_dashboard_setup() {
 		if ( current_user_can( $this->get_cap( 'read_posts' ) ) ) {
 			$this->help_topics_html = $this->get_help_topics_html();
-			if ( $this->help_topics_html )
+			if ( $this->help_topics_html ) {
 				wp_add_dashboard_widget( 'cws-wp-help-dashboard-widget', $this->get_option( 'h2' ), array( $this, 'dashboard_widget' ) );
+			}
 		}
 	}
 
@@ -244,27 +249,30 @@ class CWS_WP_Help_Plugin {
 		}
 	}
 
-	public function page_css_class( $classes, $page, $depth, $args, $current_page = NULL ) {
-		if ( !$this->filter_wp_list_pages )
+	public function page_css_class( $classes, $page, $depth, $args, $current_page = null ) {
+		if ( ! $this->filter_wp_list_pages ) {
 			return $classes;
-		if ( $this->is_slurped( $page->ID ) )
+		}
+		if ( $this->is_slurped( $page->ID ) ) {
 			$classes[] = 'cws-wp-help-is-slurped';
-		else
+		} else {
 			$classes[] = 'cws-wp-help-local';
+		}
 		return $classes;
 	}
 
 	public function wp_list_pages( $html ) {
-		if ( !$this->filter_wp_list_pages )
+		if ( ! $this->filter_wp_list_pages ) {
 			return $html;
-		return preg_replace( '#<li [^>]+>#', '$0<img class="sort-handle" src="' . esc_url( $this->get_url() . "images/sort.png" ) . '" />', $html );
+		}
+		return preg_replace( '#<li [^>]+>#', '$0<img class="sort-handle" src="' . esc_url( $this->get_url() . 'images/sort.png' ) . '" />', $html );
 	}
 
 	public function query( $query ) {
 		global $wpdb;
 		if (
 			$this->filter_wp_list_pages_sql &&
-			preg_match( "#^SELECT\s+\*\s+FROM\s+" . preg_quote( $wpdb->posts, '#' ) . '#', $query )
+			preg_match( '#^SELECT\s+\*\s+FROM\s+' . preg_quote( $wpdb->posts, '#' ) . '#', $query )
 		) {
 			$query = str_replace(
 				"post_type = '" . self::POST_TYPE . "' AND post_status = 'private'",
@@ -277,9 +285,18 @@ class CWS_WP_Help_Plugin {
 	}
 
 	public function page_attributes_dropdown( $args, $post ) {
-		if ( self::POST_TYPE !== get_post_type( $post ) )
+		if ( self::POST_TYPE !== get_post_type( $post ) ) {
 			return $args;
-		$pages = get_pages( array( 'post_type' => self::POST_TYPE, 'child_of' => 0, 'parent' => 0, 'post_status' => 'publish', 'hierarchical' => false, 'meta_key' => '_cws_wp_help_slurp_source', 'meta_value' => $this->get_slurp_source_key() ) );
+		}
+		$pages = get_pages( array(
+			'post_type' => self::POST_TYPE,
+			'child_of' => 0,
+			'parent' => 0,
+			'post_status' => 'publish',
+			'hierarchical' => false,
+			'meta_key' => '_cws_wp_help_slurp_source',
+			'meta_value' => $this->get_slurp_source_key(),
+		) );
 		$args['exclude'] = array();
 		foreach ( $pages as $p ) {
 			$args['exclude'][] = absint( $p->ID );
@@ -288,25 +305,28 @@ class CWS_WP_Help_Plugin {
 	}
 
 	public function clean_post_cache( $post_id, $post ) {
-		if ( self::POST_TYPE === $post->post_type )
+		if ( self::POST_TYPE === $post->post_type ) {
 			wp_cache_delete( 'get_pages', 'posts' ); // See: http://core.trac.wordpress.org/ticket/21279
+		}
 	}
 
 	protected function explain_slurp( $id ) {
-		if ( current_user_can( 'manage_options' ) && !current_user_can( 'edit_post', $id ) ) {
+		if ( current_user_can( 'manage_options' ) && ! current_user_can( 'edit_post', $id ) ) {
 			// Post is remote. Explain
 			echo ' <small>' . __( '&mdash; Remote document', 'wp-help' ) . '</small>';
 		}
 	}
 
 	public function load_post() {
-		if ( isset( $_GET['post'] ) && self::POST_TYPE === get_post_type( $_GET['post'] ) )
+		if ( isset( $_GET['post'] ) && self::POST_TYPE === get_post_type( $_GET['post'] ) ) {
 			$this->edit_enqueues();
+		}
 	}
 
 	public function load_post_new() {
-		if ( isset( $_GET['post_type'] ) && self::POST_TYPE === $_GET['post_type'] )
+		if ( isset( $_GET['post_type'] ) && self::POST_TYPE === $_GET['post_type'] ) {
 			$this->edit_enqueues();
+		}
 	}
 
 	protected function edit_enqueues() {
@@ -320,11 +340,13 @@ class CWS_WP_Help_Plugin {
 
 	public function map_meta_cap( $caps, $cap, $user_id, $args ) {
 		if ( preg_match( '#^(delete|edit)_(post|page)$#', $cap ) ) {
-			if ( self::POST_TYPE !== get_post_type( $args[0] ) )
+			if ( self::POST_TYPE !== get_post_type( $args[0] ) ) {
 				return $caps;
+			}
 			// If this belongs to the currently connected slurp source, disallow editing
-			if ( $this->is_slurped( $args[0] ) )
+			if ( $this->is_slurped( $args[0] ) ) {
 				$caps = array( 'do_not_allow' );
+			}
 		}
 		return $caps;
 	}
@@ -338,16 +360,22 @@ class CWS_WP_Help_Plugin {
 	}
 
 	public function api_slurp() {
-		if ( !$this->get_option( 'slurp_url' ) )
+		if ( ! $this->get_option( 'slurp_url' ) ) {
 			return;
+		}
 		$result = wp_remote_get( add_query_arg( 'time', time(), $this->get_option( 'slurp_url' ) ) );
 		if ( $result['response']['code'] == 200 ) {
-			$topics = new WP_Query( array( 'post_type' => self::POST_TYPE, 'posts_per_page' => -1, 'post_status' => 'publish' ) );
+			$topics = new WP_Query( array(
+				'post_type' => self::POST_TYPE,
+				'posts_per_page' => -1,
+				'post_status' => 'publish',
+			) );
 			$source_id_to_local_id = array();
 			if ( $topics->posts ) {
 				foreach ( $topics->posts as $p ) {
-					if ( $this->is_slurped( $p->ID ) && $source_id = get_post_meta( $p->ID, '_cws_wp_help_slurp_id', true ) )
-						$source_id_to_local_id[$source_id] = $p->ID;
+					if ( $this->is_slurped( $p->ID ) && $source_id = get_post_meta( $p->ID, '_cws_wp_help_slurp_id', true ) ) {
+						$source_id_to_local_id[ $source_id ] = $p->ID;
+					}
 				}
 			}
 			$posts = json_decode( $result['body'] );
@@ -355,15 +383,15 @@ class CWS_WP_Help_Plugin {
 			// First pass: just insert whatever is missing, without fixing post_parent
 			foreach ( $posts as $p ) {
 				$p = (array) $p;
-				$source_post_ids[absint( $p['ID'] )] = absint( $p['ID'] );
+				$source_post_ids[ absint( $p['ID'] ) ] = absint( $p['ID'] );
 				// These things are implied in the API, but we need to set them before inserting locally
 				$p['post_type'] = self::POST_TYPE;
 				$p['post_status'] = 'publish';
 				// $p['menu_order'] += 100000;
 				$copy = $p;
-				if ( isset( $source_id_to_local_id[$p['ID']] ) ) {
+				if ( isset( $source_id_to_local_id[ $p['ID'] ] ) ) {
 					// Exists. We know the local ID.
-					$copy['ID'] = $source_id_to_local_id[$p['ID']];
+					$copy['ID'] = $source_id_to_local_id[ $p['ID'] ];
 					wp_update_post( $copy );
 				} else {
 					// This is new. Insert it.
@@ -371,7 +399,7 @@ class CWS_WP_Help_Plugin {
 					$new_local_id = wp_insert_post( $copy );
 
 					// Update our lookup table
-					$source_id_to_local_id[$p['ID']] = $new_local_id;
+					$source_id_to_local_id[ $p['ID'] ] = $new_local_id;
 					// Update postmeta
 					update_post_meta( $new_local_id, '_cws_wp_help_slurp_id', absint( $p['ID'] ) );
 					update_post_meta( $new_local_id, '_cws_wp_help_slurp_source', $this->get_slurp_source_key() );
@@ -385,12 +413,24 @@ class CWS_WP_Help_Plugin {
 				}
 			}
 			// Delete any abandoned posts
-			$topics = new WP_Query( array( 'post_type' => self::POST_TYPE, 'posts_per_page' => -1, 'post_status' => 'any', 'meta_query' => array( array( 'key' => '_cws_wp_help_slurp_id', 'value' => 0, 'compare' => '>', 'type' => 'NUMERIC' ) ) ) );
+			$topics = new WP_Query( array(
+				'post_type' => self::POST_TYPE,
+				'posts_per_page' => -1,
+				'post_status' => 'any',
+				'meta_query' => array(
+					array(
+						'key' => '_cws_wp_help_slurp_id',
+						'value' => 0,
+						'compare' => '>',
+						'type' => 'NUMERIC',
+					),
+				),
+			) );
 			if ( $topics->posts ) {
 				foreach ( $topics->posts as $p ) {
 					if ( $source_id = get_post_meta( $p->ID, '_cws_wp_help_slurp_id', true ) ) {
 						// This was slurped. Was it absent from the API response? Or was it from a different source?
-						if ( !$this->is_slurped( $p->ID ) || !isset( $source_post_ids[absint($source_id)] ) ) {
+						if ( ! $this->is_slurped( $p->ID ) || ! isset( $source_post_ids[ absint( $source_id ) ] ) ) {
 							// Wasn't in the response. Delete it.
 							wp_delete_post( $p->ID );
 						}
@@ -398,18 +438,32 @@ class CWS_WP_Help_Plugin {
 				}
 			}
 			// Reparenting and link fixing
-			$topics = new WP_Query( array( 'post_type' => self::POST_TYPE, 'posts_per_page' => -1, 'post_status' => 'publish', 'meta_query' => array( array( 'key' => '_cws_wp_help_slurp_id', 'value' => 0, 'compare' => '>', 'type' => 'NUMERIC' ) ) ) );
+			$topics = new WP_Query( array(
+				'post_type' => self::POST_TYPE,
+				'posts_per_page' => -1,
+				'post_status' => 'publish',
+				'meta_query' => array(
+					array(
+						'key' => '_cws_wp_help_slurp_id',
+						'value' => 0,
+						'compare' => '>',
+						'type' => 'NUMERIC',
+					),
+				),
+			) );
 			if ( $topics->posts ) {
 				foreach ( $topics->posts as $p ) {
 					$new = array();
 					if ( strpos( $p->post_content, 'http://wp-help-link/' ) !== false ) {
 						$new['post_content'] = $this->make_links_local( $p->post_content );
-						if ( $new['post_content'] === $p->post_content )
+						if ( $new['post_content'] === $p->post_content ) {
 							unset( $new['post_content'] );
+						}
 					}
 					$new['post_parent'] = $this->local_id_from_slurp_id( $p->post_parent );
-					if ( $new['post_parent'] === $p->post_parent )
+					if ( $new['post_parent'] === $p->post_parent ) {
 						unset( $new['post_parent'] );
+					}
 					if ( $new ) {
 						$new['ID'] = $p->ID;
 						wp_update_post( $new );
@@ -439,8 +493,9 @@ class CWS_WP_Help_Plugin {
 
 	public function make_links_local_cb( $matches ) {
 		$local_id = $this->local_id_from_slurp_id( $matches[2] );
-		if ( $local_id )
+		if ( $local_id ) {
 			return 'href=' . $matches[1] . get_permalink( absint( $local_id ) ) . $matches[1];
+		}
 		return $matches[0];
 	}
 
@@ -449,32 +504,53 @@ class CWS_WP_Help_Plugin {
 	}
 
 	protected function local_id_from_slurp_id( $id ) {
-		if ( !$id )
+		if ( ! $id ) {
 			return false;
-		$local = new WP_Query( array( 'post_type' => self::POST_TYPE, 'posts_per_page' => 1, 'post_status' => 'publish', 'meta_query' => array( array( 'key' => '_cws_wp_help_slurp_id', 'value' => $id ) ) ) );
+		}
+		$local = new WP_Query( array(
+			'post_type' => self::POST_TYPE,
+			'posts_per_page' => 1,
+			'post_status' => 'publish',
+			'meta_query' => array(
+				array(
+					'key' => '_cws_wp_help_slurp_id',
+					'value' => $id,
+				),
+			),
+		) );
 
-		if ( $local->posts )
+		if ( $local->posts ) {
 			return $local->posts[0]->ID;
+		}
 		return false;
 	}
 
 	protected function get_topics_for_api() {
-		$topics = new WP_Query( array( 'post_type' => self::POST_TYPE, 'posts_per_page' => -1, 'post_status' => 'publish', 'orderby' => 'parent menu_order', 'order' => 'ASC' ) );
+		$topics = new WP_Query( array(
+			'post_type' => self::POST_TYPE,
+			'posts_per_page' => -1,
+			'post_status' => 'publish',
+			'orderby' => 'parent menu_order',
+			'order' => 'ASC',
+		) );
 		$default_doc = get_option( self::DEFAULT_DOC );
 		$menu_order = array();
 		foreach ( $topics->posts as $k => $post ) {
-			$c =& $topics->posts[$k];
+			$c =& $topics->posts[ $k ];
 			unset( $c->guid, $c->post_author, $c->comment_count, $c->post_mime_type, $c->post_status, $c->post_type, $c->pinged, $c->to_ping, $c->filter, $c->ping_status, $c->comment_status, $c->post_password );
-			if ( isset( $menu_order[$c->post_parent] ) )
-				$menu_order[$c->post_parent]++;
-			else
-				$menu_order[$c->post_parent] = 1;
-			$c->menu_order = $menu_order[$c->post_parent];
-			if ( !$c->post_parent )
+			if ( isset( $menu_order[ $c->post_parent ] ) ) {
+				$menu_order[ $c->post_parent ]++;
+			} else {
+				$menu_order[ $c->post_parent ] = 1;
+			}
+			$c->menu_order = $menu_order[ $c->post_parent ];
+			if ( ! $c->post_parent ) {
 				unset( $c->post_parent );
+			}
 			$c->post_content = $this->convert_links( $c->post_content );
-			if ( $c->ID == $default_doc )
+			if ( $c->ID == $default_doc ) {
 				$c->default = true;
+			}
 		}
 		return $topics->posts;
 	}
@@ -483,11 +559,13 @@ class CWS_WP_Help_Plugin {
 		$custom_order = array();
 		foreach ( $menu as $index => $item ) {
 			if ( 'index.php' == $item ) {
-				if ( 'below-dashboard' == $this->get_option( 'menu_location' ) )
+				if ( 'below-dashboard' == $this->get_option( 'menu_location' ) ) {
 					$custom_order[] = 'index.php';
+				}
 				$custom_order[] = self::MENU_SLUG;
-				if ( 'above-dashboard' == $this->get_option( 'menu_location' ) )
+				if ( 'above-dashboard' == $this->get_option( 'menu_location' ) ) {
 					$custom_order[] = 'index.php';
+				}
 			} elseif ( self::MENU_SLUG != $item ) {
 				$custom_order[] = $item;
 			}
@@ -496,9 +574,10 @@ class CWS_WP_Help_Plugin {
 	}
 
 	protected function get_option( $key ) {
-		if ( 'menu_location' == $key && isset( $_GET['wp-help-preview-menu-location'] ) )
+		if ( 'menu_location' == $key && isset( $_GET['wp-help-preview-menu-location'] ) ) {
 			return $_GET['wp-help-preview-menu-location'];
-		return isset( $this->options[$key] ) ? $this->options[$key] : false;
+		}
+		return isset( $this->options[ $key ] ) ? $this->options[ $key ] : false;
 	}
 
 	protected function update_options( $options ) {
@@ -519,27 +598,30 @@ class CWS_WP_Help_Plugin {
 			$this->options['h2'] = stripslashes( $_POST['h2'] );
 			$this->options['h3'] = stripslashes( $_POST['h3'] );
 			$slurp_url = stripslashes( $_POST['slurp_url'] );
-			if ( $slurp_url === $this->api_url() )
+			if ( $slurp_url === $this->api_url() ) {
 				$error = __( 'What are you doing? You&#8217;re going to create an infinite loop!', 'wp-help' );
-			elseif ( empty( $slurp_url ) )
+			} elseif ( empty( $slurp_url ) ) {
 				$this->options['slurp_url'] = '';
-			elseif ( strpos( $slurp_url, '?wp-help-key=' ) === false )
+			} elseif ( strpos( $slurp_url, '?wp-help-key=' ) === false ) {
 				$error = __( 'That is not a WP Help URL. Make sure you copied it correctly.', 'wp-help' );
-			else
+			} else {
 				$this->options['slurp_url'] = esc_url_raw( $slurp_url );
-			if ( $this->options['slurp_url'] !== $old_slurp_url && !empty( $this->options['slurp_url'] ) )
+			}
+			if ( $this->options['slurp_url'] !== $old_slurp_url && ! empty( $this->options['slurp_url'] ) ) {
 				$refresh = true;
-			if ( !$error )
+			}
+			if ( ! $error ) {
 				$this->options['menu_location'] = stripslashes( $_POST['menu_location'] );
+			}
 			$this->update_options( $this->options );
 			$result = array(
 				'slurp_url' => $this->options['slurp_url'],
-				'error' => $error
+				'error' => $error,
 			);
 			if ( $refresh ) {
 				$this->api_slurp();
 				$result['topics'] = $this->get_help_topics_html( true );
-			} elseif ( !empty( $this->options['slurp_url'] ) ) {
+			} elseif ( ! empty( $this->options['slurp_url'] ) ) {
 				// It didn't change, but we should trigger an update in the background
 				wp_schedule_single_event( current_time( 'timestamp' ), self::CRON_HOOK );
 			}
@@ -552,7 +634,7 @@ class CWS_WP_Help_Plugin {
 	public function ajax_reorder() {
 		if ( current_user_can( $this->get_cap( 'publish_posts' ) ) && check_ajax_referer( 'cws-wp-help-reorder' ) ) {
 			$order = array();
-			foreach( $_POST['order'] as $o ) {
+			foreach ( $_POST['order'] as $o ) {
 				$order[] = str_replace( 'page-', '', $o );
 			}
 			$val = -100000;
@@ -563,16 +645,21 @@ class CWS_WP_Help_Plugin {
 				}
 				$val += 10;
 				if ( $p = get_page( $o ) ) {
-					if ( intval( $p->menu_order ) !== $val )
-						wp_update_post( array( 'ID' => $p->ID, 'menu_order' => $val ) );
+					if ( intval( $p->menu_order ) !== $val ) {
+						wp_update_post( array(
+							'ID' => $p->ID,
+							'menu_order' => $val,
+						) );
+					}
 				}
 			}
 		}
 	}
 
 	public function ajax_listener() {
-		if ( !defined( 'DOING_AJAX' ) || !DOING_AJAX || !isset( $_POST['action'] ) || 'wp-link-ajax' != $_POST['action'] )
+		if ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX || ! isset( $_POST['action'] ) || 'wp-link-ajax' != $_POST['action'] ) {
 			return;
+		}
 		// It's the right kind of request
 		// Now to see if it originated from our post type
 		$qs = parse_url( $_SERVER['HTTP_REFERER'], PHP_URL_QUERY );
@@ -592,7 +679,7 @@ class CWS_WP_Help_Plugin {
 			// There really should be a better way to do this. :-\
 			$this->hook( 'pre_get_posts', 'only_query_help_docs' );
 			global $wp_post_types;
-			$wp_post_types[self::POST_TYPE]->publicly_queryable = $wp_post_types[self::POST_TYPE]->public = true;
+			$wp_post_types[ self::POST_TYPE ]->publicly_queryable = $wp_post_types[ self::POST_TYPE ]->public = true;
 		}
 	}
 
@@ -611,8 +698,9 @@ class CWS_WP_Help_Plugin {
 	}
 
 	public function submitbox_actions() {
-		if ( self::POST_TYPE !== get_post_type() )
+		if ( self::POST_TYPE !== get_post_type() ) {
 			return;
+		}
 		$this->include_file( 'templates/submitbox-actions.php' );
 	}
 
@@ -649,26 +737,26 @@ class CWS_WP_Help_Plugin {
 	public function post_updated_messages( $messages ) {
 		global $post_ID, $post;
 		$permalink = get_permalink( $post_ID );
-		$messages[self::POST_TYPE] = array(
-			 0 => '', // Unused. Messages start at index 1.
-			 1 => sprintf( __( 'Document updated. <a href="%s">View document</a>', 'wp-help' ), esc_url( $permalink ) ),
-			 2 => __( 'Custom field updated.', 'wp-help' ),
-			 3 => __( 'Custom field deleted.', 'wp-help' ),
-			 4 => __( 'Document updated.', 'wp-help' ),
-			 5 => isset( $_GET['revision'] ) ? sprintf( __( 'Document restored to revision from %s', 'wp-help' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
-			 6 => sprintf( __( 'Document published. <a href="%s">View document</a>', 'wp-help' ), esc_url( $permalink ) ),
-			 7 => __( 'Document saved.', 'wp-help' ),
-			 8 => sprintf( __( 'Document submitted. <a target="_blank" href="%s">Preview document</a>', 'wp-help' ), esc_url( add_query_arg( 'preview', 'true', $permalink ) ) ),
-			 9 => sprintf( __( 'Document scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview document</a>', 'wp-help' ), date_i18n( __( 'M j, Y @ G:i', 'wp-help' ), strtotime( $post->post_date ) ), esc_url( $permalink ) ),
-			10 => sprintf( __('Document draft updated. <a target="_blank" href="%s">Preview document</a>', 'wp-help' ), esc_url( add_query_arg( 'preview', 'true', $permalink ) ) ),
+		$messages[ self::POST_TYPE ] = array(
+			0 => '', // Unused. Messages start at index 1.
+			1 => sprintf( __( 'Document updated. <a href="%s">View document</a>', 'wp-help' ), esc_url( $permalink ) ),
+			2 => __( 'Custom field updated.', 'wp-help' ),
+			3 => __( 'Custom field deleted.', 'wp-help' ),
+			4 => __( 'Document updated.', 'wp-help' ),
+			5 => isset( $_GET['revision'] ) ? sprintf( __( 'Document restored to revision from %s', 'wp-help' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
+			6 => sprintf( __( 'Document published. <a href="%s">View document</a>', 'wp-help' ), esc_url( $permalink ) ),
+			7 => __( 'Document saved.', 'wp-help' ),
+			8 => sprintf( __( 'Document submitted. <a target="_blank" href="%s">Preview document</a>', 'wp-help' ), esc_url( add_query_arg( 'preview', 'true', $permalink ) ) ),
+			9 => sprintf( __( 'Document scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview document</a>', 'wp-help' ), date_i18n( __( 'M j, Y @ G:i', 'wp-help' ), strtotime( $post->post_date ) ), esc_url( $permalink ) ),
+			10 => sprintf( __( 'Document draft updated. <a target="_blank" href="%s">Preview document</a>', 'wp-help' ), esc_url( add_query_arg( 'preview', 'true', $permalink ) ) ),
 		);
 		return $messages;
 	}
 
 	public function enqueue() {
-		wp_enqueue_style( 'cws-wp-help', $this->get_url() . "dist/wp-help.css", array(), self::CSS_JS_VERSION );
+		wp_enqueue_style( 'cws-wp-help', $this->get_url() . 'dist/wp-help.css', array(), self::CSS_JS_VERSION );
 		$asset = $this->include_file( '/dist/index.asset.php' );
-		wp_enqueue_script( 'cws-wp-help', $this->get_url() . "dist/index.js", array_merge( [ 'jquery', 'jquery-ui-sortable' ], $asset['dependencies'] ), $asset['version'] );
+		wp_enqueue_script( 'cws-wp-help', $this->get_url() . 'dist/index.js', array_merge( array( 'jquery', 'jquery-ui-sortable' ), $asset['dependencies'] ), $asset['version'] );
 
 		if ( function_exists( 'has_blocks' ) ) {
 			$document_id = $this->get_default_doc();
@@ -686,8 +774,9 @@ class CWS_WP_Help_Plugin {
 	}
 
 	public function maybe_just_menu() {
-		if ( isset( $_GET['wp-help-preview-menu-location'] ) )
+		if ( isset( $_GET['wp-help-preview-menu-location'] ) ) {
 			$this->hook( 'in_admin_header', 'kill_it', 0 );
+		}
 	}
 
 	public function kill_it() {
@@ -700,18 +789,26 @@ class CWS_WP_Help_Plugin {
 
 	public function page_link( $link, $post ) {
 		$post = get_post( $post );
-		if ( self::POST_TYPE == $post->post_type )
+		if ( self::POST_TYPE == $post->post_type ) {
 			return $this->admin_page_url() . '&document=' . absint( $post->ID );
-		else
+		} else {
 			return $link;
+		}
 	}
 
 	protected function get_help_topics_html( $with_sort_handles = false ) {
-		if ( $with_sort_handles )
+		if ( $with_sort_handles ) {
 			$this->filter_wp_list_pages = true;
+		}
 		$this->filter_wp_list_pages_sql = true;
 		$status = ( current_user_can( $this->get_cap( 'read_private_posts' ) ) ) ? 'private' : 'publish';
-		$defaults = array( 'post_type' => self::POST_TYPE, 'post_status' => $status, 'hierarchical' => true, 'echo' => false, 'title_li' => '' );
+		$defaults = array(
+			'post_type' => self::POST_TYPE,
+			'post_status' => $status,
+			'hierarchical' => true,
+			'echo' => false,
+			'title_li' => '',
+		);
 		$output = trim( wp_list_pages( apply_filters( 'cws_wp_help_list_pages', $defaults ) ) );
 		$this->filter_wp_list_pages = $this->filter_wp_list_pages_sql = false;
 		return $output;
@@ -732,8 +829,8 @@ class CWS_WP_Help_Plugin {
 		<?php endif; ?>
 <div class="wrap">
 	<div id="cws-wp-help-h2-label-wrap"><input type="text" id="cws-wp-help-h2-label" value="<?php echo esc_attr( $this->get_option( 'h2' ) ); ?>" /></div><span id="cws-wp-help-loading" class="spinner"></span><h1><?php echo esc_html( $this->get_option( 'h2' ) ); ?></h1>
-	<?php $this->include_file( 'templates/list-documents.php', array( 'document_id' => $document_id ) ); ?>
+		<?php $this->include_file( 'templates/list-documents.php', array( 'document_id' => $document_id ) ); ?>
 </div>
-<?php
+		<?php
 	}
 }

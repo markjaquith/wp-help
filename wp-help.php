@@ -39,7 +39,7 @@ $cws_wp_help_requirements_check = new CWS_WP_Help_Requirements_Check( array(
 ));
 
 if ( $cws_wp_help_requirements_check->passes() ) {
-	// Pull in the plugin classes and initialize
+	// Pull in the plugin classes and initialize.
 	include( dirname( __FILE__ ) . '/lib/structure.php' );
 	include( dirname( __FILE__ ) . '/classes/plugin.php' );
 	CWS_WP_Help_Plugin::start( __FILE__ );
