@@ -143,15 +143,16 @@ class CWS_WP_Help_Plugin {
 	protected function register_post_type() {
 		register_post_type( self::POST_TYPE,
 			array(
-				'label'        => _x( 'Publishing Help', 'post type label', 'wp-help' ),
-				'public'       => false,
-				'show_ui'      => true,
-				'show_in_menu' => false,
-				'show_in_rest' => true,
-				'hierarchical' => true,
-				'supports'     => array( 'title', 'editor', 'revisions', 'page-attributes' ),
-				'map_meta_cap' => true,
-				'capabilities' => array(
+				'label'             => _x( 'Publishing Help', 'post type label', 'wp-help' ),
+				'public'            => false,
+				'show_ui'           => true,
+				'show_in_menu'      => false,
+				'show_in_admin_bar' => true,
+				'show_in_rest'      => true,
+				'hierarchical'      => true,
+				'supports'          => array( 'title', 'editor', 'revisions', 'page-attributes' ),
+				'map_meta_cap'      => true,
+				'capabilities'      => array(
 					// Normally requires 'edit_posts'
 					'read_posts'         => $this->view_cap( 'read_posts'         ),
 
