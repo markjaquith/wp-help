@@ -420,6 +420,10 @@ class CWS_WP_Help_Plugin {
 	}
 
 	protected function api_request() {
+		if ( ! headers_sent() ) {
+			header( 'Content-Type: application/json; charset=' . get_option( 'blog_charset' ) );
+		}
+
 		die( json_encode( $this->get_topics_for_api() ) );
 	}
 
