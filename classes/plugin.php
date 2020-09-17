@@ -342,6 +342,10 @@ class CWS_WP_Help_Plugin {
 			return;
 		$result = wp_remote_get( add_query_arg( 'time', time(), $this->get_option( 'slurp_url' ) ) );
 		if ( $result['response']['code'] == 200 ) {
+
+			// Ensure that our post type is registered prior to any operations that might get executed downstream
+			$this->register_post_type();
+
 			$topics = new WP_Query( array( 'post_type' => self::POST_TYPE, 'posts_per_page' => -1, 'post_status' => 'publish' ) );
 			$source_id_to_local_id = array();
 			if ( $topics->posts ) {
