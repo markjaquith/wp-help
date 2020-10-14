@@ -222,7 +222,12 @@ class CWS_WP_Help_Plugin {
 	}
 
 	protected function get_cap( $cap ) {
-		return get_post_type_object( self::POST_TYPE )->cap->{$cap};
+		$post_type_object = get_post_type_object( self::POST_TYPE );
+		if ( ! $post_type_object ) {
+			return 'do_not_allow';
+		}
+
+		return $post_type_object->cap->{$cap};
 	}
 
 	public function action_links( $links ) {
