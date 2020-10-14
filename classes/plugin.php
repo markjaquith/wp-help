@@ -698,8 +698,7 @@ class CWS_WP_Help_Plugin {
 
 	public function admin_menu() {
 		if ( 'dashboard-submenu' != $this->get_option( 'menu_location' ) ) {
-			$icon = version_compare( $GLOBALS['wp_version'], '3.8-RC1', '>=' ) ? 'dashicons-editor-help' : $this->get_url() . 'images/icon-16.png';
-			$hook = add_menu_page( $this->get_option( 'h2' ), $this->get_option( 'h2' ), $this->get_cap( 'read_posts' ), self::MENU_SLUG, array( $this, 'render_listing_page' ), $icon );
+			$hook = add_menu_page( $this->get_option( 'h2' ), $this->get_option( 'h2' ), $this->get_cap( 'read_posts' ), self::MENU_SLUG, array( $this, 'render_listing_page' ), 'dashicons-editor-help' );
 		} else {
 			$hook = add_dashboard_page( $this->get_option( 'h2' ), $this->get_option( 'h2' ), $this->get_cap( 'read_posts' ), self::MENU_SLUG, array( $this, 'render_listing_page' ) );
 		}
