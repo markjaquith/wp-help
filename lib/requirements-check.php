@@ -8,8 +8,8 @@ class CWS_WP_Help_Requirements_Check {
 
 	public function __construct( $args ) {
 		foreach ( array( 'title', 'php', 'wp', 'file' ) as $setting ) {
-			if ( isset( $args[$setting] ) ) {
-				$this->$setting = $args[$setting];
+			if ( isset( $args[ $setting ] ) ) {
+				$this->$setting = $args[ $setting ];
 			}
 		}
 	}
@@ -43,7 +43,7 @@ class CWS_WP_Help_Requirements_Check {
 
 	public function php_version_notice() {
 		echo '<div class="error">';
-		echo "<p>The &#8220;" . esc_html( $this->title ) . "&#8221; plugin cannot run on PHP versions older than " . $this->php . '. Please contact your host and ask them to upgrade.</p>';
+		echo '<p>The &#8220;' . esc_html( $this->title ) . '&#8221; plugin cannot run on PHP versions older than ' . $this->php . '. Please contact your host and ask them to upgrade.</p>';
 		echo '</div>';
 	}
 
@@ -62,7 +62,7 @@ class CWS_WP_Help_Requirements_Check {
 
 	public function wp_version_notice() {
 		echo '<div class="error">';
-		echo "<p>The &#8220;" . esc_html( $this->title ) . "&#8221; plugin cannot run on WordPress versions older than " . $this->wp . '. Please update WordPress.</p>';
+		echo '<p>The &#8220;' . esc_html( $this->title ) . '&#8221; plugin cannot run on WordPress versions older than ' . $this->wp . '. Please update WordPress.</p>';
 		echo '</div>';
 	}
 }

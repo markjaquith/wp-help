@@ -1,4 +1,4 @@
-<?php if ( !defined( 'ABSPATH' ) ) die(); ?>
+<?php defined( 'ABSPATH' ) or die(); ?>
 
 <div id="cws-wp-help-settings">
 
@@ -12,7 +12,7 @@
 
 <h3><?php _e( 'Menu Location', 'wp-help' ); ?></h3>
 
-<p><?php _e( 'Display the help documents menu item:', 'wp-help' ); ?> 
+<p><?php _e( 'Display the help documents menu item:', 'wp-help' ); ?>
 	<select id="cws-wp-help-menu-location" data-original-value="<?php echo esc_attr( $this->get_option( 'menu_location' ) ); ?>">
 		<option value="dashboard-submenu" <?php selected( 'dashboard-submenu', $this->get_option( 'menu_location' ) ); ?>><?php _e( 'as a Dashboard submenu', 'wp-help' ); ?></option>
 		<option value="above-dashboard" <?php selected( 'above-dashboard', $this->get_option( 'menu_location' ) ); ?>><?php _e( 'above the Dashboard menu', 'wp-help' ); ?></option>
