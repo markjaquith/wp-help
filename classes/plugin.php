@@ -385,7 +385,6 @@ class CWS_WP_Help_Plugin {
 				'posts_per_page' => -1,
 				'post_status' => 'publish',
 			) );
-
 			$source_id_to_local_id = array();
 			if ( $topics->posts ) {
 				foreach ( $topics->posts as $p ) {
