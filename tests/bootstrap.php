@@ -1,7 +1,9 @@
 <?php
 
-$_tests_dir = getenv('WP_TESTS_DIR');
-if ( !$_tests_dir ) $_tests_dir = '/tmp/wordpress-tests-lib';
+$_tests_dir = getenv( 'WP_TESTS_DIR' );
+if ( ! $_tests_dir ) {
+	$_tests_dir = '/tmp/wordpress-tests-lib';
+}
 
 require_once $_tests_dir . '/includes/functions.php';
 
@@ -18,10 +20,10 @@ class CWS_WP_Help_TestCase extends WP_UnitTestCase {
 	}
 
 	function set_post( $key, $value ) {
-		$_POST[$key] = $_REQUEST[$key] = addslashes( $value );
+		$_POST[ $key ] = $_REQUEST[ $key ] = addslashes( $value );
 	}
 
 	function unset_post( $key ) {
-		unset( $_POST[$key], $_REQUEST[$key] );
+		unset( $_POST[ $key ], $_REQUEST[ $key ] );
 	}
 }

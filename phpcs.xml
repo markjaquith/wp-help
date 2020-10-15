@@ -2,6 +2,20 @@
 <ruleset name="Slightly relaxed WordPress coding standards">
 	<description>Based on the WordPress coding standards</description>
 
+	<file>.</file>
+
+	<!-- Check all PHP files in directory tree by default. -->
+	<arg name="extensions" value="php"/>
+
+	<!-- Show progress and sniff codes in all reports -->
+	<arg value="ps"/>
+
+	<!-- Check up to 20 files simultaneously. -->
+	<arg name="parallel" value="20"/>
+
+	<!-- Whenever possible, cache the scan results and re-use those for unchanged files on the next scan. -->
+	<arg name="cache"/>
+
 	<rule ref="PHPCompatibility"/>
 	<config name="testVersion" value="7.0-"/>
 
@@ -24,4 +38,13 @@
 	<rule ref="WordPress-Docs"/>
 	<!-- Will uncomment this when I start requiring PHP 5.4+ in 2019 -->
 	<!--<rule ref="Generic.Arrays.DisallowLongArraySyntax"/>-->
+
+	<rule ref="Squiz.Commenting.FileComment.Missing">
+		<exclude-pattern>/templates/*</exclude-pattern>
+	</rule>
+
+	<exclude-pattern>/node_modules/*</exclude-pattern>
+	<exclude-pattern>/vendor/*</exclude-pattern>
+	<exclude-pattern>/release/*</exclude-pattern>
+	<exclude-pattern>/dist/*</exclude-pattern>
 </ruleset>

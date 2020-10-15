@@ -50,11 +50,12 @@ trait WP_Help_Plugin_Structure {
 		$method = $this->sanitize_method( $hook );
 		$args = func_get_args();
 		unset( $args[0] );
-		foreach( (array) $args as $arg ) {
-			if ( is_int( $arg ) )
+		foreach ( (array) $args as $arg ) {
+			if ( is_int( $arg ) ) {
 				$priority = $arg;
-			else
+			} else {
 				$method = $arg;
+			}
 		}
 		return add_action( $hook, array( $this, $method ), $priority, 999 );
 	}
