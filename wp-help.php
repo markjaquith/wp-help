@@ -2,7 +2,7 @@
 /*
 Plugin Name: WP Help
 Description: Administrators can create detailed, hierarchical documentation for the site's authors and editors, viewable in the WordPress admin.
-Version: 1.7.0
+Version: 1.7.1
 License: GPL
 Plugin URI: http://txfx.net/wordpress-plugins/wp-help/
 Author: Mark Jaquith
@@ -10,7 +10,7 @@ Author URI: http://coveredwebservices.com/
 */
 
 /**
- * Copyright (c) 2011-2020 Mark Jaquith (email: mark@jaquith.me)
+ * Copyright (c) 2011-2021 Mark Jaquith (email: mark@jaquith.me)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License, version 2 or, at
