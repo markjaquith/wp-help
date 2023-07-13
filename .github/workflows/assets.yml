@@ -10,7 +10,7 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - name: WordPress.org plugin asset/readme update
-      uses: markjaquith/action-wordpress-plugin-asset-update@only-readme-and-assets
+      uses: 10up/action-wordpress-plugin-asset-update@2.1.1
       env:
         SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
         SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
