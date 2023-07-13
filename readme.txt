@@ -1,6 +1,4 @@
-# WP Help #
-
-[![Build Status](https://travis-ci.org/markjaquith/wp-help.svg?branch=master)](https://travis-ci.org/markjaquith/wp-help)
+=== WP Help ===
 
 Contributors: markjaquith
 Donate link: http://txfx.net/wordpress-plugins/donate
@@ -11,13 +9,13 @@ Stable tag: 1.7.2
 
 Site operators can create detailed, hierarchical documentation for the site's authors, editors, and contributors, viewable in the WordPress admin.
 
-## Description ##
+== Description ==
 
 Site operators can create detailed, hierarchical documentation for the site's authors, editors, and contributors, viewable in the WordPress admin. Powered by Custom Post Types, you get all the power of WordPress to create, edit, and arrange your documentation. Perfect for customized client sites. Never send another "here's how to use your site" e-mail again!
 
 **NEW**: You can now pull in help documents from another WP Help install, and they will be automatically updated when the source documents change (even additions and deletions!). Perfect for WordPress multisite installs, or consultants with a large number of client installs.
 
-## Installation ##
+== Installation ==
 
 1. Upload the `wp-help` folder to your `/wp-content/plugins/` directory
 
@@ -25,122 +23,122 @@ Site operators can create detailed, hierarchical documentation for the site's au
 
 3. Visit "Publishing Help" in the menu to get started (note that you can change the location and title of this menu item)
 
-## Frequently Asked Questions ##
+== Frequently Asked Questions ==
 
-### Who can view the help documents? ###
+= Who can view the help documents? =
 
 Anyone who can save posts. So by default, Authors, Editors, Administrators, and Contributors
 
-### Who can edit the help documents? ###
+= Who can edit the help documents? =
 
 Anyone who can `publish_pages`. So by default, Editors and Administrators.
 
-### How do I reorder the documents? ###
+= How do I reorder the documents? =
 
 Just like you'd reorder pages. Change the `Order` setting for the page, in the `Attributes` meta box. To make something be first, give it a large negative number like `-100`.
 
-### How do I link to another help page from a help page? ###
+= How do I link to another help page from a help page? =
 
 Use WordPress' internal linking feature. When launched from a help document, it will only search for other help documents.
 
-### How do I change the default help document? ###
+= How do I change the default help document? =
 
 Edit the help document you want to be the default. Check the "Set as default help document" checkbox, and save. This will now be the default document.
 
-### Why can't I edit some documents? ###
+= Why can't I edit some documents? =
 
 Documents that came from another WP Help install that is currently connected, cannot be edited (your changes would just be overwritten anyway). In order to edit these documents, you need to disconnect from sync permanently, or edit the at their source WP Help install.
 
-### Will enabling sync delete my existing documents? ###
+= Will enabling sync delete my existing documents? =
 
 Enabling sync will delete any documents that came in via another sync source. **But it will not delete locally-created documents.**
 
-### Can I have multiple sync sources? ###
+= Can I have multiple sync sources? =
 
 Not right now. But what you can do, is have a WP Help install that aggregates another WP Help install and is then itself used as a source for the combination of the two sites docs, to be delivered to a third site.
 
-### Why can't I reorder some docs using drag and drop? ###
+= Why can't I reorder some docs using drag and drop? =
 
 You cannot internally sort synced documents — just move the whole "chunk" of synced documents around.. Also, if a local help document is the only document in its level, it won't get a drag handle, because there's nothing to reorder. Give it a sibling, and you'll be able to order them how you like.
 
-## Screenshots ##
+== Screenshots ==
 
 1. The Publishing Help screen, which lists and displays available help documents.
 
-## Upgrade Notice ##
+== Upgrade Notice ==
 
-### 1.3 ###
+= 1.3 =
 Update for WordPress 3.8 support.
 
-### 1.2 ###
+= 1.2 =
 Update for better UI and support for WordPress 3.5.
 
-### 1.1 ###
+= 1.1 =
 Sexy drag and drop reordering, and order-syncing through the sync API.
 
-### 1.0 ###
+= 1.0 =
 MASSIVE UPDATE. Sync help documents from another WP Help install. Rename and relocate the menu item. Dashboard widget. Easier navigation.
 
-### 0.3 ###
+= 0.3 =
 Upgrade for a French translation.
 
-### 0.2 ###
+= 0.2 =
 Upgrade if you want to use WP Help in one of these languages: Bulgarian, German, Spanish, Mexican Spanish, Macedonian, Dutch, Brazilian Portuguese, or Russian.
 
-## Changelog ##
+== Changelog ==
 
-### 1.7.0 ###
+= 1.7.0 =
 * Block Editor (Gutenberg) support
 * Video display improvements
 * Smaller build
 
-### 1.6.0 ###
+= 1.6.0 =
 * CSS improvements (props @mrwweb).
 * Switch from CoffeeScript to ES6 and Babel.
 * Responsive styles.
 
-### 1.5.4 ###
+= 1.5.4 =
 * Bump supported WordPress version.
 
-### 1.5.3 ###
+= 1.5.3 =
 * Make add/manage buttons use proper permissions.
 * Update styles.
 * Bump minimum WordPress version.
 
-### 1.5.2 ###
+= 1.5.2 =
 * Make permissions more filterable.
 
-### 1.5.1 ###
+= 1.5.1 =
 * Fix a PHP error on the dashboard.
 
-### 1.5.0 ###
+= 1.5.0 =
 * Updated to Mark's 2016 plugin framework for easier maintenance.
 
-### 1.4.1 ###
+= 1.4.1 =
 * More complete French translation.
 
-### 1.4 ###
+= 1.4 =
 * Added a Hebrew translation.
 
-### 1.3 ###
+= 1.3 =
 * Make the `wp_list_pages()` call filterable.
 * Added Serbian, Turkish, and Japanese translations.
 * Use a Dashicon for WordPress 3.8+.
 * RTL CSS styles.
 
-### 1.2 ###
+= 1.2 =
 * New or updated translations for Gujarati, Norwegian, and Brazilian Portuguese.
 * CSS fixes for WordPress 3.5.
 * More robust AJAX saving when save events overlap.
 
-### 1.1 ###
+= 1.1 =
 * Feature: drag and drop reordering of the documents list.
 * Feature: local /wp-admin/ links are rewritten when shared through the API so that they're wp-admin-relative and thus work on the destination site.
 * Improvement: more consistent cap checks, so plugins can consistently customize who can do what.
 * Improvement: restore settings form to previous state when "cancel" is clicked.
 * Bug fix: sort order is now synced.
 
-### 1.0 ###
+= 1.0 =
 * Feature: sync help documents from another WP Help install.
 * Feature: rename the page title.
 * Feature: rename the document list title.
@@ -149,11 +147,11 @@ Upgrade if you want to use WP Help in one of these languages: Bulgarian, German,
 * Feature: dashboard widget.
 * Improvement: better UI for selecting the default document.
 
-### 0.3 ###
+= 0.3 =
 * Translation for: French. Squashes a PHP Notice. Add an action hook so people can add their own styles.
 
-### 0.2 ###
+= 0.2 =
 * Translations for: Bulgarian, German, Spanish, Mexican Spanish, Macedonian, Dutch, Brazilian Portuguese, and Russian.
 
-### 0.1 ###
+= 0.1 =
 * Initial version

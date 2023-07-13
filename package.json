@@ -2,7 +2,7 @@
   "name": "wp-help",
   "title": "WP Help",
   "description": "A WordPress plugin",
-  "version": "1.7.1",
+  "version": "1.7.2",
   "homepage": "",
   "author": {
     "name": "Mark Jaquith",
@@ -14,6 +14,13 @@
     "singleQuote": true,
     "useTabs": true,
     "trailingComma": "es5"
+  },
+  "scripts": {
+    "build:production": "grunt build:production",
+    "clean-dist": "git clean -f dist",
+    "make-zip": "wp dist-archive . wp-help.zip",
+    "package:prep": "yarn run clean-dist && yarn run build:production",
+    "package": "yarn run package:prep && yarn run make-zip"
   },
   "keywords": [],
   "dependencies": {

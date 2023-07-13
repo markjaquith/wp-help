@@ -159,6 +159,32 @@ module.exports = grunt => {
 					},
 				],
 			},
+			readme_txt: {
+				src: ['readme.md'],
+				dest: 'readme.txt',
+				replacements: [
+					{
+						from: /^# (.*?)( #+)?$/gm,
+						to: '=== $1 ===',
+					},
+					{
+						from: /^## (.*?)( #+)?$/gm,
+						to: '== $1 ==',
+					},
+					{
+						from: /^### (.*?)( #+)?$/gm,
+						to: '= $1 =',
+					},
+					{
+						from: /^.*travis-ci.org.*$/im,
+						to: '',
+					},
+					{
+						from: /\n{3,}/gm,
+						to: '\n\n',
+					},
+				],
+			},
 			svn_readme: {
 				src: ['release/svn/readme.md'],
 				dest: 'release/svn/readme.txt',
