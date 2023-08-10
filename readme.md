@@ -6,8 +6,8 @@ Contributors: markjaquith
 Donate link: http://txfx.net/wordpress-plugins/donate
 Tags: help, documentation, client sites, clients, docs
 Requires at least: 4.9
-Tested up to: 6.2.2
-Stable tag: 1.7.3
+Tested up to: 6.3
+Stable tag: 1.7.4
 
 Site operators can create detailed, hierarchical documentation for the site's authors, editors, and contributors, viewable in the WordPress admin.
 

@@ -15,7 +15,7 @@ class CWS_WP_Help_Plugin {
 	const MENU_SLUG   = 'wp-help-documents';
 	const CRON_HOOK   = 'cws_wp_help_update';
 	const POST_TYPE   = 'wp-help';
-	const CSS_JS_VERSION = '1.7.3';
+	const CSS_JS_VERSION = '1.7.4';
 
 	protected function __construct() {
 		$this->hook( 'init' );
@@ -280,16 +280,17 @@ class CWS_WP_Help_Plugin {
 	}
 
 	public function query( $query ) {
-		global $wpdb;
 		if (
-			$this->filter_wp_list_pages_sql &&
-			preg_match( '#^SELECT\s+\*\s+FROM\s+' . preg_quote( $wpdb->posts, '#' ) . '#', $query )
+			$this->filter_wp_list_pages_sql && // We are filtering
+			preg_match( '#^\s*SELECT\s+#', $query) && // This is a SELECT query
+			preg_match( '#post_type\s*=\s*([\'"])' . self::POST_TYPE . '\1#', $query ) // This is a query for our post type
 		) {
-			$query = str_replace(
-				"post_type = '" . self::POST_TYPE . "' AND post_status = 'private'",
-				"post_type = '" . self::POST_TYPE . "' AND post_status IN('private','publish')",
+			$query = preg_replace(
+				'#post_status\s*=\s*([\'"])private\1#', // We want private posts, but also:
+				"post_status IN('private','publish')", // Published ones too.
 				$query
 			);
+
 			$this->filter_wp_list_pages_sql = false;
 		}
 		return $query;
