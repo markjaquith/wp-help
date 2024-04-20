@@ -2,12 +2,12 @@
 
 [![Build Status](https://travis-ci.org/markjaquith/wp-help.svg?branch=master)](https://travis-ci.org/markjaquith/wp-help)
 
-Contributors: markjaquith
-Donate link: http://txfx.net/wordpress-plugins/donate
-Tags: help, documentation, client sites, clients, docs
-Requires at least: 4.9
-Tested up to: 6.3
-Stable tag: 1.7.4
+Contributors: markjaquith  
+Donate link: http://txfx.net/wordpress-plugins/donate  
+Tags: help, documentation, client sites, clients, docs  
+Requires at least: 4.9  
+Tested up to: 6.5  
+Stable tag: 1.7.5  
 
 Site operators can create detailed, hierarchical documentation for the site's authors, editors, and contributors, viewable in the WordPress admin.
 
