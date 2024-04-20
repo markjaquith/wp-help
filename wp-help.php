@@ -10,7 +10,7 @@ Author URI: http://coveredwebservices.com/
 */
 
 /**
- * Copyright (c) 2011-2023 Mark Jaquith (email: mark@jaquith.me)
+ * Copyright (c) 2011-2024 Mark Jaquith (email: mark@jaquith.me)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License, version 2 or, at
